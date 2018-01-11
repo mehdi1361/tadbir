@@ -1,0 +1,293 @@
+
+
+@font-face {
+    font-family: 'iran-sans';
+    src: url('fonts/IranSans/IRANSansWeb.eot');
+    src: url('fonts/IranSans/IRANSansWeb.eot#iefix') format('embedded-opentype'),
+         url('fonts/IranSans/IRANSansWeb.woff') format('woff'),
+		 url('fonts/IranSans/IRANSansWeb.woff2') format('woff2'),
+         url('fonts/IranSans/IRANSansWeb.ttf') format('truetype'),
+         url('fonts/IranSans/IRANSansWeb.svg#CartoGothicStdBook') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+/*@media Tablet*/
+@media screen and (min-width: 768px) {
+
+.col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4,
+.col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8,
+.col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12
+    {
+        float:right;
+    }
+}
+
+/*@media Mobile*/
+@media screen and (max-width: 480px){
+    #wrapper .content-page 
+    {
+        padding-right: 50px;
+        padding-left: 0px; 
+    }
+}
+
+@media screen and (min-width: 992px){
+.col-md-1, .col-md-2, .col-md-3, .col-md-4, 
+.col-md-5, .col-md-6, .col-md-7, .col-md-8, 
+.col-md-9, .col-md-10, .col-md-11, .col-md-12 
+    {
+        float: right;
+    }
+}
+
+
+.col-xs-1, .col-xs-2, .col-xs-3, .col-xs-4,
+.col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8,
+.col-xs-9, .col-xs-10, .col-xs-11, .col-xs-12 {
+    float: right;
+}
+
+body{
+    font-family:'iran-sans',tahoma,arial;
+}
+h1,h2,h3,h4,h5,h6,div,p,ul,ol,input,select,label{
+    font-family:'iran-sans',tahoma,arial;
+}
+
+body.fixed-left .side-menu.left,.side-menu.left{
+    right:0;
+}
+
+.content-page > .content,
+.breadcrumb,
+.md-modal,
+input,select,label,
+.table > thead > tr > th ,.table > tbody > tr > td ,th,
+.pagination > li
+{
+    direction: rtl;
+    text-align: right;
+}
+.pagination{
+    padding-right: 0;
+}
+.dropdown-menu > li{
+    text-align: right;
+}
+#wrapper.enlarged .left.side-menu{
+   right:0;}
+   
+#wrapper.enlarged .content-page {
+    margin-right: 50px;
+	margin-left:0px;
+}
+
+.topbar{
+	background:#eee;
+}
+.topbar .topbar-left{
+float: right;
+height: 50px;
+position: relative;
+z-index: 1;
+width: 240px;
+background: #3E4B53;
+}
+
+#wrapper.enlarged .left.side-menu #sidebar-menu ul ul li:hover > ul {
+  position: absolute;
+  left: -190px;
+  margin-top: -36px;
+  width: 190px;
+  display: block;
+}
+
+#wrapper.enlarged .left.side-menu #sidebar-menu ul > li:hover > ul {
+  position: absolute;
+  left: -190px;
+  width: 190px;
+  display: block;
+      top: 0px;
+}
+
+#wrapper.enlarged .left.side-menu #sidebar-menu ul > li > a span{margin-top:-10px}
+
+.open-right-sidebar .right {
+    left: 0px !important;
+}
+
+#wrapper.open-right-sidebar {
+    padding-right: 0px;
+}
+
+.open-right-sidebar .topbar {
+    margin-right: 0px;
+}
+
+.navbar-right {
+    float: right!important;
+    margin-right: 0px; 
+}
+.nav{padding-right: 0;}
+#sidebar-menu > ul > li > a{
+	text-align: right;
+	direction: rtl;
+	padding-right:5px;
+}
+
+#sidebar-menu ul ul a {
+	direction: rtl;
+    text-align: right;
+}
+
+
+.profile-info .col-xs-4 {
+    padding: 0px 15px 0px 0px;
+}
+
+.widget .widget-header h2{
+    direction: rtl;
+    text-align: right;
+}
+
+.widget .additional-btn {
+    left:13px;
+    right: inherit;
+    direction: rtl;}
+    
+
+
+.btn-group > .btn{
+    float:right;
+}
+.dd-handle{
+    text-align: left;
+}
+.dd3-content{
+    text-align: left;
+}
+.profile-text{
+    font-size: 12px;
+}
+#chat_groups li a,#chat_groups h2,
+#recent_tickets h2,#recent_tickets li a{
+    text-align: right;
+}
+.navbar-nav > li.topbar-profile > .dropdown-menu > li > a{
+    text-align: right;
+}
+.navbar-nav > li > .dropdown-menu > li > a {
+    text-align: right;
+}
+.widget-content .widget-icon{
+    right: inherit;
+    left:4%;
+}
+#updates-list li,#updates-list li a{
+    font-size: 12px;
+}
+.todo-list li:hover .todo-options,
+.todo-list .todo-tags{
+    left: 9px;
+    right: inherit;
+}
+
+
+
+
+.profile-text,#sidebar-menu ul,
+#sidebar-menu ul ul li,
+#sidebar-menu ul ul li ul li,
+#sidebar-menu ul ul a,
+#chat_groups li a,
+#recent_tickets li a,
+.topbar-profile > a,
+.navbar-nav > li.topbar-profile > .dropdown-menu > li > a,
+.widget-content,.widget-content p,.widget-content a,.widget-content b,
+.navbar-nav > li > .dropdown-menu.grid-dropdown a,
+#notification-list li,#notification-list li a,
+#inbox-list a .sender,
+#updates-list li,#updates-list li a,
+#chat-list li,#chat-list li a,
+.breadcrumb > li,.breadcrumb > li a,
+.nav-tabs > li,.nav-tabs > li > a
+{
+    font-family:'iran-sans',tahoma,arial;
+    font-weight: 300;
+}
+
+.btn-group>.btn:last-child:not(:first-child), .btn-group>.dropdown-toggle:not(:first-child),
+.input-group-addon:last-child
+{
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.btn-group>.btn:first-child:not(:last-child):not(.dropdown-toggle),
+.input-group-addon:first-child,
+.pagination>li:first-child > a, .pagination>li:first-child > span
+{
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+.input-group-addon:last-child{
+    border-right: 0;
+    border-left-style: solid;
+    border-left-color: #ccc;
+    border-left-width: 1px;
+}
+.input-group-addon:first-child{
+    border-left: 0;
+    border-right-style: solid;
+    border-right-color: #ccc;
+    border-right-width: 1px;
+}
+.close{
+    float: left;
+}
+.progress-bar,
+.nav-tabs>li,
+.pagination > li,.pagination>li>a, .pagination>li>span,
+.btn-toolbar .btn-group, .btn-toolbar .input-group
+{
+    float: right;
+}
+table.table thead .sorting {
+    /*background: url('../images/sort_both.png') no-repeat center left;*/
+    background-repeat: no-repeat;
+    background-position: center left;
+}
+.dataTables_length, div.dataTables_info{
+    margin-right: 15px;
+}
+.form-control-feedback{
+    top:8px;
+}
+.btn-toolbar .rows-check-cont{
+    margin-right: 0;
+    margin-left: 15px;
+}
+.sender-photo{
+    float: right;
+    margin-left: 10px;
+}
+.gallery-wrap .column{
+    float:right;
+}
+.gallery-wrap .column .inner .caption-static{
+    text-align: right;
+}
+.the-timeline ul li.the-year p{
+    margin-left: 0;
+    margin-right: 41%;
+}
+ul, menu, dir {
+    display: block;
+    list-style-type: disc;
+    -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    -webkit-padding-start: 0px;
+}
