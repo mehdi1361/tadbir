@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Bank, ManagementAreas, Branch
+from .models import Bank, ManagementAreas, Branch, File
 
 
 class ManagementInline(admin.TabularInline):
@@ -15,3 +15,18 @@ class BankAdmin(admin.ModelAdmin):
 @admin.register(Branch)
 class BranchAdmin(admin.ModelAdmin):
     list_display = ('name', 'created_at', 'update_at')
+
+
+@admin.register(File)
+class FileAdmin(admin.ModelAdmin):
+    list_display = (
+        'file_code',
+        'contract_code',
+        'main_deposit',
+        'end_deposit',
+        'cost_proceeding',
+        'branch',
+        'status',
+        'created_at',
+        'update_at'
+    )

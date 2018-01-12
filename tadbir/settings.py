@@ -127,3 +127,4 @@ STATIC_URL = '/static/'
 #     # '/var/www/static/',
 # ]
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
+USE_THOUSAND_SEPARATOR = True

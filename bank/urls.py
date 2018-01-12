@@ -11,4 +11,5 @@ urlpatterns = [
     url(r'^branches/$', views.BranchListView.as_view(), name='branches_list'),
     # url(r'^branches/edit$', views.BranchListView.as_view(), name='edit_branch'),
     url(r'^branch/new/$', views.new_branch, name='new_branch'),
+    url(r'^files/$', views.file_list, name='files_list'),
 ]

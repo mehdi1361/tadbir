@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
 
-from .models import Bank, ManagementAreas, Branch
+from .models import Bank, ManagementAreas, Branch, File
 from django.views.generic import ListView
 from .forms import BankForm, AreaForm, BranchForm
 from django.shortcuts import get_object_or_404
@@ -96,3 +96,8 @@ def new_branch(request):
         form = BranchForm(request.POST)
 
     return render(request, 'bank/branch/new.html', {'form': form})
+
+
+def file_list(request):
+    files = File.objects.all()
+    return render(request, 'bank/file/list.html', {'files': files})
