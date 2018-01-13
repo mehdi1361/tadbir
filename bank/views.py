@@ -5,6 +5,7 @@ from .models import Bank, ManagementAreas, Branch, File
 from django.views.generic import ListView
 from .forms import BankForm, AreaForm, BranchForm
 from django.shortcuts import get_object_or_404
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 def bank_list(request):
@@ -99,5 +100,17 @@ def new_branch(request):
 
 
 def file_list(request):
-    files = File.objects.all()
-    return render(request, 'bank/file/list.html', {'files': files})
+    object_list = File.objects.all()
+    paginator = Paginator(object_list, 15)
+    page = request.GET.get('page')
+
+    try:
+        files = paginator.page(page)
+
+    except PageNotAnInteger:
+        files = paginator.page(1)
+
+    except EmptyPage:
+        files = paginator.page(paginator.num_pages)
+
+    return render(request, 'bank/file/list.html', {'files': files, 'page': page})

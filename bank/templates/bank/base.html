@@ -3,7 +3,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title> کو کو ، قالب مدیریت واکنش گرا | mohammad shoja</title>
+        <title> نرم افزار جامع وصول مطالبات</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="description" content="">
@@ -122,9 +122,9 @@
 <!-- Top Bar Start -->
 <div class="topbar">
     <div class="topbar-left">
-        <div class="logo">
-            <h1><a href="#"><img src="{% static "assets/img/logo.png" %}" alt="Logo"></a></h1>
-        </div>
+{#        <div class="logo">#}
+{#            <h1><a href="#"><img src="{% static "assets/img/logo.png" %}" alt="Logo"></a></h1>#}
+{#        </div>#}
         <button class="button-menu-mobile open-left">
         <i class="fa fa-bars"></i>
         </button>
@@ -400,163 +400,6 @@
 								</li>
 							</ul>
 						</li>
-						<li class='has_sub'>
-							<a href='javascript:void(0);'>
-								<i class='icon-pencil-3'></i>
-									<span>فرمها</span>
-									<span class="pull-left">
-										<i class="fa fa-angle-down"></i>
-									</span></a>
-									<ul>
-										<li>
-											<a href='forms.html'>
-												<span>المانهای فرم</span>
-											</a>
-										</li>
-										<li><a href='advanced-forms.html'><span>فرم پیشرفته</span></a></li>
-                                        <li><a href='form-wizard.html'><span>فرم ویزارد</span></a></li>
-                                        <li><a href='form-validation.html'><span>فرم اعتبار سنجی</span></a></li>
-                                        <li><a href='form-uploads.html'><span>آپلود فایل</span></a></li>
-                                    </ul>
-                        </li>
-                        <li class='has_sub'>
-                            <a href='javascript:void(0);'>
-                                <i class='fa fa-table'></i>
-                                <span>جداول</span>
-                                <span class="pull-left">
-                                    <i class="fa fa-angle-down"></i>
-                                </span>
-                            </a>
-                            <ul>
-                                <li>
-                                    <a href='tables.html'>
-                                        <span>جدول پایه</span>
-                                    </a>
-                                </li>
-                                <li><a href='datatables.html'><span>دیتا تیبل</span></a></li>
-                            </ul>
-                        </li>
-                        <li class='has_sub'>
-                            <a href='javascript:void(0);'>
-                                <i class='fa fa-map-marker'></i>
-                                <span>نقشه ها</span>
-                                <span class="pull-left">
-                                    <i class="fa fa-angle-down"></i>
-                                </span>
-                            </a>
-                            <ul>
-                                <li><a href='google-maps.html'><span>نقشه گوگل</span></a></li>
-                                <li><a href='vector-maps.html'><span>نقشه وکتور</span></a></li>
-                            </ul>
-                        </li>
-                        <li class='has_sub'>
-                            <a href='javascript:void(0);'>
-                                <i class='fa fa-envelope'></i>
-                                <span>ایمیل</span>
-                                <span class="pull-left">
-                                    <i class="fa fa-angle-down"></i>
-                                </span>
-                            </a>
-                            <ul>
-                                <li><a href='inbox.html'><span>صندوق دریافت</span></a></li>
-                                <li><a href='read-message.html'><span>نمایش ایمیل ها</span></a></li>
-                                <li><a href='new-message.html'><span>ایمیل جدید</span></a></li>
-                            </ul>
-                        </li>
-                        <li class='has_sub'>
-                            <a href='javascript:void(0);'>
-                                <i class='icon-chart-line'></i>
-                                <span>چارتها</span>
-                                <span class="pull-left">
-                                    <i class="fa fa-angle-down"></i>
-                                </span>
-                            </a>
-                            <ul>
-                                <li><a href='sparkline-charts.html'><span>Sparkline چارت</span></a></li>
-                                <li><a href='morris-charts.html'><span>Morris چارت</span></a></li>
-                                <li><a href='rickshaw-charts.html'><span>Rickshaw چارت</span></a></li>
-                                <li><a href='other-charts.html'><span>دیگر نمونه ها</span></a></li>
-                            </ul>
-                        </li>
-                        <li class='has_sub'>
-                        <a href='javascript:void(0);'>
-                            <i class='icon-megaphone'></i>
-                            <span>بیشتر</span>
-                            <span class="pull-left">
-                                <i class="fa fa-angle-down"></i>
-                            </span>
-                        </a>
-                        <ul>
-                            <li><a href='blank.html'><span>صفحه خالی</span></a></li>
-                            <li><a href='login.html'><span>ورود به صفحه</span></a></li>
-                            <li><a href='register.html'><span>ثبت نام</span></a></li>
-                            <li><a href='lockscreen.html'><span>قفل صفحه</span></a></li>
-                            <li><a href='404.html'><span>404 خطای</span></a></li>
-                            <li><a href='500.html'><span>500 خطای</span></a></li>
-                            <li><a href='profile.html'><span>پروفایل کاربری</span></a></li>
-                            <li><a href='invoice.html'><span>Invoice</span></a></li>
-                            <li><a href='gallery.html'><span>گالری</span></a></li>
-                            <li><a href='maintenance.html'><span>صفحه در دست ساخت</span></a></li>
-                            <li class='has_sub'>
-                                <a href='javascript:void(0);'>
-                                    <span>منوی لول 3</span>
-                                    <span class="pull-left">
-                                        <i class="fa fa-angle-down"></i>
-                                    </span>
-                                </a>
-                                <ul>
-                                    <li><a href='javascript:void(0);'><span>زیر عنوان</span></a></li>
-                                </ul>
-                            </li>
-                                <li class='has_sub'>
-                                    <a href='javascript:void(0);'>
-                                        <span>منوی لول 3</span>
-                                        <span class="pull-left">
-                                            <i class="fa fa-angle-down"></i>
-                                        </span>
-                                    </a>
-                                    <ul>
-                                        <li class='has_sub'>
-                                            <a href='javascript:void(0);'>
-                                                <span>زیر منوی لول 3</span>
-                                                <span class="pull-left">
-                                                    <i class="fa fa-angle-down"></i>
-                                                </span>
-                                            </a>
-                                            <ul>
-                                                <li>
-                                                    <a href='javascript:void(0);'>
-                                                        <span>زیر منوی لول 4</span>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class='has_sub'>
-                                    <a href='javascript:void(0);'>
-                                        <span>زیر منو با آیکن</span>
-                                        <span class="pull-left">
-                                            <i class="fa fa-angle-down"></i>
-                                        </span>
-                                    </a>
-                                    <ul>
-                                        <li>
-                                            <a href='javascript:void(0);'>
-                                                <i class='fa fa-camera'></i>
-                                                <span>آیتم با آیکن</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href='javascript:void(0);'>
-                                                <i class='entypo entypo-users'></i>
-                                                <span>آیتمهای بیشتر</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
                     </ul>
                     <div class="clearfix"></div>
                 </div>
@@ -566,24 +409,17 @@
                     <h2>گروه های چت</h2>
                     <div class="widget-content">
                         <ul class="list-unstyled">
-                            <li><a href="javascript:;"><i class="fa fa-circle-o text-red-1"></i>دانشگاهی</a></li>
-                            <li><a href="javascript:;"><i class="fa fa-circle-o text-blue-1"></i> فامیلی</a></li>
-                            <li><a href="javascript:;"><i class="fa fa-circle-o text-green-1"></i> دوستانه</a></li>
+                            <li><a href="javascript:;"><i class="fa fa-circle-o text-red-1"></i>تیم</a></li>
+                            <li><a href="javascript:;"><i class="fa fa-circle-o text-blue-1"></i> دفتر</a></li>
+                            <li><a href="javascript:;"><i class="fa fa-circle-o text-green-1"></i> شرکت</a></li>
                         </ul>
                     </div>
                 </div>
 
                 <div id="recent_tickets" class="widget transparent nomargin">
-                    <h2>تیکیت های اخیر</h2>
+                    <h2>فعالیت های اخیر</h2>
                     <div class="widget-content">
-                        <ul class="list-unstyled">
-                            <li>
-                                <a href="javascript:;">سایت وردپرسی من خراب شده <span>من میخام صفحاتم رو ذخیره کنم و ...</span></a>
-                            </li>
-                            <li>
-                                <a href="javascript:;">سرور خاموش شده . احتیاج به کمک دارم<span>سرور من هیچ عملیاتی رو انجام نمیده و ....</span></a>
-                            </li>
-                        </ul>
+
                     </div>
                 </div>
             </div>
