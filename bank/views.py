@@ -3,9 +3,10 @@ from django.urls import reverse
 
 from .models import Bank, ManagementAreas, Branch, File
 from django.views.generic import ListView
-from .forms import BankForm, AreaForm, BranchForm
+from .forms import BankForm, AreaForm, BranchForm, FileForm
 from django.shortcuts import get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from dal import autocomplete
 
 
 def bank_list(request):
@@ -114,3 +115,26 @@ def file_list(request):
         files = paginator.page(paginator.num_pages)
 
     return render(request, 'bank/file/list.html', {'files': files, 'page': page})
+
+
+class BranchAutoComplete(autocomplete.Select2QuerySetView):
+    def get_queryset(self):
+        qs = Branch.objects.all()
+
+        if self.q:
+            qs = qs.filter(name__isstartwith=self.q)
+
+        return qs
+
+
+def new_file(request):
+    if request.method == 'POST':
+        form = FileForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect(reverse('bank:files_list'))
+
+    else:
+        form = FileForm(request.POST)
+
+    return render(request, 'bank/file/new.html', {'form': form})
