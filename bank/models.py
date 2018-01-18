@@ -51,7 +51,7 @@ class Branch(Base, Location):
         db_table = 'branches'
 
     def __str__(self):
-        return '{} {} {}'.format(self.area, self.city, self.name)
+        return '{}-{}-{}'.format(self.area, self.city, self.name)
 
 
 @python_2_unicode_compatible
@@ -67,8 +67,8 @@ class File(Base):
         ('اعتباری خرید کالا', 'اعتباری خرید کالا'),
         ('خرید خودرو', 'خرید خودرو'),
     )
-    file_code = models.CharField(_(u'کد پرونده'), max_length=200)
-    contract_code = models.CharField(_(u'شماره قرارداد'), max_length=200)
+    file_code = models.CharField(_(u'کد پرونده'), max_length=200, unique=True)
+    contract_code = models.CharField(_(u'شماره قرارداد'), max_length=200, unique=True)
     main_deposit = models.PositiveIntegerField(_(u'اصل مبلغ بدهی'), default=100)
     nc_deposit = models.PositiveIntegerField(_(u'وجه التزام'), default=100)
     so_deposit = models.PositiveIntegerField(_(u'سود'), default=100)

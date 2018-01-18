@@ -50,6 +50,13 @@ class BranchForm(forms.ModelForm):
 
 
 class FileForm(forms.ModelForm):
+    def save(self, commit=True):
+        instance = super(FileForm, self).save(commit=False)
+        instance.persian_normal_date_refrence = '1394'
+        if commit:
+            instance.save()
+        return instance
+
     class Meta:
         model = File
         fields = [
@@ -61,7 +68,6 @@ class FileForm(forms.ModelForm):
             'cost_proceeding',
             'branch',
             'persian_date_refrence',
-            'persian_normal_date_refrence',
             'status',
             'file_type'
         ]
@@ -73,4 +79,7 @@ class FileForm(forms.ModelForm):
             'so_deposit': forms.TextInput(attrs={'class': 'form-control'}),
             'cost_proceeding': forms.TextInput(attrs={'class': 'form-control'}),
             'persian_date_refrence': forms.TextInput(attrs={'class': 'form-control'}),
+            'branch': forms.Select(attrs={'class': 'form-control'}),
+            'status': forms.Select(attrs={'class': 'form-control'}),
+            'file_type': forms.Select(attrs={'class': 'form-control'}),
         }

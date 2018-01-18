@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'states',
     'bank',
+    'notify',
 ]
 
 MIDDLEWARE_CLASSES = [

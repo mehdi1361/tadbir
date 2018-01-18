@@ -4,6 +4,14 @@
     <div>
 
     </div>
+     {% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+{#    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>#}
+         <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+</ul>
+{% endif %}
     <div class="widget">
 					<div class="widget-header transparent">
 						<h2><strong>پرونده جدید</strong></h2>
@@ -65,18 +73,38 @@
                             </label>
 							<div class="col-sm-10">
                                 {{ form.branch }}
-                                <div class="ui-widget">
-                                  <label for="branches">branches: </label>
-                                  <input id="branches" class="form-control">
-                              </div>
-                              <script type="text/javascript">
-                                  $(function() {
-                                      $("#branches").autocomplete({
-                                        source: "/bank/api/get_branches/",
-                                        minLength: 2,
-                                      });
-                                    });
-                              </script>
+							</div>
+						  </div>
+                          <div class="form-group">
+							<label for="input-text" class="col-sm-2 control-label">
+                                {{ form.persian_date_refrence.label }}
+                            </label>
+							<div class="col-sm-10">
+                                {{ form.persian_date_refrence }}
+							</div>
+						  </div>
+{#                          <div class="form-group">#}
+{#							<label for="input-text" class="col-sm-2 control-label">#}
+{#                                {{ form.persian_normal_date_refrence.label }}#}
+{#                            </label>#}
+{#							<div class="col-sm-10">#}
+{#                                {{ form.persian_normal_date_refrence }}#}
+{#							</div>#}
+{#						  </div>#}
+                          <div class="form-group">
+							<label for="input-text" class="col-sm-2 control-label">
+                                {{ form.status.label }}
+                            </label>
+							<div class="col-sm-10">
+                                {{ form.status }}
+							</div>
+						  </div>
+                          <div class="form-group">
+							<label for="input-text" class="col-sm-2 control-label">
+                                {{ form.file_type.label }}
+                            </label>
+							<div class="col-sm-10">
+                                {{ form.file_type }}
 							</div>
 						  </div>
                             <div class="col-lg-12">
@@ -88,4 +116,6 @@
 					</div>
 
 				</div>
+
+
 {% endblock %}

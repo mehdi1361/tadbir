@@ -10,7 +10,8 @@ from .forms import BankForm, AreaForm, BranchForm, FileForm
 from django.shortcuts import get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from dal import autocomplete
-
+from notify.signals import notify
+from django.contrib import messages
 
 def bank_list(request):
     banks = Bank.objects.all()
@@ -104,7 +105,7 @@ def new_branch(request):
 
 
 def file_list(request):
-    object_list = File.objects.all()
+    object_list = File.objects.all().order_by('-created_at')
     paginator = Paginator(object_list, 15)
     page = request.GET.get('page')
 
@@ -135,12 +136,16 @@ def new_file(request):
         form = FileForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect(reverse('bank:files_list'))
+            return redirect(reverse('bank:new_file_detail'))
 
     else:
         form = FileForm(request.POST)
 
     return render(request, 'bank/file/new.html', {'form': form})
+
+
+def file_document(request):
+    return render(request, 'bank/file/new_detail.html')
 
 
 def get_branch(request):

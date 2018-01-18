@@ -4,12 +4,11 @@ from bank.models import File, Branch
 
 def main():
     for branch in Branch.objects.all():
-        for i in range(1000):
+        for i in range(10):
             data = {
                 'file_code': random.randint(1000000, 9000000),
                 'contract_code': random.randint(1000000, 9000000),
                 'main_deposit': random.randint(1000000, 900000000),
-                'end_deposit': random.randint(1000000, 900000000),
                 'cost_proceeding': random.randint(1000000, 900000000),
                 'branch': branch,
                 'persian_date_refrence': '{}/{}/{}'.format(
@@ -30,7 +29,6 @@ def main():
                 'file_code': random.randint(1000000, 9000000),
                 'contract_code': random.randint(1000000, 9000000),
                 'main_deposit': random.randint(1000000, 900000000),
-                'end_deposit': random.randint(1000000, 900000000),
                 'cost_proceeding': random.randint(1000000, 900000000),
                 'branch': branch,
                 'status': 'معوق',
@@ -52,7 +50,6 @@ def main():
                 'file_code': random.randint(1000000, 9000000),
                 'contract_code': random.randint(1000000, 9000000),
                 'main_deposit': random.randint(1000000, 900000000),
-                'end_deposit': random.randint(1000000, 900000000),
                 'cost_proceeding': random.randint(1000000, 900000000), 'branch': branch,
                 'status': 'سر رسید گذشته',
                 'persian_date_refrence': '{}/{}/{}'.format(
