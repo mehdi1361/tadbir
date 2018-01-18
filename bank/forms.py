@@ -32,6 +32,23 @@ class BranchForm(forms.ModelForm):
         }
 
 
+# class FileForm(forms.ModelForm):
+#     class Meta:
+#         model = File
+#         fields = [
+#             'file_code',
+#             'contract_code',
+#             'main_deposit',
+#             'end_deposit',
+#             'cost_proceeding',
+#             'branch',
+#             'persian_date_refrence'
+#         ]
+#         widgets = {
+#             'branch': autocomplete.ModelSelect2(url='bank:branch-autocomplete')
+#         }
+
+
 class FileForm(forms.ModelForm):
     class Meta:
         model = File
@@ -39,11 +56,21 @@ class FileForm(forms.ModelForm):
             'file_code',
             'contract_code',
             'main_deposit',
-            'end_deposit',
+            'nc_deposit',
+            'so_deposit',
             'cost_proceeding',
             'branch',
-            'persian_date_refrence'
+            'persian_date_refrence',
+            'persian_normal_date_refrence',
+            'status',
+            'file_type'
         ]
         widgets = {
-            'branch': autocomplete.ModelSelect2(url='branch-autocomplete')
+            'file_code': forms.TextInput(attrs={'class': 'form-control'}),
+            'contract_code': forms.TextInput(attrs={'class': 'form-control'}),
+            'main_deposit': forms.TextInput(attrs={'class': 'form-control'}),
+            'nc_deposit': forms.TextInput(attrs={'class': 'form-control'}),
+            'so_deposit': forms.TextInput(attrs={'class': 'form-control'}),
+            'cost_proceeding': forms.TextInput(attrs={'class': 'form-control'}),
+            'persian_date_refrence': forms.TextInput(attrs={'class': 'form-control'}),
         }

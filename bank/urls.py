@@ -13,4 +13,5 @@ urlpatterns = [
     url(r'^branch/new/$', views.new_branch, name='new_branch'),
     url(r'^files/$', views.file_list, name='files_list'),
     url(r'^files/new/$', views.new_file, name='new_file'),
+    url(r'^api/get_branches/', views.get_branch, name='get_branches'),
 ]

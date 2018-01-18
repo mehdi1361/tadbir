@@ -20,9 +20,4 @@ from bank.views import BranchAutoComplete
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^bank/', include('bank.urls', namespace='bank', app_name='bank')),
-    url(
-        r'^branch-autocomplete/$',
-        BranchAutoComplete.as_view(),
-        name='branch-autocomplete',
-    ),
 ]

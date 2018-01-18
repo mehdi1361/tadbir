@@ -1,7 +1,7 @@
 colorama==0.3.9
 decorator==4.1.2
 Django==1.11
-ipython==6.2.1
+ipython
 ipython-genutils==0.2.0
 jedi==0.11.1
 parso==0.1.1

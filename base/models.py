@@ -12,10 +12,10 @@ class Base(models.Model):
         abstract = True
 
 
-class Person(models.Model):
+class Human(models.Model):
     GENDER = (
-        ('male', _('male')),
-        ('female', _('female'))
+        ('مرد', _('مرد')),
+        ('زن', _('زن'))
     )
     first_name = models.CharField(_('first name'), max_length=200)
     last_name = models.CharField(_('last_name'), max_length=200)
@@ -37,8 +37,8 @@ class Location(models.Model):
 
 
 class Document(models.Model):
-    name = models.CharField(_('location name'), max_length=200)
-    image_upload = models.ImageField(_('image'), upload_to='file', null=True)
+    image_upload = models.ImageField(_('تصویر'), upload_to='document', null=True)
+    description = models.TextField(_('توضیحات'), null=True, default=None)
 
     class Meta:
         abstract = True

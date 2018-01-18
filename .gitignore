@@ -6,3 +6,7 @@ venv
 .idea/dataSources/72b37879-c62e-4d07-8778-73189011f57b/_src_/
 .idea/dataSources/72b37879-c62e-4d07-8778-73189011f57b/_staging_/
 .idea/inspectionProfiles/
+
+py27venv/*
+py27venv
+/py27venv

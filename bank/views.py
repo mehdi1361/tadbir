@@ -1,3 +1,6 @@
+import json
+
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 
@@ -122,7 +125,7 @@ class BranchAutoComplete(autocomplete.Select2QuerySetView):
         qs = Branch.objects.all()
 
         if self.q:
-            qs = qs.filter(name__isstartwith=self.q)
+            qs = qs.filter(name__contains=self.q)
 
         return qs
 
@@ -138,3 +141,22 @@ def new_file(request):
         form = FileForm(request.POST)
 
     return render(request, 'bank/file/new.html', {'form': form})
+
+
+def get_branch(request):
+    if request.is_ajax():
+        q = request.GET.get('term', '')
+        branches = Branch.objects.filter(name__contains=q)[:20]
+        results = []
+        for branch in branches:
+            branch_json = {
+                'id': branch.id,
+                'label': str(branch),
+                'value': str(branch)
+            }
+            results.append(branch_json)
+        data = json.dumps(results)
+    else:
+        data = 'fail'
+    mimetype = 'application/json'
+    return HttpResponse(data, mimetype)
