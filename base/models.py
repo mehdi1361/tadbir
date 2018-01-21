@@ -17,11 +17,11 @@ class Human(models.Model):
         ('مرد', _('مرد')),
         ('زن', _('زن'))
     )
-    first_name = models.CharField(_('first name'), max_length=200)
-    last_name = models.CharField(_('last_name'), max_length=200)
-    father_name = models.CharField(_('father_name'), max_length=200)
-    national_code = models.CharField(_('national code'), max_length=20)
-    gender = models.CharField(_('gender'), max_length=20, choices=GENDER)
+    first_name = models.CharField(_('نام'), max_length=200)
+    last_name = models.CharField(_('نام خانوادگی'), max_length=200)
+    father_name = models.CharField(_('نام پدر'), max_length=200)
+    national_code = models.CharField(_('کد ملی'), max_length=20)
+    gender = models.CharField(_('جنسیت'), max_length=20, choices=GENDER)
 
     class Meta:
         abstract = True

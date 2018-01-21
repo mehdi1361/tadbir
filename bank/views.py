@@ -6,12 +6,12 @@ from django.urls import reverse
 
 from .models import Bank, ManagementAreas, Branch, File
 from django.views.generic import ListView
-from .forms import BankForm, AreaForm, BranchForm, FileForm
+from .forms import BankForm, AreaForm, BranchForm, FileForm, PersonForm
 from django.shortcuts import get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from dal import autocomplete
-from notify.signals import notify
 from django.contrib import messages
+
 
 def bank_list(request):
     banks = Bank.objects.all()
@@ -145,7 +145,16 @@ def new_file(request):
 
 
 def file_document(request):
-    return render(request, 'bank/file/new_detail.html')
+    if request.method == 'POST':
+        person_form = PersonForm(request.POST)
+    else:
+        person_form = PersonForm(request.POST)
+
+    return render(
+        request,
+        'bank/file/new_detail.html',
+        {'person_form': person_form}
+    )
 
 
 def get_branch(request):

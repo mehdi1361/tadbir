@@ -91,7 +91,7 @@ class File(Base):
 
 @python_2_unicode_compatible
 class Person(Base, Human):
-    file = models.ManyToManyField(File, through='PersonHuman', verbose_name=_('شخص'), related_name='persons')
+    file = models.ManyToManyField(File, through='PersonFile', verbose_name=_('شخص'), related_name='persons')
 
     class Meta:
         ordering = ['first_name', 'last_name']
@@ -103,7 +103,7 @@ class Person(Base, Human):
         return "{} {}".format(self.first_name, self.last_name)
 
 
-class PersonHuman(Base):
+class PersonFile(Base):
     TYPE = (
         ('مدیون', 'مدیون'),
         ('ضامن', 'ضامن'),
@@ -114,16 +114,34 @@ class PersonHuman(Base):
     relation_type = models.CharField(_('ارتباط'), max_length=10, default='مدیون', choices=TYPE)
 
     class Meta:
-        verbose_name = _('person_human')
-        verbose_name_plural = _('person_humans')
-        db_table = 'person_humans'
+        verbose_name = _('person_file')
+        verbose_name_plural = _('person_files')
+        db_table = 'person_files'
 
     def __str__(self):
         return "{}-{} {}".format(self.file.file_code, self.person.first_name, self.person.last_name)
 
 
 class Assurance(Base, Document):
-    pass
+    TYPE = (
+        ('سفته', 'سفته'),
+        ('چک', 'چک'),
+        ('سند ملکی', 'سند ملکی'),
+        ('سند در رهن', 'سند در رهن'),
+    )
+    person = models.ForeignKey(PersonFile, verbose_name=_('per'), related_name='assurances', default=None)
+    assurance_type = models.CharField(_('نو وثیقه'), max_length=50, choices=TYPE, default='سفته')
+
+    class Meta:
+        verbose_name = _('assurance')
+        verbose_name_plural = _('assurances')
+        db_table = 'assurances'
+
+    def __str__(self):
+        return "{}-{} {}".format(self.assurance_type,
+                                 self.person.person.first_name,
+                                 self.person.person.last_name
+                                 )
 
 
 
