@@ -15,4 +15,6 @@ urlpatterns = [
     url(r'^files/new/$', views.new_file, name='new_file'),
     url(r'^files/new_detail/$', views.file_document, name='new_file_detail'),
     url(r'^api/get_branches/', views.get_branch, name='get_branches'),
+    url(r'^files/new_person/$', views.new_person, name='new_person'),
+
 ]

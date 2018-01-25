@@ -174,3 +174,20 @@ def get_branch(request):
         data = 'fail'
     mimetype = 'application/json'
     return HttpResponse(data, mimetype)
+
+
+def new_person(request):
+    if request.method == 'POST':
+        form = PersonForm(request.POST)
+        if form.is_valid():
+            form.save()
+    else:
+        form = PersonForm()
+
+    messages.add_message(request, messages.SUCCESS, 'Hello world.')
+
+    return render(
+        request,
+        'bank/file/new_person.html',
+        {'form': form}
+    )

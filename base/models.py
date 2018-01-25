@@ -20,7 +20,7 @@ class Human(models.Model):
     first_name = models.CharField(_('نام'), max_length=200)
     last_name = models.CharField(_('نام خانوادگی'), max_length=200)
     father_name = models.CharField(_('نام پدر'), max_length=200)
-    national_code = models.CharField(_('کد ملی'), max_length=20)
+    national_code = models.CharField(_('کد ملی'), max_length=20, unique=True)
     gender = models.CharField(_('جنسیت'), max_length=20, choices=GENDER)
 
     class Meta:

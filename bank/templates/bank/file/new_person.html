@@ -1,0 +1,96 @@
+{% extends 'bank/base.html' %}
+
+{% block content %}
+    <div>
+
+    </div>
+     {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+{#            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>#}
+                 <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <script>
+    $(document).ready(function() {
+        // messages timeout for 10 sec
+        setTimeout(function() {
+            $('.message').fadeOut('slow');
+        }, 10000); // <-- time in milliseconds, 1000 =  1 sec
+
+        // delete message
+        $('.del-msg').live('click',function(){
+            $('.del-msg').parent().attr('style', 'display:none;');
+        })
+    });
+</script>
+    <div class="widget">
+					<div class="widget-header transparent">
+						<h2><strong>شخص حقیقی جدید</strong></h2>
+						<div class="additional-btn">
+							<a href="#" class="hidden reload"><i class="icon-ccw-1"></i></a>
+							<a href="#" class="widget-toggle"><i class="icon-down-open-2"></i></a>
+							<a href="#" class="widget-close"><i class="icon-cancel-3"></i></a>
+						</div>
+					</div>
+					<div class="widget-content padding">
+						<form class="form-horizontal" role="form" action="" method="post">
+						  <div class="form-group">
+							<label for="input-text" class="col-sm-2 control-label">
+                                {{ form.first_name.label }}
+                            </label>
+							<div class="col-sm-10">
+                                {{ form.first_name  }}
+							</div>
+						  </div>
+                          <div class="form-group">
+							<label for="input-text" class="col-sm-2 control-label">
+                                {{ form.last_name.label }}
+                            </label>
+							<div class="col-sm-10">
+                                {{ form.last_name }}
+							</div>
+						  </div>
+                          <div class="form-group">
+							<label for="input-text" class="col-sm-2 control-label">{{ form.father_name.label }}</label>
+							<div class="col-sm-10">
+                                {{ form.father_name }}
+                                {{ form.father_name.errors }}
+							</div>
+						  </div>
+                          <div class="form-group">
+							<label for="input-text" class="col-sm-2 control-label">{{ form.national_code.label }}</label>
+							<div class="col-sm-10">
+                                {{ form.national_code }}
+							</div>
+						  </div>
+                          <div class="form-group">
+							<label for="input-text" class="col-sm-2 control-label">
+                                {{ form.gender.label }}
+                            </label>
+							<div class="col-sm-10">
+                                {{ form.gender }}
+							</div>
+						  </div>
+
+{#                          <div class="form-group">#}
+{#							<label for="input-text" class="col-sm-2 control-label">#}
+{#                                {{ form.persian_normal_date_refrence.label }}#}
+{#                            </label>#}
+{#							<div class="col-sm-10">#}
+{#                                {{ form.persian_normal_date_refrence }}#}
+{#							</div>#}
+{#						  </div>#}
+                            <div class="col-lg-12">
+                                {% csrf_token %}
+                                <input type="submit" value="ایجاد" class="btn btn-success">
+                            </div>
+                            <hr>
+						</form>
+					</div>
+
+				</div>
+
+
+{% endblock %}
