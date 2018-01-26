@@ -103,6 +103,21 @@ class Person(Base, Human):
         return "{} {}".format(self.first_name, self.last_name)
 
 
+class PersonOffice(Base, Location):
+    name = models.CharField(_('نام شرکت'), max_length=200)
+    city = models.ForeignKey(City, verbose_name=_('نام شهر'),null=True)
+    register_number = models.PositiveIntegerField(_('شماره ثبت'), unique=True)
+
+    class Meta:
+        ordering = ['register_number']
+        verbose_name = _('person_office')
+        verbose_name_plural = _('person_offices')
+        db_table = 'person_offices'
+
+    def __str__(self):
+        return "{}".format(self.name)
+
+
 class PersonFile(Base):
     TYPE = (
         ('مدیون', 'مدیون'),

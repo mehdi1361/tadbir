@@ -16,5 +16,7 @@ urlpatterns = [
     url(r'^files/new_detail/$', views.file_document, name='new_file_detail'),
     url(r'^api/get_branches/', views.get_branch, name='get_branches'),
     url(r'^files/new_person/$', views.new_person, name='new_person'),
-
+    url(r'^persons/list/$', views.get_persons, name='get_persons'),
+    url(r'^files/new_person_office/$', views.new_person_office, name='new_person_office'),
+    url(r'^persons_office/list/$', views.get_person_office, name='persons_office'),
 ]

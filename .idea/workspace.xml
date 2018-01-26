@@ -5,21 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f7a1b592-8495-4d82-864c-bb6254d40ee8" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bank/migrations/0009_auto_20180122_2139.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bank/templates/bank/file/new_person.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources/72b37879-c62e-4d07-8778-73189011f57b/_metadata_/metadata" afterPath="$PROJECT_DIR$/.idea/dataSources/72b37879-c62e-4d07-8778-73189011f57b/_metadata_/metadata" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources/72b37879-c62e-4d07-8778-73189011f57b/_metadata_/metadata.keystream" afterPath="$PROJECT_DIR$/.idea/dataSources/72b37879-c62e-4d07-8778-73189011f57b/_metadata_/metadata.keystream" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources/72b37879-c62e-4d07-8778-73189011f57b/_metadata_/metadata.keystream.len" afterPath="$PROJECT_DIR$/.idea/dataSources/72b37879-c62e-4d07-8778-73189011f57b/_metadata_/metadata.keystream.len" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources/72b37879-c62e-4d07-8778-73189011f57b/_metadata_/metadata.len" afterPath="$PROJECT_DIR$/.idea/dataSources/72b37879-c62e-4d07-8778-73189011f57b/_metadata_/metadata.len" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources/72b37879-c62e-4d07-8778-73189011f57b/_metadata_/metadata_i" afterPath="$PROJECT_DIR$/.idea/dataSources/72b37879-c62e-4d07-8778-73189011f57b/_metadata_/metadata_i" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources/72b37879-c62e-4d07-8778-73189011f57b/_metadata_/metadata_i.len" afterPath="$PROJECT_DIR$/.idea/dataSources/72b37879-c62e-4d07-8778-73189011f57b/_metadata_/metadata_i.len" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bank/templates/bank/person/edit.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bank/templates/bank/person/list.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bank/templates/bank/person/newb.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bank/templates/bank/person_office/edit.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bank/templates/bank/person_office/list.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bank/templates/bank/person_office/new.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bank/templates/bank/person_office/newb.html" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/bank/templates/bank/file/new_person.html" afterPath="$PROJECT_DIR$/bank/templates/bank/person/new.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db.sqlite3" afterPath="$PROJECT_DIR$/db.sqlite3" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources/72b37879-c62e-4d07-8778-73189011f57b.xml" afterPath="$PROJECT_DIR$/.idea/dataSources/72b37879-c62e-4d07-8778-73189011f57b.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/tadbir.iml" afterPath="$PROJECT_DIR$/.idea/tadbir.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bank/forms.py" afterPath="$PROJECT_DIR$/bank/forms.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bank/models.py" afterPath="$PROJECT_DIR$/bank/models.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bank/templates/bank/base.html" afterPath="$PROJECT_DIR$/bank/templates/bank/base.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bank/templates/bank/file/list.html" afterPath="$PROJECT_DIR$/bank/templates/bank/file/list.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bank/urls.py" afterPath="$PROJECT_DIR$/bank/urls.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bank/views.py" afterPath="$PROJECT_DIR$/bank/views.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/base/models.py" afterPath="$PROJECT_DIR$/base/models.py" />
@@ -30,6 +30,9 @@
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CoverageDataManager">
+    <SUITE FILE_PATH="coverage/tadbir$models.coverage" NAME="models Coverage Results" MODIFIED="1516960092165" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/bank" />
   </component>
   <component name="DatabaseView">
     <option name="SHOW_INTERMEDIATE" value="true" />
@@ -64,31 +67,46 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="forms.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/bank/forms.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2508">
-              <caret line="117" column="71" lean-forward="false" selection-start-line="117" selection-start-column="71" selection-end-line="117" selection-end-column="71" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/bank/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="352">
-              <caret line="17" column="48" lean-forward="false" selection-start-line="17" selection-start-column="48" selection-end-line="17" selection-end-column="48" />
+            <state relative-caret-position="361">
+              <caret line="20" column="80" lean-forward="false" selection-start-line="20" selection-start-column="66" selection-end-line="20" selection-end-column="80" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="persons" pinned="false" current-in-tab="false">
-        <entry file="das://table:/15f24684/72b37879-c62e-4d07-8778-73189011f57b/main.persons">
-          <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-            <state>
-              <filtering enabled="true" />
+      <file leaf-file-name="base.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/bank/templates/bank/base.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="307">
+              <caret line="394" column="71" lean-forward="false" selection-start-line="394" selection-start-column="71" selection-end-line="394" selection-end-column="71" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/bank/views.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="221">
+              <caret line="253" column="108" lean-forward="true" selection-start-line="253" selection-start-column="108" selection-end-line="253" selection-end-column="108" />
+              <folding>
+                <element signature="e#0#11#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="forms.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/bank/forms.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="322">
+              <caret line="124" column="17" lean-forward="false" selection-start-line="124" selection-start-column="17" selection-end-line="124" selection-end-column="17" />
+              <folding>
+                <element signature="e#0#24#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -96,8 +114,8 @@
       <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/bank/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1936">
-              <caret line="92" column="21" lean-forward="false" selection-start-line="92" selection-start-column="21" selection-end-line="92" selection-end-column="21" />
+            <state relative-caret-position="227">
+              <caret line="107" column="70" lean-forward="false" selection-start-line="107" selection-start-column="70" selection-end-line="107" selection-end-column="70" />
               <folding />
             </state>
           </provider>
@@ -106,50 +124,28 @@
       <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/base/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="572">
-              <caret line="47" column="12" lean-forward="false" selection-start-line="47" selection-start-column="12" selection-end-line="47" selection-end-column="12" />
+            <state relative-caret-position="86">
+              <caret line="29" column="6" lean-forward="false" selection-start-line="29" selection-start-column="6" selection-end-line="29" selection-end-column="6" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/bank/views.py">
+      <file leaf-file-name="new.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/bank/templates/bank/person_office/new.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="130">
-              <caret line="178" column="24" lean-forward="true" selection-start-line="178" selection-start-column="24" selection-end-line="178" selection-end-column="24" />
-              <folding>
-                <element signature="e#0#11#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="266">
+              <caret line="57" column="44" lean-forward="false" selection-start-line="57" selection-start-column="44" selection-end-line="57" selection-end-column="44" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="list.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/bank/templates/bank/file/list.html">
+        <entry file="file://$PROJECT_DIR$/bank/templates/bank/person_office/list.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="220">
-              <caret line="10" column="15" lean-forward="false" selection-start-line="10" selection-start-column="15" selection-end-line="10" selection-end-column="15" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="new_person.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/bank/templates/bank/file/new_person.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="132">
-              <caret line="6" column="5" lean-forward="false" selection-start-line="6" selection-start-column="5" selection-end-line="13" selection-end-column="15" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="base.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/bank/templates/bank/base.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="22">
-              <caret line="46" column="73" lean-forward="false" selection-start-line="46" selection-start-column="60" selection-end-line="46" selection-end-column="73" />
+            <state relative-caret-position="98">
+              <caret line="52" column="76" lean-forward="false" selection-start-line="52" selection-start-column="76" selection-end-line="52" selection-end-column="76" />
               <folding />
             </state>
           </provider>
@@ -189,6 +185,8 @@
       <find>{{</find>
       <find>خانه</find>
       <find>notify.min.js</find>
+      <find>edit</find>
+      <find>edit_area</find>
     </findStrings>
     <dirStrings>
       <dir>C:\Users\mehdi\Documents\python-project\tadbir</dir>
@@ -227,16 +225,19 @@
         <option value="$APPLICATION_CONFIG_DIR$/consoles/db/72b37879-c62e-4d07-8778-73189011f57b/console.sql" />
         <option value="$PROJECT_DIR$/tadbir/urls.py" />
         <option value="$PROJECT_DIR$/tadbir/settings.py" />
-        <option value="$PROJECT_DIR$/bank/forms.py" />
         <option value="$PROJECT_DIR$/bank/templates/bank/file/new_detail.html" />
         <option value="$PROJECT_DIR$/bank/templates/bank/file/person.html" />
-        <option value="$PROJECT_DIR$/bank/models.py" />
-        <option value="$PROJECT_DIR$/bank/templates/bank/base.html" />
-        <option value="$PROJECT_DIR$/bank/urls.py" />
-        <option value="$PROJECT_DIR$/base/models.py" />
-        <option value="$PROJECT_DIR$/bank/templates/bank/file/new_person.html" />
         <option value="$PROJECT_DIR$/bank/templates/bank/file/list.html" />
+        <option value="$PROJECT_DIR$/bank/templates/bank/file/new_person.html" />
+        <option value="$PROJECT_DIR$/bank/templates/bank/person/list.html" />
+        <option value="$PROJECT_DIR$/base/models.py" />
+        <option value="$PROJECT_DIR$/bank/forms.py" />
+        <option value="$PROJECT_DIR$/bank/templates/bank/person_office/new.html" />
+        <option value="$PROJECT_DIR$/bank/models.py" />
         <option value="$PROJECT_DIR$/bank/views.py" />
+        <option value="$PROJECT_DIR$/bank/templates/bank/person_office/list.html" />
+        <option value="$PROJECT_DIR$/bank/urls.py" />
+        <option value="$PROJECT_DIR$/bank/templates/bank/base.html" />
       </list>
     </option>
   </component>
@@ -274,6 +275,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -290,36 +293,6 @@
               <item name="tadbir" type="b2602c69:ProjectViewProjectNode" />
               <item name="tadbir" type="462c0819:PsiDirectoryNode" />
               <item name="bank" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="tadbir" type="b2602c69:ProjectViewProjectNode" />
-              <item name="tadbir" type="462c0819:PsiDirectoryNode" />
-              <item name="bank" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="tadbir" type="b2602c69:ProjectViewProjectNode" />
-              <item name="tadbir" type="462c0819:PsiDirectoryNode" />
-              <item name="bank" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="tadbir" type="b2602c69:ProjectViewProjectNode" />
-              <item name="tadbir" type="462c0819:PsiDirectoryNode" />
-              <item name="bank" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-              <item name="pages" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="tadbir" type="b2602c69:ProjectViewProjectNode" />
-              <item name="tadbir" type="462c0819:PsiDirectoryNode" />
-              <item name="bank" type="462c0819:PsiDirectoryNode" />
               <item name="templates" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -328,6 +301,14 @@
               <item name="bank" type="462c0819:PsiDirectoryNode" />
               <item name="templates" type="462c0819:PsiDirectoryNode" />
               <item name="bank" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="tadbir" type="b2602c69:ProjectViewProjectNode" />
+              <item name="tadbir" type="462c0819:PsiDirectoryNode" />
+              <item name="bank" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+              <item name="bank" type="462c0819:PsiDirectoryNode" />
+              <item name="person_office" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="tadbir" type="b2602c69:ProjectViewProjectNode" />
@@ -340,17 +321,10 @@
               <item name="states" type="462c0819:PsiDirectoryNode" />
               <item name="migrations" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="tadbir" type="b2602c69:ProjectViewProjectNode" />
-              <item name="tadbir" type="462c0819:PsiDirectoryNode" />
-              <item name="tadbir" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scratches" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -360,15 +334,16 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/bank/templates/bank/person" />
+      <recent name="C:\Users\mehdi\Documents\python-project\tadbir\bank\templates\bank" />
+      <recent name="C:\Users\mehdi\Documents\python-project\tadbir\bank\templates" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/bank/templates/bank" />
+      <recent name="$PROJECT_DIR$/bank/templates/bank/management_area" />
       <recent name="C:\Users\mehdi\Documents\python-project\tadbir\bank\templates\bank\file" />
       <recent name="$PROJECT_DIR$/bank/templates/bank/file" />
-      <recent name="$PROJECT_DIR$/bank/templates/bank" />
-      <recent name="C:\Users\mehdi\Documents\python-project\tadbir\bank\templates" />
-      <recent name="C:\Users\mehdi\Documents\python-project\tadbir\bank\templates\bank" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\mehdi\Documents\python-project\tadbir\bank\templates\bank" />
       <recent name="C:\Users\mehdi\Documents\python-project\tadbir\bank\templates" />
     </key>
   </component>
@@ -384,15 +359,15 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Django server.Unnamed">
+  <component name="RunManager" selected="Python.models">
     <configuration name="Unnamed" type="Python.DjangoServer" factoryName="Django server">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
         <env name="DJANGO_SETTINGS_MODULE" value="tadbir.settings" />
+        <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="C:\Users\mehdi\Documents\python-project\tadbir\venv\Scripts\python.exe" />
+      <option name="SDK_HOME" value="$PROJECT_DIR$/venv/bin/python" />
       <option name="WORKING_DIRECTORY" value="" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -430,6 +405,33 @@
       <option name="useCustomRunCommand" value="false" />
       <option name="customRunCommand" value="" />
     </configuration>
+    <configuration name="models" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/bank" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="tadbir" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/bank/models.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+    </configuration>
+    <list size="2">
+      <item index="0" class="java.lang.String" itemvalue="Django server.Unnamed" />
+      <item index="1" class="java.lang.String" itemvalue="Python.models" />
+    </list>
+    <recent_temporary>
+      <list size="1">
+        <item index="0" class="java.lang.String" itemvalue="Python.models" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="ShelveChangesManager" show_recycled="false">
     <option name="remove_strategy" value="false" />
@@ -448,31 +450,43 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1296" height="776" extended-state="6" />
+    <frame x="0" y="32" width="1368" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3298887" sideWeight="0.49375" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3289689" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32847896" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32956383" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5024233" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" x="0" y="23" width="1280" height="737" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4022617" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5767367" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2128788" sideWeight="0.49375" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3287879" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32956383" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2564725" sideWeight="0.50625" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3990307" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3289689" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32956383" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5015625" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" x="0" y="23" width="1280" height="737" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4015625" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.309375" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32956383" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3298887" sideWeight="0.49375" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32847896" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="SciView" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2564725" sideWeight="0.50625" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39871383" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32956383" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296875" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="SciView" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -525,28 +539,22 @@
           <line>137</line>
           <option name="timeStamp" value="15" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/bank/views.py</url>
+          <line>201</line>
+          <option name="timeStamp" value="16" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/bank/views.py</url>
+          <line>202</line>
+          <option name="timeStamp" value="17" />
+        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="16" />
+      <option name="time" value="18" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/base/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="0" lean-forward="true" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/persons/models.py" />
-    <entry file="file://$PROJECT_DIR$/bank/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="22">
-          <caret line="1" column="0" lean-forward="true" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/django/core/handlers/base.py" />
     <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/django/core/handlers/exception.py" />
     <entry file="file://$PROJECT_DIR$/bank/templates/bank/bank/edit.html">
       <provider selected="true" editor-type-id="text-editor">
@@ -566,21 +574,14 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/django/forms/templates/django/forms/widgets/text.html" />
-    <entry file="file://$PROJECT_DIR$/bank/templates/bank/management_area/new.html">
+    <entry file="file://$PROJECT_DIR$/bank/templates/bank/person/newb.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="660">
           <caret line="30" column="87" lean-forward="false" selection-start-line="30" selection-start-column="87" selection-end-line="30" selection-end-column="87" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/bank/templates/bank/management_area/list.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1276">
-          <caret line="58" column="85" lean-forward="false" selection-start-line="58" selection-start-column="85" selection-end-line="58" selection-end-column="85" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bank/templates/bank/management_area/edit.html">
+    <entry file="file://$PROJECT_DIR$/bank/templates/bank/person/edit.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="182">
           <caret line="22" column="34" lean-forward="true" selection-start-line="22" selection-start-column="34" selection-end-line="22" selection-end-column="34" />
@@ -695,8 +696,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/bank/templates/bank/file/new.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="528">
-          <caret line="24" column="72" lean-forward="false" selection-start-line="24" selection-start-column="0" selection-end-line="115" selection-end-column="0" />
+        <state relative-caret-position="2242">
+          <caret line="118" column="0" lean-forward="false" selection-start-line="118" selection-start-column="0" selection-end-line="118" selection-end-column="0" />
           <folding>
             <element signature="e#797#4662#0#HTML" expanded="false" />
           </folding>
@@ -713,51 +714,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/bank/templates/bank/file/new_detail.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="905">
-          <caret line="97" column="14" lean-forward="false" selection-start-line="97" selection-start-column="14" selection-end-line="97" selection-end-column="14" />
+        <state relative-caret-position="211">
+          <caret line="30" column="0" lean-forward="true" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/bank/forms.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2508">
-          <caret line="117" column="71" lean-forward="false" selection-start-line="117" selection-start-column="71" selection-end-line="117" selection-end-column="71" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bank/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="352">
-          <caret line="17" column="48" lean-forward="false" selection-start-line="17" selection-start-column="48" selection-end-line="17" selection-end-column="48" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bank/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1936">
-          <caret line="92" column="21" lean-forward="false" selection-start-line="92" selection-start-column="21" selection-end-line="92" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://table:/15f24684/72b37879-c62e-4d07-8778-73189011f57b/main.persons">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bank/templates/bank/file/new_person.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="6" column="5" lean-forward="false" selection-start-line="6" selection-start-column="5" selection-end-line="13" selection-end-column="15" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="das://table:/15f24684/72b37879-c62e-4d07-8778-73189011f57b/main.persons" />
     <entry file="file://$PROJECT_DIR$/bank/templates/bank/file/list.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="220">
@@ -770,33 +733,107 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="548">
           <caret line="43" column="0" lean-forward="false" selection-start-line="43" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://table:/f030e1a0/72b37879-c62e-4d07-8778-73189011f57b/main.persons">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bank/templates/bank/person/new.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-267">
+          <caret line="10" column="52" lean-forward="false" selection-start-line="10" selection-start-column="52" selection-end-line="10" selection-end-column="52" />
+          <folding>
+            <element signature="e#938#1203#0#HTML" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bank/templates/bank/person/list.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="59" column="60" lean-forward="false" selection-start-line="59" selection-start-column="60" selection-end-line="59" selection-end-column="60" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/bank/templates/bank/base.html">
+    <entry file="file://$PROJECT_DIR$/bank/templates/bank/management_area/edit.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="22">
-          <caret line="46" column="73" lean-forward="false" selection-start-line="46" selection-start-column="60" selection-end-line="46" selection-end-column="73" />
+        <state relative-caret-position="361">
+          <caret line="19" column="20" lean-forward="false" selection-start-line="19" selection-start-column="20" selection-end-line="19" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bank/forms.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="322">
+          <caret line="124" column="17" lean-forward="false" selection-start-line="124" selection-start-column="17" selection-end-line="124" selection-end-column="17" />
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bank/templates/bank/person_office/new.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="266">
+          <caret line="57" column="44" lean-forward="false" selection-start-line="57" selection-start-column="44" selection-end-line="57" selection-end-column="44" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/base/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="572">
-          <caret line="47" column="12" lean-forward="false" selection-start-line="47" selection-start-column="12" selection-end-line="47" selection-end-column="12" />
+        <state relative-caret-position="86">
+          <caret line="29" column="6" lean-forward="false" selection-start-line="29" selection-start-column="6" selection-end-line="29" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bank/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="227">
+          <caret line="107" column="70" lean-forward="false" selection-start-line="107" selection-start-column="70" selection-end-line="107" selection-end-column="70" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/bank/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="130">
-          <caret line="178" column="24" lean-forward="true" selection-start-line="178" selection-start-column="24" selection-end-line="178" selection-end-column="24" />
+        <state relative-caret-position="221">
+          <caret line="253" column="108" lean-forward="true" selection-start-line="253" selection-start-column="108" selection-end-line="253" selection-end-column="108" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bank/templates/bank/person_office/list.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="98">
+          <caret line="52" column="76" lean-forward="false" selection-start-line="52" selection-start-column="76" selection-end-line="52" selection-end-column="76" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bank/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="361">
+          <caret line="20" column="80" lean-forward="false" selection-start-line="20" selection-start-column="66" selection-end-line="20" selection-end-column="80" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bank/templates/bank/base.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="307">
+          <caret line="394" column="71" lean-forward="false" selection-start-line="394" selection-start-column="71" selection-end-line="394" selection-end-column="71" />
+          <folding />
         </state>
       </provider>
     </entry>

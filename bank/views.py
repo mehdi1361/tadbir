@@ -4,9 +4,9 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 
-from .models import Bank, ManagementAreas, Branch, File
+from .models import Bank, ManagementAreas, Branch, File, Person, PersonOffice
 from django.views.generic import ListView
-from .forms import BankForm, AreaForm, BranchForm, FileForm, PersonForm
+from .forms import BankForm, AreaForm, BranchForm, FileForm, PersonForm, PersonOfficeForm
 from django.shortcuts import get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from dal import autocomplete
@@ -181,13 +181,74 @@ def new_person(request):
         form = PersonForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.add_message(request, messages.SUCCESS, 'کاربر با موفقیت ذخیره شد.')
+            form = PersonForm()
+
+        else:
+            messages.add_message(request, messages.WARNING, form.errors)
+            form = PersonForm(request.POST)
+
     else:
         form = PersonForm()
 
-    messages.add_message(request, messages.SUCCESS, 'Hello world.')
+    return render(
+        request,
+        'bank/person/new.html',
+        {'form': form}
+    )
+
+
+def get_persons(request):
+    object_list = Person.objects.all().order_by('-created_at')
+    paginator = Paginator(object_list, 15)
+    page = request.GET.get('page')
+
+    try:
+        persons = paginator.page(page)
+
+    except PageNotAnInteger:
+        persons = paginator.page(1)
+
+    except EmptyPage:
+        persons = paginator.page(paginator.num_pages)
+
+    return render(request, 'bank/person/list.html', {'persons': persons, 'page': page})
+
+
+def new_person_office(request):
+    if request.method == 'POST':
+        form = PersonOfficeForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.add_message(request, messages.SUCCESS, 'شرکت با موفقیت ذخیره شد.')
+            form = PersonOfficeForm
+
+        else:
+            messages.add_message(request, messages.WARNING, form.errors)
+            form = PersonOfficeForm(request.POST)
+
+    else:
+        form = PersonOfficeForm()
 
     return render(
         request,
-        'bank/file/new_person.html',
+        'bank/person_office/new.html',
         {'form': form}
     )
+
+
+def get_person_office(request):
+    object_list = PersonOffice.objects.all().order_by('-created_at')
+    paginator = Paginator(object_list, 15)
+    page = request.GET.get('page')
+
+    try:
+        persons_office = paginator.page(page)
+
+    except PageNotAnInteger:
+        persons_office = paginator.page(1)
+
+    except EmptyPage:
+        persons_office = paginator.page(paginator.num_pages)
+
+    return render(request, 'bank/person_office/list.html', {'persons_office': persons_office, 'page': page})
