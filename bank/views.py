@@ -4,9 +4,9 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 
-from .models import Bank, ManagementAreas, Branch, File, Person, PersonOffice
+from .models import Bank, ManagementAreas, Branch, File, Person, Office
 from django.views.generic import ListView
-from .forms import BankForm, AreaForm, BranchForm, FileForm, PersonForm, PersonOfficeForm
+from .forms import BankForm, AreaForm, BranchForm, FileForm, PersonForm, OfficeForm, PersonFileForm, FileOfficeForm
 from django.shortcuts import get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from dal import autocomplete
@@ -148,15 +148,21 @@ def file_document(request, file_id):
     file = get_object_or_404(File, pk=file_id)
     if request.method == 'POST':
         person_form = PersonFileForm(request.POST)
+        person_office = FileOfficeForm(request.POST)
+
         if person_form.is_valid():
             person_form.save()
-    else:
-        person_form = PersonFileForm(request.POST)
+
+        if person_office.is_valid():
+            person_office.save()
+
+    person_form = PersonFileForm()
+    person_office = FileOfficeForm()
 
     return render(
         request,
         'bank/file/file_detail.html',
-        {'person_form': person_form, 'file': file}
+        {'person_form': person_form, 'person_office': person_office, 'file': file}
     )
 
 
@@ -241,7 +247,7 @@ def new_person_office(request):
 
 
 def get_person_office(request):
-    object_list = PersonOffice.objects.all().order_by('-created_at')
+    object_list = Office.objects.all().order_by('-created_at')
     paginator = Paginator(object_list, 15)
     page = request.GET.get('page')
 

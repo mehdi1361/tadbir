@@ -4,7 +4,99 @@
     <div>
 
     </div>
+
     {%  if file %}
+        <div class="row top-summary">
+					<div class="col-lg-3 col-md-6">
+						<div class="widget green-1 animated fadeInDown">
+							<div class="widget-content padding">
+{#								<div class="widget-icon">#}
+{#									<i class="icon-globe-inv"></i>#}
+{#								</div>#}
+								<div class="text-box">
+									<p class="maindata"><b>اصل مبلغ بدهی</b></p>
+									<h2><span class="animate-number" data-value="{{ file.main_deposit }}" data-duration="3000">{{ file.main_deposit }}</span></h2>
+									<div class="clearfix"></div>
+								</div>
+							</div>
+							<div class="widget-footer">
+								<div class="row">
+									<div class="col-sm-12">
+{#										<i class="fa fa-caret-up rel-change"></i> <b>39%</b> حجم مصرفی ترافیک#}
+									</div>
+								</div>
+								<div class="clearfix"></div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-lg-3 col-md-6">
+						<div class="widget darkblue-2 animated fadeInDown">
+							<div class="widget-content padding">
+								<div class="text-box">
+									<p class="maindata"><b>وجه التزام</b></p>
+									<h2><span class="animate-number" data-value="{{ file.nc_deposit }}" data-duration="3000">6,399</span></h2>
+
+									<div class="clearfix"></div>
+								</div>
+							</div>
+							<div class="widget-footer">
+								<div class="row">
+									<div class="col-sm-12">
+{#										<i class="fa fa-caret-down rel-change"></i> <b>11%</b> فروش در ماه جاری#}
+									</div>
+								</div>
+								<div class="clearfix"></div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-lg-3 col-md-6">
+						<div class="widget orange-4 animated fadeInDown">
+							<div class="widget-content padding">
+{#								<div class="widget-icon">#}
+{#									<i class="fa fa-dollar"></i>#}
+{#								</div>#}
+								<div class="text-box">
+									<p class="maindata"><b>سود</b></p>
+									<h2><span class="animate-number" data-value="{{ file.so_deposit }}" data-duration="3000">70,389</span></h2>
+									<div class="clearfix"></div>
+								</div>
+							</div>
+							<div class="widget-footer">
+								<div class="row">
+									<div class="col-sm-12">
+{#										<i class="fa fa-caret-down rel-change"></i> <b>7%</b> فروشند گان جدید در بازه تاریخ#}
+									</div>
+								</div>
+								<div class="clearfix"></div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-lg-3 col-md-6">
+						<div class="widget lightblue-1 animated fadeInDown">
+							<div class="widget-content padding">
+{#								<div class="widget-icon">#}
+{#									<i class="icon-users"></i>#}
+{#								</div>#}
+								<div class="text-box">
+									<p class="maindata"><b>هزینه دادرسی</b></p>
+									<h2><span class="animate-number" data-value="{{ file.cost_proceeding }}" data-duration="3000">18,648</span></h2>
+									<div class="clearfix"></div>
+								</div>
+							</div>
+							<div class="widget-footer">
+								<div class="row">
+									<div class="col-sm-12">
+{#										<i class="fa fa-caret-up rel-change"></i> <b>6%</b> کاربران اضافه شده جدید#}
+									</div>
+								</div>
+								<div class="clearfix"></div>
+							</div>
+						</div>
+					</div>
+                </div>
         <div class="row">
             <div class="col-md-12 portlets ui-sortable">
                     <div class="widget">
@@ -89,9 +181,80 @@
                         </form>
 
                     </p>
+                    <div class="row">
+					<div class="col-md-12">
+						<div class="widget">
+							<div class="widget-header transparent">
+								<h2><strong>اشخاص</strong> </h2>
+								<div class="additional-btn">
+									<a href="#" class="hidden reload"><i class="icon-ccw-1"></i></a>
+									<a href="#" class="widget-toggle"><i class="icon-down-open-2"></i></a>
+									<a href="#" class="widget-close"><i class="icon-cancel-3"></i></a>
+								</div>
+							</div>
+							<div class="widget-content">
+								<div class="table-responsive">
+										<table data-sortable="" class="table" data-sortable-initialized="true">
+										<thead>
+											<tr>
+												<th>شماره</th>
+												<th>ارتباط</th>
+												<th>نام شخص</th>
+											</tr>
+										</thead>
+
+										<tbody>
+                                            {% for document in file.file_persons.all %}
+                                                <tr>
+                                                    <td>{{ forloop.counter }}</td>
+                                                    <td><strong>{{ document.relation_type }}</strong></td>
+                                                    <td>{{ document.person.first_name }} {{ document.person.last_name }}</td>
+                                                </tr>
+                                            {% endfor %}
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
                 </div> <!-- / .tab-pane -->
                 <div class="tab-pane fade" id="demo5-profile">
-                    <p style="text-align:justify">لورم ایپسوم یا طرح‌نما به متنی آزمایشی و بی‌معنی در صنعت چاپ، صفحه‌آرایی و طراحی گرافیک گفته می‌شود. طراح گرافیک از این متن به عنوان عنصری از ترکیب بندی برای پر کردن صفحه و ارایه اولیه شکل ظاهری و کلی طرح سفارش گرفته شده استفاده می نماید، تا از نظر گرافیکی نشانگر چگونگی نوع و اندازه فونت و ظاهر متن باشد. معمولا طراحان گرافیک برای صفحه‌آرایی، نخست از متن‌های آزمایشی و بی‌معنی استفاده می‌کنند تا صرفا به مشتری یا صاحب کار خود نشان دهند که صفحه طراحی یا صفحه بندی شده بعد از اینکه متن در آن قرار گیرد چگونه به نظر می‌رسد و قلم‌ها و اندازه‌بندی‌ها چگونه در نظر گرفته شده‌است. از آنجایی که طراحان عموما نویسنده متن نیستند و وظیفه رعایت حق تکثیر متون را ندارند و در همان حال کار آنها به نوعی وابسته به متن می‌باشد آنها با استفاده از محتویات ساختگی، صفحه گرافیکی خود را صفحه‌آرایی می‌کنند تا مرحله طراحی و صفحه‌بندی را به پایان برند.</p>
+                   <p style="text-align:justify">
+                        <form class="form-horizontal" role="form" action="" method="post">
+                          <div class="form-group">
+                            <label for="input-text" class="col-sm-3 control-label">
+                                {{ person_office.file.label }}
+                            </label>
+                            <div class="col-sm-10">
+                                {{ person_office.file }}
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label for="input-text" class="col-sm-3 control-label">
+                                {{ person_office.office.label }}
+                            </label>
+                            <div class="col-sm-10">
+                                {{ person_office.office }}
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label for="input-text" class="col-sm-3 control-label">
+                                {{ person_office.relation_type.label }}
+                            </label>
+                            <div class="col-sm-10">
+                                {{ person_office.relation_type }}
+                            </div>
+                          </div>
+                            <div class="col-lg-12">
+                                {% csrf_token %}
+                                <input type="submit" value="ایجاد" class="btn btn-success">
+                            </div>
+                            <hr>
+                        </form>
+
+                    </p>
                 </div> <!-- / .tab-pane -->
                 <div class="tab-pane fade" id="demo5-dropdown1">
                     <p style="text-align:justify">لورم ایپسوم یا طرح‌نما به متنی آزمایشی و بی‌معنی در صنعت چاپ، صفحه‌آرایی و طراحی گرافیک گفته می‌شود. طراح گرافیک از این متن به عنوان عنصری از ترکیب بندی برای پر کردن صفحه و ارایه اولیه شکل ظاهری و کلی طرح سفارش گرفته شده استفاده می نماید، تا از نظر گرافیکی نشانگر چگونگی نوع و اندازه فونت و ظاهر متن باشد. معمولا طراحان گرافیک برای صفحه‌آرایی، نخست از متن‌های آزمایشی و بی‌معنی استفاده می‌کنند تا صرفا به مشتری یا صاحب کار خود نشان دهند که صفحه طراحی یا صفحه بندی شده بعد از اینکه متن در آن قرار گیرد چگونه به نظر می‌رسد و قلم‌ها و اندازه‌بندی‌ها چگونه در نظر گرفته شده‌است. از آنجایی که طراحان عموما نویسنده متن نیستند و وظیفه رعایت حق تکثیر متون را ندارند و در همان حال کار آنها به نوعی وابسته به متن می‌باشد آنها با استفاده از محتویات ساختگی، صفحه گرافیکی خود را صفحه‌آرایی می‌کنند تا مرحله طراحی و صفحه‌بندی را به پایان برند.</p>

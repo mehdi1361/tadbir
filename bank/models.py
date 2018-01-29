@@ -103,7 +103,7 @@ class Person(Base, Human):
         return "{} {}".format(self.first_name, self.last_name)
 
 
-class PersonOffice(Base, Location):
+class Office(Base, Location):
     name = models.CharField(_('نام شرکت'), max_length=200)
     city = models.ForeignKey(City, verbose_name=_('نام شهر'),null=True)
     register_number = models.PositiveIntegerField(_('شماره ثبت'), unique=True)
@@ -118,6 +118,25 @@ class PersonOffice(Base, Location):
         return "{}".format(self.name)
 
 
+class FileOffice(Base):
+    TYPE = (
+        ('مدیون', 'مدیون'),
+        ('ضامن', 'ضامن'),
+        ('منفرقه', 'متفرقه'),
+    )
+    file = models.ForeignKey(File, verbose_name=_('پرونده'), related_name='related_office')
+    office = models.ForeignKey(Office, verbose_name=_('شرکت'), related_name='related_office')
+    relation_type = models.CharField(_('ارتباط'), max_length=10, default='مدیون', choices=TYPE)
+
+    class Meta:
+        verbose_name = _('file_office')
+        verbose_name_plural = _('file_offices')
+        db_table = 'file_offices'
+
+    def __str__(self):
+        return "{}-{}".format(self.file.file_code, self.office.name)
+
+
 class PersonFile(Base):
     TYPE = (
         ('مدیون', 'مدیون'),
@@ -129,6 +148,7 @@ class PersonFile(Base):
     relation_type = models.CharField(_('ارتباط'), max_length=10, default='مدیون', choices=TYPE)
 
     class Meta:
+        unique_together = ['file', 'person']
         verbose_name = _('person_file')
         verbose_name_plural = _('person_files')
         db_table = 'person_files'
