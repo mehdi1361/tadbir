@@ -1,5 +1,5 @@
 from django import forms
-from .models import Bank, ManagementAreas, Branch, File, Assurance, PersonFile, Person
+from .models import Bank, ManagementAreas, Branch, File, Assurance, PersonFile, Person, PersonOffice
 from dal import autocomplete
 from django.forms.models import inlineformset_factory
 
@@ -108,11 +108,37 @@ class PersonForm(forms.ModelForm):
 
 class PersonFileForm(forms.ModelForm):
     class Meta:
+        model = PersonFile
         fields = [
             'file',
             'person',
             'relation_type'
         ]
+        widgets = {
+            'person': forms.Select(attrs={'class': 'form-control'}),
+            'file': forms.Select(attrs={'class': 'form-control'}),
+            # 'file': forms.TextInput(attrs={'class': 'form-control'}),
+            'relation_type': forms.Select(attrs={'class': 'form-control'}),
+        }
+
+
+class PersonOfficeForm(forms.ModelForm):
+    class Meta:
+        model = PersonOffice
+
+        fields = [
+            'name',
+            'register_number',
+            'city',
+            'address',
+            'postal_code'
+        ]
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'postal_code': forms.TextInput(attrs={'class': 'form-control'}),
+            'register_number': forms.TextInput(attrs={'class': 'form-control'}),
+            'address': forms.Textarea(attrs={'class': 'form-control'}),
+        }
 
 
 inlineformset_factory(Person, PersonFile, form=PersonFileForm, extra=2)

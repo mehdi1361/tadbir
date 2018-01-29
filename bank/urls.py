@@ -13,8 +13,10 @@ urlpatterns = [
     url(r'^branch/new/$', views.new_branch, name='new_branch'),
     url(r'^files/$', views.file_list, name='files_list'),
     url(r'^files/new/$', views.new_file, name='new_file'),
-    url(r'^files/new_detail/$', views.file_document, name='new_file_detail'),
+    url(r'^files/detail/(?P<file_id>\d+)$', views.file_document, name='file_detail'),
     url(r'^api/get_branches/', views.get_branch, name='get_branches'),
     url(r'^files/new_person/$', views.new_person, name='new_person'),
-
+    url(r'^persons/list/$', views.get_persons, name='get_persons'),
+    url(r'^files/new_person_office/$', views.new_person_office, name='new_person_office'),
+    url(r'^persons_office/list/$', views.get_person_office, name='persons_office'),
 ]

@@ -4,9 +4,33 @@
     <div>
 
     </div>
+    {%  if file %}
+        <div class="row">
+            <div class="col-md-12 portlets ui-sortable">
+                    <div class="widget">
+                        <div class="widget-header">
+                            <h2>مشخصات پرونده</h2>
+                            <div class="additional-btn">
+                                <a href="#" class="hidden reload"><i class="icon-ccw-1"></i></a>
+                                <a href="#" class="widget-toggle"><i class="icon-down-open-2"></i></a>
+                                <a href="#" class="widget-close"><i class="icon-cancel-3"></i></a>
+                            </div>
+                        </div>
+                        <div class="widget-content padding" style="display: block;">
+                            <div style="margin-bottom: 10px"><span>شماره پرونده:</span><span>{{ file.file_code }}</span></div>
+                            <div style="margin-bottom: 10px"><span>شماره قرارداد:</span><span>{{ file.contract_code }}</span></div>
+                            <div style="margin-bottom: 10px"><span>اصل مبلغ بدهی:</span><span>{{ file.main_deposit }}</span></div>
+                            <div style="margin-bottom: 10px"><span>وجه التزام:</span><span>{{ file.nc_deposit }}</span></div>
+                            <div style="margin-bottom: 10px"><span>شعبه:</span><span>{{ file.branch }}</span></div>
+                            <div style="margin-bottom: 10px"><span>شهر:</span><span>{{ file.branch.city }}</span></div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    {%  endif %}
     <div class="widget">
         <div class="widget-header">
-            <h2>تب ها</h2>
+            <h2>اطلاعات پرونده</h2>
             <div class="additional-btn">
                 <a href="#" class="hidden reload"><i class="icon-ccw-1"></i></a>
                 <a href="#" class="widget-toggle"><i class="icon-down-open-2"></i></a>
@@ -35,43 +59,28 @@
                         <form class="form-horizontal" role="form" action="" method="post">
                           <div class="form-group">
                             <label for="input-text" class="col-sm-3 control-label">
-                                {{ person_form.first_name.label }}
+                                {{ person_form.person.label }}
                             </label>
                             <div class="col-sm-10">
-                                {{ person_form.first_name  }}
+                                {{ person_form.person  }}
                             </div>
                           </div>
                           <div class="form-group">
                             <label for="input-text" class="col-sm-3 control-label">
-                                {{ person_form.last_name.label }}
+                                {{ person_form.file.label }}
                             </label>
                             <div class="col-sm-10">
-                                {{ person_form.last_name }}
-                            </div>
-                          </div>
-                          <div class="form-group">
-                            <label for="input-text" class="col-sm-3 control-label">{{ person_form.father_name.label }}</label>
-                            <div class="col-sm-10">
-                                {{ person_form.father_name }}
-                            </div>
-                          </div>
-                          <div class="form-group">
-                            <label for="input-text" class="col-sm-3 control-label">{{ person_form.national_code.label }}</label>
-                            <div class="col-sm-10">
-                                {{ person_form.national_code }}
+                                {{ person_form.file }}
                             </div>
                           </div>
                           <div class="form-group">
                             <label for="input-text" class="col-sm-3 control-label">
-                                {{ person_form.gender.label }}
+                                {{ person_form.relation_type.label }}
                             </label>
                             <div class="col-sm-10">
-                                {{ person_form.gender }}
+                                {{ person_form.relation_type }}
                             </div>
                           </div>
-                    {% for form in person_form.forms %}
-                        {{ form.as_p }}
-                    {% endfor %}
                             <div class="col-lg-12">
                                 {% csrf_token %}
                                 <input type="submit" value="ایجاد" class="btn btn-success">
