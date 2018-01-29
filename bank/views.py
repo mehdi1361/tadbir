@@ -6,7 +6,7 @@ from django.urls import reverse
 
 from .models import Bank, ManagementAreas, Branch, File, Person, PersonOffice
 from django.views.generic import ListView
-from .forms import BankForm, AreaForm, BranchForm, FileForm, PersonForm, PersonOfficeForm, PersonFileForm
+from .forms import BankForm, AreaForm, BranchForm, FileForm, PersonForm, PersonOfficeForm
 from django.shortcuts import get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from dal import autocomplete

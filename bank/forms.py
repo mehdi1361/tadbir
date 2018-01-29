@@ -139,6 +139,4 @@ class PersonOfficeForm(forms.ModelForm):
             'register_number': forms.TextInput(attrs={'class': 'form-control'}),
             'address': forms.Textarea(attrs={'class': 'form-control'}),
         }
-
-
 inlineformset_factory(Person, PersonFile, form=PersonFileForm, extra=2)

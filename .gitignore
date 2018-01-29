@@ -10,3 +10,4 @@ venv
 py27venv/*
 py27venv
 /py27venv
+.idea/workspace.xml
