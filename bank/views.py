@@ -6,11 +6,14 @@ from django.urls import reverse
 
 from .models import Bank, ManagementAreas, Branch, File, Person, Office
 from django.views.generic import ListView
-from .forms import BankForm, AreaForm, BranchForm, FileForm, PersonForm, OfficeForm, PersonFileForm, FileOfficeForm
+from .forms import BankForm, AreaForm, BranchForm, FileForm, PersonForm, AssuranceForm, PersonFileForm, FileOfficeForm
 from django.shortcuts import get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from dal import autocomplete
 from django.contrib import messages
+
+from django.contrib.auth import authenticate, login
+from .forms import LoginForm
 
 
 def bank_list(request):
@@ -149,6 +152,7 @@ def file_document(request, file_id):
     if request.method == 'POST':
         person_form = PersonFileForm(request.POST)
         person_office = FileOfficeForm(request.POST)
+        assurance_form = AssuranceForm(request.POST)
 
         if person_form.is_valid():
             person_form.save()
@@ -156,13 +160,22 @@ def file_document(request, file_id):
         if person_office.is_valid():
             person_office.save()
 
+        if assurance_form.is_valid():
+            assurance_form.save()
+
     person_form = PersonFileForm()
     person_office = FileOfficeForm()
+    assurance_form = AssuranceForm()
 
     return render(
         request,
         'bank/file/file_detail.html',
-        {'person_form': person_form, 'person_office': person_office, 'file': file}
+        {
+            'person_form': person_form,
+            'person_office': person_office,
+            'assurance_form': assurance_form,
+            'file': file
+        }
     )
 
 

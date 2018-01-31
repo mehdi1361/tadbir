@@ -43,7 +43,6 @@
 									<table data-sortable="" class="table" data-sortable-initialized="true">
 										<thead>
 											<tr>
-												<th>شماره</th>
 												<th>کد پرونده</th>
 												<th>شماره قرارداد</th>
 												<th>نوع قرارداد</th>
@@ -53,14 +52,13 @@
 												<th data-sortable="false">سود</th>
 												<th data-sortable="false">هزینه دادرسی</th>
 												<th>وضعیت</th>
-												<th data-sortable="false">گزینه ها</th>
+												<th data-sortable="false">جزییات</th>
 											</tr>
 										</thead>
 
 										<tbody>
                                             {% for file in files %}
                                                 <tr>
-                                                    <td>{{ forloop.counter }}</td>
                                                     <td><strong>{{ file }}</strong></td>
                                                     <td>{{ file.contract_code }}</td>
                                                     <td>{{ file.file_type }}</td>
@@ -79,8 +77,8 @@
                                                     {% endif %}
                                                     <td>
                                                         <div class="btn-group btn-group-xs">
-                                                            <a data-toggle="tooltip" title="خاموش" class="btn btn-default"><i class="fa fa-power-off"></i></a>
-{#                                                            <a href="{% url "bank:edit_branch" area.id %}" data-toggle="tooltip" title="ویرایش" class="btn btn-default"><i class="fa fa-edit"></i></a>#}
+{#                                                            <a data-toggle="tooltip" title="خاموش" class="btn btn-default"><i class="fa fa-power-off"></i></a>#}
+                                                            <a href="{% url "bank:file_detail" file.id %}" data-toggle="tooltip" title="جزییات پرونده" class="btn btn-default"><i class="fa fa-edit"></i></a>
                                                         </div>
                                                     </td>
                                                 </tr>

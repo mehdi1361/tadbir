@@ -255,9 +255,139 @@
                         </form>
 
                     </p>
+                    <div class="row">
+					<div class="col-md-12">
+						<div class="widget">
+							<div class="widget-header transparent">
+								<h2><strong>اشخاص</strong> </h2>
+								<div class="additional-btn">
+									<a href="#" class="hidden reload"><i class="icon-ccw-1"></i></a>
+									<a href="#" class="widget-toggle"><i class="icon-down-open-2"></i></a>
+									<a href="#" class="widget-close"><i class="icon-cancel-3"></i></a>
+								</div>
+							</div>
+							<div class="widget-content">
+								<div class="table-responsive">
+										<table data-sortable="" class="table" data-sortable-initialized="true">
+										<thead>
+											<tr>
+												<th>ردیف</th>
+												<th>ارتباط</th>
+												<th>نام شخص</th>
+											</tr>
+										</thead>
+
+										<tbody>
+                                            {% for document in file.related_office.all %}
+                                                <tr>
+                                                    <td>{{ forloop.counter }}</td>
+                                                    <td><strong>{{ document.relation_type }}</strong></td>
+                                                    <td>{{ document.office.name }}</td>
+                                                </tr>
+                                            {% endfor %}
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
                 </div> <!-- / .tab-pane -->
                 <div class="tab-pane fade" id="demo5-dropdown1">
-                    <p style="text-align:justify">لورم ایپسوم یا طرح‌نما به متنی آزمایشی و بی‌معنی در صنعت چاپ، صفحه‌آرایی و طراحی گرافیک گفته می‌شود. طراح گرافیک از این متن به عنوان عنصری از ترکیب بندی برای پر کردن صفحه و ارایه اولیه شکل ظاهری و کلی طرح سفارش گرفته شده استفاده می نماید، تا از نظر گرافیکی نشانگر چگونگی نوع و اندازه فونت و ظاهر متن باشد. معمولا طراحان گرافیک برای صفحه‌آرایی، نخست از متن‌های آزمایشی و بی‌معنی استفاده می‌کنند تا صرفا به مشتری یا صاحب کار خود نشان دهند که صفحه طراحی یا صفحه بندی شده بعد از اینکه متن در آن قرار گیرد چگونه به نظر می‌رسد و قلم‌ها و اندازه‌بندی‌ها چگونه در نظر گرفته شده‌است. از آنجایی که طراحان عموما نویسنده متن نیستند و وظیفه رعایت حق تکثیر متون را ندارند و در همان حال کار آنها به نوعی وابسته به متن می‌باشد آنها با استفاده از محتویات ساختگی، صفحه گرافیکی خود را صفحه‌آرایی می‌کنند تا مرحله طراحی و صفحه‌بندی را به پایان برند.</p>
+                    <p style="text-align:justify">
+                        <form class="form-horizontal" role="form" action="" method="post">
+                          <div class="form-group">
+                            <label for="input-text" class="col-sm-3 control-label">
+                                {{ assurance_form.assurance_number.label }}
+                            </label>
+                            <div class="col-sm-10">
+                                {{ assurance_form.assurance_number }}
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label for="input-text" class="col-sm-3 control-label">
+                                {{ assurance_form.assurance_value.label }}
+                            </label>
+                            <div class="col-sm-10">
+                                {{ assurance_form.assurance_value }}
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label for="input-text" class="col-sm-3 control-label">
+                                {{ assurance_form.file.label }}
+                            </label>
+                            <div class="col-sm-10">
+                                {{ assurance_form.file }}
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label for="input-text" class="col-sm-3 control-label">
+                                {{ assurance_form.assurance_type.label }}
+                            </label>
+                            <div class="col-sm-10">
+                                {{ assurance_form.assurance_type }}
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label for="input-text" class="col-sm-3 control-label">
+                                {{ assurance_form.description.label }}
+                            </label>
+                            <div class="col-sm-10">
+                                {{ assurance_form.description }}
+                            </div>
+                          </div>
+
+                            <div class="col-lg-12">
+                                {% csrf_token %}
+                                <input type="submit" value="ایجاد" class="btn btn-success">
+                            </div>
+                            <hr>
+                        </form>
+                    </p>
+                    <div class="row">
+					<div class="col-md-12">
+						<div class="widget">
+							<div class="widget-header transparent">
+								<h2><strong>وثایق ثبت شده</strong> </h2>
+								<div class="additional-btn">
+									<a href="#" class="hidden reload"><i class="icon-ccw-1"></i></a>
+									<a href="#" class="widget-toggle"><i class="icon-down-open-2"></i></a>
+									<a href="#" class="widget-close"><i class="icon-cancel-3"></i></a>
+								</div>
+							</div>
+							<div class="widget-content">
+								<div class="table-responsive">
+										<table data-sortable="" class="table" data-sortable-initialized="true">
+										<thead>
+											<tr>
+												<th>شماره</th>
+												<th>پرونده</th>
+												<th>نوع وثیقه</th>
+												<th>شماره سند</th>
+												<th>مبلغ</th>
+												<th>شرح</th>
+											</tr>
+										</thead>
+
+										<tbody>
+                                            {% for assurance in file.assurances.all %}
+                                                <tr>
+                                                    <td>{{ forloop.counter }}</td>
+                                                    <td><strong>{{ assurance.file }}</strong></td>
+                                                    <td>{{ assurance.assurance_type }}</td>
+                                                    <td>{{ assurance.assurance_number }}</td>
+                                                    <td>{{ assurance.assurance_value }}</td>
+                                                    <td>{{ assurance.description }}</td>
+                                                </tr>
+                                            {% endfor %}
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
                 </div> <!-- / .tab-pane -->
                 <div class="tab-pane fade" id="demo5-dropdown2">
                     <p style="text-align:justify">لورم ایپسوم یا طرح‌نما به متنی آزمایشی و بی‌معنی در صنعت چاپ، صفحه‌آرایی و طراحی گرافیک گفته می‌شود. طراح گرافیک از این متن به عنوان عنصری از ترکیب بندی برای پر کردن صفحه و ارایه اولیه شکل ظاهری و کلی طرح سفارش گرفته شده استفاده می نماید، تا از نظر گرافیکی نشانگر چگونگی نوع و اندازه فونت و ظاهر متن باشد. معمولا طراحان گرافیک برای صفحه‌آرایی، نخست از متن‌های آزمایشی و بی‌معنی استفاده می‌کنند تا صرفا به مشتری یا صاحب کار خود نشان دهند که صفحه طراحی یا صفحه بندی شده بعد از اینکه متن در آن قرار گیرد چگونه به نظر می‌رسد و قلم‌ها و اندازه‌بندی‌ها چگونه در نظر گرفته شده‌است. از آنجایی که طراحان عموما نویسنده متن نیستند و وظیفه رعایت حق تکثیر متون را ندارند و در همان حال کار آنها به نوعی وابسته به متن می‌باشد آنها با استفاده از محتویات ساختگی، صفحه گرافیکی خود را صفحه‌آرایی می‌کنند تا مرحله طراحی و صفحه‌بندی را به پایان برند.</p>

@@ -129,6 +129,7 @@ class FileOffice(Base):
     relation_type = models.CharField(_('ارتباط'), max_length=10, default='مدیون', choices=TYPE)
 
     class Meta:
+        unique_together = ['file', 'office']
         verbose_name = _('file_office')
         verbose_name_plural = _('file_offices')
         db_table = 'file_offices'
@@ -164,19 +165,20 @@ class Assurance(Base, Document):
         ('سند ملکی', 'سند ملکی'),
         ('سند در رهن', 'سند در رهن'),
     )
-    person = models.ForeignKey(PersonFile, verbose_name=_('per'), related_name='assurances', default=None)
-    assurance_type = models.CharField(_('نو وثیقه'), max_length=50, choices=TYPE, default='سفته')
+    file = models.ForeignKey(File, verbose_name=_('پرونده'), related_name='assurances', default=None)
+    assurance_type = models.CharField(_('نوع وثیقه'), max_length=50, choices=TYPE, default='سفته')
+    assurance_number = models.CharField(_('شماره سند'), max_length=200, default=0)
+    assurance_date = models.CharField(_('تاریخ'), max_length=200, default='')
+    assurance_value = models.PositiveIntegerField(_('مبلغ'), default=0)
 
     class Meta:
+        unique_together = ['file', 'assurance_type','assurance_number']
         verbose_name = _('assurance')
         verbose_name_plural = _('assurances')
         db_table = 'assurances'
 
     def __str__(self):
-        return "{}-{} {}".format(self.assurance_type,
-                                 self.person.person.first_name,
-                                 self.person.person.last_name
-                                 )
+        return "{}-{}".format(self.assurance_type, self.file)
 
 
 

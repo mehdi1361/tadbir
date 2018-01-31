@@ -155,4 +155,27 @@ class OfficeForm(forms.ModelForm):
             'register_number': forms.TextInput(attrs={'class': 'form-control'}),
             'address': forms.Textarea(attrs={'class': 'form-control'}),
         }
+
+
+class AssuranceForm(forms.ModelForm):
+    class Meta:
+        model = Assurance
+
+        fields = [
+            'file',
+            'assurance_type',
+            'assurance_number',
+            'assurance_value',
+            'description'
+        ]
+        widgets = {
+            'file': forms.Select(attrs={'class': 'form-control'}),
+            'assurance_type': forms.Select(attrs={'class': 'form-control'}),
+            'assurance_number': forms.TextInput(attrs={'class': 'form-control'}),
+            'assurance_value': forms.TextInput(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control'}),
+
+        }
+
+
 inlineformset_factory(Person, PersonFile, form=PersonFileForm, extra=2)
