@@ -13,7 +13,7 @@ from dal import autocomplete
 from django.contrib import messages
 
 from django.contrib.auth import authenticate, login
-from .forms import LoginForm
+# from .forms import LoginForm
 
 
 def bank_list(request):
