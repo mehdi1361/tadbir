@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from .forms import LoginForm, UserRegistrationForm
 from django.contrib.auth import login, authenticate
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 
@@ -39,4 +40,10 @@ def register(request):
     else:
             user_form = UserRegistrationForm()
 
+    print(user_form.errors)
     return render(request, 'bank/employee/register.html', {'form': user_form})
+
+
+@login_required(login_url='/employee/login/')
+def dashboard(request):
+    return render(request, 'bank/employee/dashboard.html')

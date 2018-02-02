@@ -104,25 +104,25 @@
 	<!-- Begin page -->
 	<div class="container">
 		<div class="full-content-center animated fadeInDownBig">
-			<p class="text-center"><a href="#"><img src="{% static "assets/img/login-logo.png" %}" alt="Logo"></a></p>
+{#			<p class="text-center"><a href="#"><img src="{% static "assets/img/login-logo.png" %}" alt="Logo"></a></p>#}
 			<div class="login-wrap">
 				<div class="login-block">
-					<form role="form" action="index.html">
+					<form role="form" action="" method="post">
 						<div class="form-group login-input">
 						<i class="fa fa-envelope overlay"></i>
-						<input type="text" class="form-control text-input" placeholder="ایمیل">
+                            {{ form.email }}
 						</div>
 						<div class="form-group login-input">
 						<i class="fa fa-user overlay"></i>
-						<input type="text" class="form-control text-input" placeholder="نام کاربری">
+						    {{ form.username }}
 						</div>
 						<div class="form-group login-input">
 						<i class="fa fa-key overlay"></i>
-						<input type="password" class="form-control text-input" placeholder="********">
+                            {{ form.password }}
 						</div>
                         <div class="form-group login-input">
 						<i class="fa fa-key overlay"></i>
-						<input type="password" class="form-control text-input" placeholder="********">
+                            {{ form.password2 }}
 						</div>
 						<div class="checkbox" style="text-align:right">
 							<label>
@@ -132,6 +132,7 @@
 						</div>
 						<div class="row">
 							<div class="col-sm-12">
+                                {% csrf_token %}
 							<button type="submit" class="btn btn-default btn-block">ثبت نام</button>
 							</div>
 						</div>

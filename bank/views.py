@@ -11,23 +11,27 @@ from django.shortcuts import get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from dal import autocomplete
 from django.contrib import messages
-
-from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+# from django.contrib.auth import authenticate, login
 # from .forms import LoginForm
 
 
+@login_required(login_url='/employee/login/')
 def bank_list(request):
     banks = Bank.objects.all()
     return render(request, 'bank/bank/list.html', {'banks': banks})
 
 
-class BankListView(ListView):
+class BankListView(LoginRequiredMixin, ListView):
+    login_url = '/employee/login/'
     queryset = Bank.objects.all()
     context_object_name = 'posts'
     paginate_by = 3
     template_name = 'bank/bank/list.html'
 
 
+@login_required(login_url='/employee/login/')
 def new_bank(request):
     if request.method == 'POST':
         form = BankForm(request.POST)
@@ -41,6 +45,7 @@ def new_bank(request):
     return render(request, 'bank/bank/new.html', {'form': form})
 
 
+@login_required(login_url='/employee/login/')
 def edit_bank(request, bank_id):
     bank = get_object_or_404(Bank, id=bank_id)
     if request.method == 'POST':
@@ -55,11 +60,13 @@ def edit_bank(request, bank_id):
     return render(request, 'bank/bank/edit.html', {'form': form, 'bank': bank})
 
 
+@login_required(login_url='/employee/login/')
 def management_area_list(request):
     areas = ManagementAreas.objects.all()
     return render(request, 'bank/management_area/list.html', {'areas': areas})
 
 
+@login_required(login_url='/employee/login/')
 def new_area(request):
     if request.method == 'POST':
         form = AreaForm(request.POST)
@@ -73,6 +80,7 @@ def new_area(request):
     return render(request, 'bank/management_area/new.html', {'form': form})
 
 
+@login_required(login_url='/employee/login/')
 def edit_area(request, area_id):
     area = get_object_or_404(ManagementAreas, id=area_id)
     if request.method == 'POST':
@@ -87,13 +95,15 @@ def edit_area(request, area_id):
     return render(request, 'bank/bank/edit.html', {'form': form, 'area': area})
 
 
-class BranchListView(ListView):
+class BranchListView(LoginRequiredMixin, ListView):
+    login_url = '/employee/login/'
     queryset = Branch.objects.all()
     context_object_name = 'branches'
     paginate_by = 3
     template_name = 'bank/branch/list.html'
 
 
+@login_required(login_url='/employee/login/')
 def new_branch(request):
     if request.method == 'POST':
         form = BranchForm(request.POST)
@@ -107,6 +117,7 @@ def new_branch(request):
     return render(request, 'bank/branch/new.html', {'form': form})
 
 
+@login_required(login_url='/employee/login/')
 def file_list(request):
     object_list = File.objects.all().order_by('-created_at')
     paginator = Paginator(object_list, 15)
@@ -134,6 +145,7 @@ class BranchAutoComplete(autocomplete.Select2QuerySetView):
         return qs
 
 
+@login_required(login_url='/employee/login/')
 def new_file(request):
     if request.method == 'POST':
         form = FileForm(request.POST)
@@ -147,6 +159,7 @@ def new_file(request):
     return render(request, 'bank/file/new.html', {'form': form})
 
 
+@login_required(login_url='/employee/login/')
 def file_document(request, file_id):
     file = get_object_or_404(File, pk=file_id)
     if request.method == 'POST':
@@ -179,6 +192,7 @@ def file_document(request, file_id):
     )
 
 
+@login_required(login_url='/employee/login/')
 def get_branch(request):
     if request.is_ajax():
         q = request.GET.get('term', '')
@@ -198,6 +212,7 @@ def get_branch(request):
     return HttpResponse(data, mimetype)
 
 
+@login_required(login_url='/employee/login/')
 def new_person(request):
     if request.method == 'POST':
         form = PersonForm(request.POST)
@@ -220,6 +235,7 @@ def new_person(request):
     )
 
 
+@login_required(login_url='/employee/login/')
 def get_persons(request):
     object_list = Person.objects.all().order_by('-created_at')
     paginator = Paginator(object_list, 15)
@@ -237,6 +253,7 @@ def get_persons(request):
     return render(request, 'bank/person/list.html', {'persons': persons, 'page': page})
 
 
+@login_required(login_url='/employee/login/')
 def new_person_office(request):
     if request.method == 'POST':
         form = PersonOfficeForm(request.POST)
@@ -259,6 +276,7 @@ def new_person_office(request):
     )
 
 
+@login_required(login_url='/login/')
 def get_person_office(request):
     object_list = Office.objects.all().order_by('-created_at')
     paginator = Paginator(object_list, 15)

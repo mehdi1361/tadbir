@@ -130,3 +130,6 @@ STATIC_URL = '/static/'
 # ]
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 USE_THOUSAND_SEPARATOR = True
+
+LOGIN_REDIRECT_URL = '/employee/login'
+
