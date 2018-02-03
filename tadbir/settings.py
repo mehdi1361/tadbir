@@ -31,6 +31,9 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    # 'material',
+    # 'material.frontend',
+    # 'material.admin',
     'dal',
     'dal_select2',
     'django.contrib.admin',
@@ -41,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'states',
     'bank',
+    'employee',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -52,6 +56,8 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 'material.frontend.middleware.SmoothNavigationMiddleware',
+
 ]
 
 ROOT_URLCONF = 'tadbir.urls'

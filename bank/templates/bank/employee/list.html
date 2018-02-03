@@ -1,0 +1,95 @@
+{% extends 'bank/base.html' %}
+
+{% block content %}
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+{#            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>#}
+                 <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <ul>
+            <div class="row">
+                <div class="col-md-12 portlets ui-sortable">
+						<div class="widget">
+							<div class="widget-header">
+								<h2>جستجو</h2>
+								<div class="additional-btn">
+									<a href="#" class="hidden reload"><i class="icon-ccw-1"></i></a>
+									<a href="#" class="widget-toggle"><i class="icon-down-open-2"></i></a>
+									<a href="#" class="widget-close"><i class="icon-cancel-3"></i></a>
+								</div>
+							</div>
+							<div class="widget-content padding" style="display: block;">
+								<a href="{% url "bank:new_file" %}" class="btn btn-success">پر.نده جدید</a>
+							</div>
+						</div>
+					</div>
+            </div>
+            <div class="row">
+					<div class="col-md-12">
+						<div class="widget">
+							<div class="widget-header transparent">
+								<h2><strong>پرونده ها</strong> </h2>
+								<div class="additional-btn">
+									<a href="#" class="hidden reload"><i class="icon-ccw-1"></i></a>
+									<a href="#" class="widget-toggle"><i class="icon-down-open-2"></i></a>
+									<a href="#" class="widget-close"><i class="icon-cancel-3"></i></a>
+								</div>
+							</div>
+							<div class="widget-content">
+								<div class="table-responsive">
+									<table data-sortable="" class="table" data-sortable-initialized="true">
+										<thead>
+											<tr>
+												<th>کد پرونده</th>
+												<th>شماره قرارداد</th>
+												<th>نوع قرارداد</th>
+												<th>شعبه</th>
+												<th>اصل مبلغ بدهی</th>
+												<th data-sortable="false">وجه التزام</th>
+												<th data-sortable="false">سود</th>
+												<th data-sortable="false">هزینه دادرسی</th>
+												<th>وضعیت</th>
+												<th data-sortable="false">جزییات</th>
+											</tr>
+										</thead>
+
+										<tbody>
+                                            {% for employee_files in files %}
+                                                <tr>
+                                                    <td><strong>{{ employee_files.file }}</strong></td>
+                                                    <td>{{ employee_files.file.contract_code }}</td>
+                                                    <td>{{ employee_files.file.file_type }}</td>
+                                                    <td>{{ employee_files.file.branch }}</td>
+                                                    <td>{{ employee_files.file.main_deposit }}</td>
+                                                    <td>{{ employee_files.file.nc_deposit }}</td>
+                                                    <td>{{ employee_files.file.so_deposit }}</td>
+                                                    <td>{{ employee_files.file.cost_proceeding }}</td>
+                                                    {% if file.status == 'سر رسید گذشته' %}
+                                                        <td><span class="label label-success">{{ employee_files.file.status }}</span></td>
+                                                    {% elif file.status == 'معوق' %}
+                                                        <td><span class="label label-warning">{{ employee_files.file.status }}</span></td>
+                                                    {% else %}
+                                                        <td><span class="label label-danger">{{ employee_files.file.status }}</span></td>
+
+                                                    {% endif %}
+                                                    <td>
+                                                        <div class="btn-group btn-group-xs">
+{#                                                            <a data-toggle="tooltip" title="خاموش" class="btn btn-default"><i class="fa fa-power-off"></i></a>#}
+                                                            <a href="{% url "bank:file_detail" employee_files.file.id %}" data-toggle="tooltip" title="جزییات پرونده" class="btn btn-default"><i class="fa fa-edit"></i></a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+                {% include "bank/file/pagination.html" with page=files %}
+    </ul>
+{% endblock %}

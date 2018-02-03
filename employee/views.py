@@ -1,8 +1,10 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from .forms import LoginForm, UserRegistrationForm
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
+from django.core.urlresolvers import reverse
+from .models import EmployeeFile
 # Create your views here.
 
 
@@ -15,7 +17,9 @@ def user_login(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
-                return HttpResponse('login success')
+                return HttpResponseRedirect(
+                    reverse('main'))
+                # return HttpResponse('login success')
             else:
                 return HttpResponse('disable user')
 
@@ -47,3 +51,9 @@ def register(request):
 @login_required(login_url='/employee/login/')
 def dashboard(request):
     return render(request, 'bank/employee/dashboard.html')
+
+
+@login_required(login_url='/employee/login/')
+def files(request):
+    employee_files = EmployeeFile.files.filter(employee=request.user)
+    return render(request, 'bank/employee/list.html', {'files': employee_files})

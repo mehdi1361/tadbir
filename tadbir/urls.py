@@ -17,10 +17,13 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django.contrib.auth.views import logout
 from django.conf import settings
+from employee.views import dashboard, login
 from bank.views import BranchAutoComplete
 
 urlpatterns = [
+    url(r'^$', dashboard, name='main'),
     url(r'^admin/', admin.site.urls),
+    url(r'^admin/login/', login),
     url(r'^bank/', include('bank.urls', namespace='bank', app_name='bank')),
     url(r'^employee/', include('employee.urls', namespace='employee', app_name='employee')),
     url(r'^logout/$', logout, {'next_page': settings.LOGIN_REDIRECT_URL}, name='logout'),
