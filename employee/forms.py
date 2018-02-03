@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
+from .models import Profile
 
 
 class LoginForm(forms.Form):
@@ -46,3 +47,29 @@ class UserRegistrationForm(forms.ModelForm):
             raise forms.ValidationError('password dont match')
         return cd['password2']
 
+
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = [
+            'first_name',
+            'last_name',
+            'father_name',
+            'national_code',
+            'gender'
+        ]
+        widgets = {
+            'first_name': forms.TextInput(attrs={
+                'class': 'form-control'
+            }),
+            'last_name': forms.TextInput(attrs={
+                'class': 'form-control'
+            }),
+            'father_name': forms.TextInput(attrs={
+                'class': 'form-control'
+            }),
+            'national_code': forms.TextInput(attrs={
+                'class': 'form-control'
+            }),
+            'gender': forms.Select(attrs={'class': 'form-control'}),
+        }

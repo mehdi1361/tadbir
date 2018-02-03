@@ -1,6 +1,6 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
-from .forms import LoginForm, UserRegistrationForm
+from .forms import LoginForm, UserRegistrationForm, ProfileForm
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
@@ -57,3 +57,17 @@ def dashboard(request):
 def files(request):
     employee_files = EmployeeFile.files.filter(employee=request.user)
     return render(request, 'bank/employee/list.html', {'files': employee_files})
+
+
+@login_required(login_url='/employee/login/')
+def register_profile(request):
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, instance=request.user.profile)
+
+        if form.is_valid():
+            form.save()
+
+    else:
+            form = ProfileForm(instance=request.user.profile)
+
+    return render(request, 'bank/employee/profile.html', {'form': form})

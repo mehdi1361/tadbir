@@ -3,6 +3,8 @@ from bank.models import File
 from base.models import Base, Human
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
 class FileManager(models.Manager):
@@ -44,3 +46,8 @@ class Profile(Base, Human):
         return "{} {}".format(self.first_name, self.last_name)
 
 
+@receiver(post_save, sender=User)
+def create_or_update_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
+    instance.profile.save()
