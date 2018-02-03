@@ -1,6 +1,6 @@
 from django.db import models
 from bank.models import File
-from base.models import Base
+from base.models import Base, Human
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 
@@ -30,3 +30,17 @@ class EmployeeFile(Base):
 
     def __str__(self):
         return self.file.file_code
+
+
+class Profile(Base, Human):
+    user = models.OneToOneField(User, verbose_name=_('پروفایل'), related_name='profile')
+
+    class Meta:
+        verbose_name = _('profile')
+        verbose_name_plural = _('profiles')
+        db_table = 'profiles'
+
+    def __str__(self):
+        return "{} {}".format(self.first_name, self.last_name)
+
+
