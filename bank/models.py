@@ -103,6 +103,7 @@ class Person(Base, Human):
         return "{} {}".format(self.first_name, self.last_name)
 
 
+@python_2_unicode_compatible
 class Office(Base, Location):
     name = models.CharField(_('نام شرکت'), max_length=200)
     city = models.ForeignKey(City, verbose_name=_('نام شهر'),null=True)
@@ -118,6 +119,7 @@ class Office(Base, Location):
         return "{}".format(self.name)
 
 
+@python_2_unicode_compatible
 class FileOffice(Base):
     TYPE = (
         ('مدیون', 'مدیون'),
@@ -138,6 +140,7 @@ class FileOffice(Base):
         return "{}-{}".format(self.file.file_code, self.office.name)
 
 
+@python_2_unicode_compatible
 class PersonFile(Base):
     TYPE = (
         ('مدیون', 'مدیون'),
@@ -158,6 +161,7 @@ class PersonFile(Base):
         return "{}-{} {}".format(self.file.file_code, self.person.first_name, self.person.last_name)
 
 
+@python_2_unicode_compatible
 class Assurance(Base, Document):
     TYPE = (
         ('سفته', 'سفته'),

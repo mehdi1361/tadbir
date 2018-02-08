@@ -3,7 +3,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title> نرم افزار جامع وصول مطالبات</title>
+        <title> test</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="description" content="">
@@ -257,14 +257,20 @@
                     </li>
                     <li class="dropdown iconify hide-phone"><a href="#" onclick="javascript:toggle_fullscreen()"><i class="icon-resize-full-2"></i></a></li>
                     <li class="dropdown topbar-profile">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="rounded-image topbar-profile-image"><img src="{% static "assets/img/avatar/mohammad2.jpg" %}"></span> محمد <strong>شجاع</strong> <i class="fa fa-caret-down"></i></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <span class="rounded-image topbar-profile-image">
+                                <img src="{% static "assets/img/avatar/mohammad2.jpg" %}">
+                            </span>
+                            {% if user.profile %}
+                                {{ user.profile.first_name }} {{ user.profile.last_name }}
+                            {%  else %}
+                                {{ user.get_username }}
+                            {% endif %}<i class="fa fa-caret-down"></i></a>
                         <ul class="dropdown-menu">
                             <li><a href="{% url 'employee:profile' %}">پروفایل من</a></li>
                             <li><a href="#">تغییر رمز عبور</a></li>
-                            <li><a href="#">تنظیمات حساب</a></li>
                             <li class="divider"></li>
                             <li><a href="#"><i class="icon-help-2"></i>کمک رسانی</a></li>
-                            <li><a href="lockscreen.html"><i class="icon-lock-1"></i>قفل حساب</a></li>
                             <li><a class="md-trigger" data-modal="logout-modal"><i class="icon-logout-1"></i> خروج</a></li>
                         </ul>
                     </li>

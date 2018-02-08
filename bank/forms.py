@@ -110,13 +110,12 @@ class PersonFileForm(forms.ModelForm):
     class Meta:
         model = PersonFile
         fields = [
-            'file',
             'person',
             'relation_type'
         ]
         widgets = {
             'office': forms.Select(attrs={'class': 'form-control'}),
-            'file': forms.Select(attrs={'class': 'form-control'}),
+            # 'file': forms.Select(attrs={'class': 'form-control'}),
             # 'file': forms.TextInput(attrs={'class': 'form-control'}),
             'relation_type': forms.Select(attrs={'class': 'form-control'}),
         }
@@ -126,13 +125,13 @@ class FileOfficeForm(forms.ModelForm):
     class Meta:
         model = FileOffice
         fields = [
-            'file',
+            # 'file',
             'office',
             'relation_type'
         ]
         widgets = {
             'office': forms.Select(attrs={'class': 'form-control'}),
-            'file': forms.Select(attrs={'class': 'form-control'}),
+            # 'file': forms.Select(attrs={'class': 'form-control'}),
             # 'file': forms.TextInput(attrs={'class': 'form-control'}),
             'relation_type': forms.Select(attrs={'class': 'form-control'}),
         }
@@ -162,14 +161,14 @@ class AssuranceForm(forms.ModelForm):
         model = Assurance
 
         fields = [
-            'file',
+            # 'file',
             'assurance_type',
             'assurance_number',
             'assurance_value',
             'description'
         ]
         widgets = {
-            'file': forms.Select(attrs={'class': 'form-control'}),
+            # 'file': forms.Select(attrs={'class': 'form-control'}),
             'assurance_type': forms.Select(attrs={'class': 'form-control'}),
             'assurance_number': forms.TextInput(attrs={'class': 'form-control'}),
             'assurance_value': forms.TextInput(attrs={'class': 'form-control'}),

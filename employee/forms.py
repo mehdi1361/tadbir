@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import Profile
+from .models import Profile, FollowUp
 
 
 class LoginForm(forms.Form):
@@ -72,4 +72,19 @@ class ProfileForm(forms.ModelForm):
                 'class': 'form-control'
             }),
             'gender': forms.Select(attrs={'class': 'form-control'}),
+        }
+
+
+class FollowUpForm(forms.ModelForm):
+    class Meta:
+        model = FollowUp
+        fields = [
+            'follow_up_type',
+            'description',
+        ]
+        widgets = {
+            'follow_up_type': forms.Select(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={
+                'class': 'form-control'
+            }),
         }

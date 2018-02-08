@@ -1,10 +1,12 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
-from .forms import LoginForm, UserRegistrationForm, ProfileForm
+from .forms import LoginForm, UserRegistrationForm, ProfileForm, FollowUpForm
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from .models import EmployeeFile
+from bank.models import File
+from django.shortcuts import get_object_or_404
 # Create your views here.
 
 
@@ -71,3 +73,29 @@ def register_profile(request):
             form = ProfileForm(instance=request.user.profile)
 
     return render(request, 'bank/employee/profile.html', {'form': form})
+
+
+@login_required(login_url='/employee/login/')
+def file_document(request, file_id):
+    file = get_object_or_404(File, pk=file_id)
+    follow_form = FollowUpForm(request.POST)
+
+    if request.method == 'POST':
+        if follow_form.is_valid():
+            result_follow_form = follow_form.save(commit=False)
+            result_follow_form.file = file
+            result_follow_form.save()
+
+    else:
+        follow_form = FollowUpForm()
+
+    return render(
+        request,
+        'bank/employee/file_detail.html',
+        {
+            'file': file,
+            'follow_form': follow_form
+        }
+    )
+
+

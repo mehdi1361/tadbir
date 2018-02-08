@@ -168,13 +168,19 @@ def file_document(request, file_id):
         assurance_form = AssuranceForm(request.POST)
 
         if person_form.is_valid():
-            person_form.save()
+            new_person_file = person_form.save(commit=False)
+            new_person_file.file = file
+            new_person_file.save()
 
         if person_office.is_valid():
-            person_office.save()
+            new_office_file = person_office.save(commit=False)
+            new_office_file.file = file
+            new_office_file.save()
 
         if assurance_form.is_valid():
-            assurance_form.save()
+            new_assurance_file = assurance_form.save(commit=False)
+            new_assurance_file.file = file
+            new_assurance_file.save()
 
     person_form = PersonFileForm()
     person_office = FileOfficeForm()

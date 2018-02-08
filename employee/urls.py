@@ -7,4 +7,5 @@ urlpatterns = [
     url(r'^register/$', views.register, name='register'),
     url(r'^list/$', views.files, name='list'),
     url(r'^profile/$', views.register_profile, name='profile'),
+    url(r'^files/detail/(?P<file_id>\d+)$', views.file_document, name='employee_file_detail'),
 ]
