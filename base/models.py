@@ -30,14 +30,14 @@ class Human(models.Model):
 class Location(models.Model):
     name = models.CharField(_('نام'), max_length=200)
     address = models.TextField(_('آدرس'), default=None, null=True)
-    postal_code = models.CharField(_('کد پستی'),max_length=20, default=None, null=True)
+    postal_code = models.CharField(_('کد پستی'), max_length=20, default=None, null=True)
 
     class Meta:
         abstract = True
 
 
 class Document(models.Model):
-    image_upload = models.ImageField(_('تصویر'), upload_to='document', null=True)
+    image_upload = models.FileField(_('تصویر'), upload_to='document', null=True)
     description = models.TextField(_('توضیحات'), null=True, default=None)
 
     class Meta:

@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'states',
     'bank',
     'employee',
+    'ckeditor',
+    'ckeditor_uploader',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -139,3 +141,5 @@ USE_THOUSAND_SEPARATOR = True
 
 LOGIN_REDIRECT_URL = '/employee/login'
 
+CKEDITOR_BASEPATH = "/my_static/ckeditor/ckeditor"
+CKEDITOR_UPLOAD_PATH = "uploads/"

@@ -1,6 +1,8 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import Profile, FollowUp
+from .models import Profile, FollowUp, PhoneFile, AddressFile, DocumentFile
+from ckeditor.widgets import CKEditorWidget
+from django.core.exceptions import ValidationError
 
 
 class LoginForm(forms.Form):
@@ -84,7 +86,80 @@ class FollowUpForm(forms.ModelForm):
         ]
         widgets = {
             'follow_up_type': forms.Select(attrs={'class': 'form-control'}),
+            # 'description': forms.Textarea(attrs={
+            #     'class': 'form-control'
+            # }),
+        }
+
+
+class PhoneFileForm(forms.ModelForm):
+    class Meta:
+        model = PhoneFile
+        fields = [
+            'phone_number',
+            'person_type',
+            'type',
+            'description'
+        ]
+        widgets = {
+            'phone_number': forms.TextInput(attrs={
+                'class': 'form-control'
+            }),
+            'person_type': forms.Select(attrs={'class': 'form-control'}),
+            'type': forms.Select(attrs={'class': 'form-control'}),
             'description': forms.Textarea(attrs={
                 'class': 'form-control'
             }),
         }
+
+        def clean(self):
+            cleaned_data = self.cleaned_data
+
+            objects = PhoneFile.objects.filter(
+                file=cleaned_data.get('file'),
+                phone_number=cleaned_data.get('phone_number')
+            )
+
+            if len(objects) > 0:
+                msg = u"This row is not unique"
+                raise ValidationError(msg)
+
+            return cleaned_data
+
+
+class AddressForm(forms.ModelForm):
+    class Meta:
+        model = AddressFile
+        fields = [
+            'address',
+            'person_type',
+            'type',
+            'description'
+        ]
+        widgets = {
+            'address': forms.Textarea(attrs={
+                'class': 'form-control'
+            }),
+            'person_type': forms.Select(attrs={'class': 'form-control'}),
+            'type': forms.Select(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={
+                'class': 'form-control'
+            })
+        }
+
+
+class DocumentForm(forms.ModelForm):
+    class Meta:
+        model = DocumentFile
+        fields = [
+            'type',
+            'description',
+            'image_upload',
+        ]
+        widgets = {
+            'type': forms.Select(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={
+                'class': 'form-control'
+            })
+        }
+

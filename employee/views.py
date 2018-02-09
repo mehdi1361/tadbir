@@ -1,10 +1,11 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
-from .forms import LoginForm, UserRegistrationForm, ProfileForm, FollowUpForm
+from .forms import LoginForm, UserRegistrationForm, \
+    ProfileForm, FollowUpForm, PhoneFileForm, AddressForm, DocumentForm
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
-from .models import EmployeeFile
+from .models import EmployeeFile,DocumentFile
 from bank.models import File
 from django.shortcuts import get_object_or_404
 # Create your views here.
@@ -79,6 +80,9 @@ def register_profile(request):
 def file_document(request, file_id):
     file = get_object_or_404(File, pk=file_id)
     follow_form = FollowUpForm(request.POST)
+    phone_form = PhoneFileForm(request.POST)
+    address_form = AddressForm(request.POST)
+    document_form = DocumentForm(request.POST, request.FILES)
 
     if request.method == 'POST':
         if follow_form.is_valid():
@@ -86,15 +90,65 @@ def file_document(request, file_id):
             result_follow_form.file = file
             result_follow_form.save()
 
+        else:
+            follow_form = FollowUpForm()
+
+        if phone_form.is_valid():
+            try:
+                result_phone_form = phone_form.save(commit=False)
+                result_phone_form.file = file
+                result_phone_form.save()
+
+            except:
+                pass
+
+        else:
+            phone_form = PhoneFileForm()
+
+        if address_form.is_valid():
+            try:
+                result_address_form = address_form.save(commit=False)
+                result_address_form.file = file
+                result_address_form.save()
+
+            except:
+                pass
+
+        else:
+            address_form = AddressForm()
+
+        if document_form.is_valid():
+            # try:
+            new_doc = DocumentFile(
+                image_upload=request.FILES['image_upload'],
+                type=request.POST['type'],
+                description=request.POST['description']
+            )
+            new_doc.save()
+                # result_document_form = document_form.save(commit=False)
+                # result_document_form.file = file
+                # result_document_form.save()
+
+            # except:
+            #     pass
+
+        document_form = DocumentForm()
+
     else:
         follow_form = FollowUpForm()
+        phone_form = PhoneFileForm()
+        address_form = AddressForm()
+        document_form = DocumentForm()
 
     return render(
         request,
         'bank/employee/file_detail.html',
         {
             'file': file,
-            'follow_form': follow_form
+            'follow_form': follow_form,
+            'phone_form': phone_form,
+            'address_form': address_form,
+            'document_form': document_form
         }
     )
 

@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from bank.models import File
-from base.models import Base, Human
+from base.models import Base, Human, Document
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils.encoding import python_2_unicode_compatible
+from ckeditor.fields import RichTextField
 
 
 @python_2_unicode_compatible
@@ -82,6 +83,7 @@ class SmsCaution(Base):
     caution_type = models.CharField(_('نوع اخطار'), max_length=20, choices=TYPE, default='caution1')
     file = models.ForeignKey(File, verbose_name=_('پرونده'), related_name='sms_cautions')
     description = models.TextField(_('توضیحات'), null=True, default=None)
+    # description = RichTextField(null=True)
 
     class Meta:
         verbose_name = _('employee_file_sms_caution')
@@ -90,6 +92,88 @@ class SmsCaution(Base):
 
     def __str__(self):
         return self.file.file_code
+
+
+@python_2_unicode_compatible
+class PhoneFile(Base):
+    PERSON_TYPE = (
+        ('مدیون', 'مدیون'),
+        ('ضامن', 'ضامن'),
+        ('متفرقه', 'متفرقه'),
+    )
+
+    TYPE = (
+        ('ثابت', 'ثابت'),
+        ('همراه', 'همراه'),
+    )
+
+    phone_number = models.CharField(_('شماره تماس'), max_length=20)
+    file = models.ForeignKey(File, verbose_name=_('پرونده'), related_name='phones')
+    person_type = models.CharField(_('مالک'), max_length=10, choices=PERSON_TYPE, default='مدیون')
+    type = models.CharField(_('نوع خط'), max_length=10, choices=TYPE, default='ثابت')
+    description = models.TextField(_('توضیحات'), null=True, default=None)
+
+    class Meta:
+        unique_together = ('phone_number', 'file')
+        verbose_name = _('employee_phone')
+        verbose_name_plural = _('employee_phones')
+        db_table = 'employee_phones'
+
+    def __str__(self):
+        return self.phone_number
+
+
+@python_2_unicode_compatible
+class AddressFile(Base):
+    PERSON_TYPE = (
+        ('مدیون', 'مدیون'),
+        ('ضامن', 'ضامن'),
+        ('متفرقه', 'متفرقه'),
+    )
+
+    TYPE = (
+        ('ملکی', 'ملکی'),
+        ('استیجاری', 'استیجاری'),
+        ('رهنی', 'رهنی'),
+    )
+
+    address = models.TextField(_('آدرس'))
+    file = models.ForeignKey(File, verbose_name=_('پرونده'), related_name='addresses')
+    person_type = models.CharField(_('مالک'), max_length=10, choices=PERSON_TYPE, default='مدیون')
+    type = models.CharField(_('نوع مالکیت'), max_length=10, choices=TYPE, default='ملکی')
+    description = models.TextField(_('توضیحات'), null=True, default=None)
+
+    class Meta:
+        unique_together = ('address', 'file')
+        verbose_name = _('employee_address')
+        verbose_name_plural = _('employee_addresses')
+        db_table = 'employee_addresses'
+
+    def __str__(self):
+        return self.address
+
+
+@python_2_unicode_compatible
+class DocumentFile(Base, Document):
+
+    TYPE = (
+        ('وثیقه', 'وثیقه'),
+        ('ضمانی', 'ضمانی'),
+        ('متفرقه', 'متفرقه'),
+    )
+
+    file = models.ForeignKey(File, verbose_name=_('پرونده'), related_name='documents')
+    type = models.CharField(_('نوع مالکیت'), max_length=10, choices=TYPE, default='وثیقه')
+    image_upload = models.ImageField(_('تصویر سند'), upload_to='document/', null=True)
+
+    class Meta:
+        unique_together = ('type', 'file', 'description')
+        verbose_name = _('document_file')
+        verbose_name_plural = _('document_file')
+        db_table = 'document_file'
+
+    def __str__(self):
+        return self.address
 
 
 @receiver(post_save, sender=User)
