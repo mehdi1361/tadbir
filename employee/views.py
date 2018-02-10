@@ -82,7 +82,7 @@ def file_document(request, file_id):
     follow_form = FollowUpForm(request.POST)
     phone_form = PhoneFileForm(request.POST)
     address_form = AddressForm(request.POST)
-    document_form = DocumentForm(request.POST, request.FILES)
+    document_form = DocumentForm(request.POST, request.FILES or None)
 
     if request.method == 'POST':
         if follow_form.is_valid():
@@ -118,19 +118,17 @@ def file_document(request, file_id):
             address_form = AddressForm()
 
         if document_form.is_valid():
-            # try:
-            new_doc = DocumentFile(
-                image_upload=request.FILES['image_upload'],
-                type=request.POST['type'],
-                description=request.POST['description']
-            )
-            new_doc.save()
-                # result_document_form = document_form.save(commit=False)
-                # result_document_form.file = file
-                # result_document_form.save()
+            try:
 
-            # except:
-            #     pass
+                result_document_form = document_form.save(commit=False)
+                result_document_form.file = file
+                result_document_form.save()
+
+            except:
+                pass
+
+        else:
+            print(document_form.errors)
 
         document_form = DocumentForm()
 

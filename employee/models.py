@@ -164,7 +164,7 @@ class DocumentFile(Base, Document):
 
     file = models.ForeignKey(File, verbose_name=_('پرونده'), related_name='documents')
     type = models.CharField(_('نوع مالکیت'), max_length=10, choices=TYPE, default='وثیقه')
-    image_upload = models.ImageField(_('تصویر سند'), upload_to='document/', null=True)
+    image_upload = models.ImageField(_('تصویر سند'), upload_to='document', null=True)
 
     class Meta:
         unique_together = ('type', 'file', 'description')
@@ -173,7 +173,7 @@ class DocumentFile(Base, Document):
         db_table = 'document_file'
 
     def __str__(self):
-        return self.address
+        return self.file.file_code
 
 
 @receiver(post_save, sender=User)
