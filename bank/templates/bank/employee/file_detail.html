@@ -280,6 +280,11 @@
 
                 </div> <!-- / .tab-pane -->
                 <div class="tab-pane fade" id="demo5-dropdown2">
+                    <button data-modal="md-slide-stick-top" class="btn btn-default btn-sm md-trigger">پیگیری جدید</button>
+                <div class="md-modal md-slide-stick-top" id="md-slide-stick-top">
+	    		<div class="md-content">
+				<h3>باکس شناور</h3>
+				<div>
                     <p style="text-align:justify">
                         <form class="form-horizontal" role="form" action="" method="post">
                           <div class="form-group">
@@ -299,7 +304,21 @@
                                 {{ follow_form.description }}
                             </div>
                           </div>
-                            <div class="widget-content">
+
+                            <div class="col-lg-12">
+                                {% csrf_token %}
+                                <input type="submit" value="ایجاد" class="btn btn-success">
+                                <a href="#" class="btn btn-danger md-close">بستن</a>
+                            </div>
+                            <hr>
+                        </form>
+                    </p>
+				</div>
+			</div><!-- End div .md-content -->
+		</div>
+
+
+                    <div class="widget-content">
 								<div class="table-responsive">
 										<table data-sortable="" class="table" data-sortable-initialized="true">
 										<thead>
@@ -324,13 +343,6 @@
 									</table>
 								</div>
 							</div>
-                            <div class="col-lg-12">
-                                {% csrf_token %}
-                                <input type="submit" value="ایجاد" class="btn btn-success">
-                            </div>
-                            <hr>
-                        </form>
-                    </p>
                 </div> <!-- / .tab-pane -->
                 <div class="tab-pane fade" id="demo5-dropdown3">
                     <p style="text-align:justify">
@@ -515,32 +527,85 @@
                             <hr>
                         </form>
                     </p>
-                    <div class="widget-content">
-								<div class="table-responsive">
-										<table data-sortable="" class="table" data-sortable-initialized="true">
-										<thead>
-											<tr>
-												<th>شماره</th>
-												<th>پرونده</th>
-												<th>نوع پیگیری</th>
-												<th>شرح</th>
-											</tr>
-										</thead>
 
-										<tbody>
-                                            {% for address in file.addresses.all %}
-                                                <tr>
-                                                    <td>{{ forloop.counter }}</td>
-                                                    <td>{{ address.person_type }}</td>
-                                                    <td>{{ address.type }}</td>
-                                                    <td><strong>{{ address.address }}</strong></td>
-                                                    <td>{{ address.description }}</td>
-                                                </tr>
-                                            {% endfor %}
-										</tbody>
-									</table>
-								</div>
-							</div>
+                    <div class="box-info animated fadeInDown">
+                            <div class="gallery-wrap">
+                                {% for document in file.documents.all %}
+                                     <div class="column">
+                                    <div class="inner">
+                                        <a class="zooming" href="{{ document.image_upload.url }}" title="{{ document.description }}">
+                                        <div class="img-wrap">
+                                            <img src="{{ document.image_upload.url }}" alt="Image gallery" title="{{ document.description }}" class="mfp-fade">
+                                        </div>
+                                        {% if document.type == 'وثیقه' %}
+                                            <div class="caption-static success">
+                                                {{ document.type }}
+                                            </div>
+                                        {% endif %}
+                                        {% if document.type == 'ضمانی' %}
+                                            <div class="caption-static danger">
+                                                {{ document.type }}
+                                            </div>
+                                        {% endif %}
+                                        {% if document.type == 'متفرقه' %}
+                                            <div class="caption-static warning">
+                                                {{ document.type }}
+                                            </div>
+                                        {% endif %}
+                                        </a>
+                                    </div>
+                                </div>
+                                {%  endfor %}
+{#                                <div class="column">#}
+{#                                    <div class="inner">#}
+{#                                        <a class="zooming" href="images/big/img007.jpg" title="عنوان تصویر در اینجا">#}
+{#                                        <div class="img-wrap">#}
+{#                                            <img src="images/small/img007_small.jpg" alt="Image gallery" title="عنوان تصویر در اینجا" class="mfp-fade">#}
+{#                                        </div>#}
+{#                                        <div class="caption-static success">#}
+{#                                        سلام ! من یک عنوان هستم#}
+{#                                        </div>#}
+{#                                        </a>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <div class="column">#}
+{#                                    <div class="inner">#}
+{#                                        <a class="zooming" href="images/big/img008.jpg" title="عنوان تصویر در اینجا">#}
+{#                                        <div class="img-wrap">#}
+{#                                            <img src="images/small/img008_small.jpg" alt="Image gallery" title="عنوان تصویر در اینجا" class="mfp-fade">#}
+{#                                        </div>#}
+{#                                        <div class="caption-static warning">#}
+{#                                        سلام ! من یک عنوان هستم#}
+{#                                        </div>#}
+{#                                        </a>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <div class="column">#}
+{#                                    <div class="inner">#}
+{#                                        <a class="zooming" href="images/big/img009.jpg" title="عنوان تصویر در اینجا">#}
+{#                                        <div class="img-wrap">#}
+{#                                            <img src="images/small/img009_small.jpg" alt="Image gallery" title="عنوان تصویر در اینجا" class="mfp-fade">#}
+{#                                        </div>#}
+{#                                        <div class="caption-static danger">#}
+{#                                        سلام ! من یک عنوان هستم#}
+{#                                        </div>#}
+{#                                        </a>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <div class="column">#}
+{#                                    <div class="inner">#}
+{#                                        <a class="zooming" href="images/big/img010.jpg" title="عنوان تصویر در اینجا">#}
+{#                                        <div class="img-wrap">#}
+{#                                            <img src="images/small/img010_small.jpg" alt="Image gallery" title="عنوان تصویر در اینجا" class="mfp-fade">#}
+{#                                        </div>#}
+{#                                        <div class="caption-static info">#}
+{#                                        سلام ! من یک عنوان هستم#}
+{#                                        </div>#}
+{#                                        </a>#}
+{#                                    </div>#}
+{#                                </div>#}
+                            </div>
+                    </div>
                 </div>
             </div> <!-- / .tab-content -->
 

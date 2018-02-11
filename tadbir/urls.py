@@ -19,6 +19,7 @@ from django.contrib.auth.views import logout
 from django.conf import settings
 from employee.views import dashboard, login
 from bank.views import BranchAutoComplete
+from django.conf.urls.static import static
 
 urlpatterns = [
     url(r'^$', dashboard, name='main'),
@@ -29,3 +30,6 @@ urlpatterns = [
     url(r'^logout/$', logout, {'next_page': settings.LOGIN_REDIRECT_URL}, name='logout'),
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
