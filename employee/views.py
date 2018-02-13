@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from .forms import LoginForm, UserRegistrationForm, \
@@ -8,6 +9,7 @@ from django.core.urlresolvers import reverse
 from .models import EmployeeFile,DocumentFile
 from bank.models import File
 from django.shortcuts import get_object_or_404
+from django.db.models import Q
 # Create your views here.
 
 
@@ -42,12 +44,11 @@ def register(request):
             new_user.set_password(user_form.cleaned_data['password'])
 
             new_user.save()
-            return HttpResponse('ok')
+            return HttpResponseRedirect('/employee/login')
 
     else:
             user_form = UserRegistrationForm()
 
-    print(user_form.errors)
     return render(request, 'bank/employee/register.html', {'form': user_form})
 
 
@@ -58,7 +59,13 @@ def dashboard(request):
 
 @login_required(login_url='/employee/login/')
 def files(request):
-    employee_files = EmployeeFile.files.filter(employee=request.user)
+    query = request.POST.get('q')
+    if query:
+        employee_files = EmployeeFile.files.filter(employee=request.user).filter(
+            Q(file__file_code__contains=query) | Q(file__contract_code__contains=query))
+
+    else:
+        employee_files = EmployeeFile.files.filter(employee=request.user)
     return render(request, 'bank/employee/list.html', {'files': employee_files})
 
 
@@ -89,18 +96,21 @@ def file_document(request, file_id):
             result_follow_form = follow_form.save(commit=False)
             result_follow_form.file = file
             result_follow_form.save()
+            messages.add_message(request, messages.SUCCESS, 'پیگیری با موفقیت ثبت شد.')
 
         else:
             follow_form = FollowUpForm()
+            # messages.add_message(request, messages.ERROR, 'خطا در ثبت پیگیری')
 
         if phone_form.is_valid():
             try:
                 result_phone_form = phone_form.save(commit=False)
                 result_phone_form.file = file
                 result_phone_form.save()
+                messages.add_message(request, messages.SUCCESS, 'شماره تماس با موفقیت ثبت شد')
 
             except:
-                pass
+                messages.add_message(request, messages.ERROR, 'هشدار شماره تلفن تکراری است.')
 
         else:
             phone_form = PhoneFileForm()
@@ -110,9 +120,11 @@ def file_document(request, file_id):
                 result_address_form = address_form.save(commit=False)
                 result_address_form.file = file
                 result_address_form.save()
+                messages.add_message(request, messages.SUCCESS, 'آدرس با موفقیت ثبت شد.')
 
             except:
-                pass
+                messages.add_message(request, messages.ERROR, 'هشدار آدرس تکراری است.')
+                address_form = AddressForm()
 
         else:
             address_form = AddressForm()
@@ -125,7 +137,7 @@ def file_document(request, file_id):
                 result_document_form.save()
 
             except:
-                pass
+                document_form = DocumentForm()
 
         else:
             print(document_form.errors)

@@ -6,6 +6,7 @@ from states.models import City, State
 from django.utils.encoding import python_2_unicode_compatible
 
 
+
 @python_2_unicode_compatible
 class Bank(Base):
     name = models.CharField(_('bank name'), max_length=100, unique=True)

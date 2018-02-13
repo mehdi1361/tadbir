@@ -79,7 +79,7 @@ class FileForm(forms.ModelForm):
             'nc_deposit': forms.TextInput(attrs={'class': 'form-control'}),
             'so_deposit': forms.TextInput(attrs={'class': 'form-control'}),
             'cost_proceeding': forms.TextInput(attrs={'class': 'form-control'}),
-            'persian_date_refrence': forms.TextInput(attrs={'class': 'form-control'}),
+            'persian_date_refrence': forms.TextInput(attrs={'id': 'date_input'}),
             'branch': forms.Select(attrs={'class': 'form-control'}),
             'status': forms.Select(attrs={'class': 'form-control'}),
             'file_type': forms.Select(attrs={'class': 'form-control'}),
