@@ -2,7 +2,7 @@
 
 {% block content %}
     <div>
-
+        <div id="overlay"></div>
     </div>
 
     {%  if file %}
@@ -280,10 +280,10 @@
 
                 </div> <!-- / .tab-pane -->
                 <div class="tab-pane fade" id="demo5-dropdown2">
-                    <button data-modal="md-slide-stick-top" class="btn btn-default btn-sm md-trigger">پیگیری جدید</button>
-                <div class="md-modal md-slide-stick-top" id="md-slide-stick-top">
+                    <button data-modal="md-slide-stick-top"  onclick="on()" class="btn btn-default btn-sm md-trigger">پیگیری جدید</button>
+                <div class="md-modal md-newspaper" id="md-slide-stick-top">
 	    		<div class="md-content">
-				<h3>باکس شناور</h3>
+				<h3>ثبت پیگیری</h3>
 				<div>
                     <p style="text-align:justify">
                         <form class="form-horizontal" role="form" action="" method="post">
@@ -307,8 +307,8 @@
 
                             <div class="col-lg-12">
                                 {% csrf_token %}
-                                <input type="submit" value="ایجاد" class="btn btn-success">
-                                <a href="#" class="btn btn-danger md-close">بستن</a>
+                                <input type="submit"  onclick="off()" value="ایجاد" class="btn btn-success">
+                                <a href="#"  onclick="off()" class="btn btn-danger md-close">بستن</a>
                             </div>
                             <hr>
                         </form>
@@ -345,51 +345,61 @@
 							</div>
                 </div> <!-- / .tab-pane -->
                 <div class="tab-pane fade" id="demo5-dropdown3">
-                    <p style="text-align:justify">
-                        <form class="form-horizontal" role="form" action="" method="post">
-                          <div class="form-group">
-                            <label for="input-text" class="col-sm-3 control-label">
-                                {{ phone_form.phone_number.label }}
-                            </label>
-                            <div class="col-sm-10">
-                                {{ phone_form.phone_number }}
-                            </div>
-                          </div>
+                    <button data-modal="md-newspaper" onclick="on()"  class="btn btn-default btn-sm md-trigger">شماره تلفن جدید</button>
+                    <div class="md-modal md-newspaper" id="md-newspaper">
+                        <div class="md-content">
+                            <h3>ثبت شماره تماس</h3>
+                            <div>
+                                <p style="text-align:justify">
+                                    <form class="form-horizontal" role="form" action="" method="post">
+                                      <div class="form-group">
+                                        <label for="input-text" class="col-sm-3 control-label">
+                                            {{ phone_form.phone_number.label }}
+                                        </label>
+                                        <div class="col-sm-10">
+                                            {{ phone_form.phone_number }}
+                                        </div>
+                                      </div>
 
-                          <div class="form-group">
-                            <label for="input-text" class="col-sm-3 control-label">
-                                {{ phone_form.person_type.label }}
-                            </label>
-                            <div class="col-sm-10">
-                                {{ phone_form.person_type }}
-                            </div>
-                          </div>
+                                      <div class="form-group">
+                                        <label for="input-text" class="col-sm-3 control-label">
+                                            {{ phone_form.person_type.label }}
+                                        </label>
+                                        <div class="col-sm-10">
+                                            {{ phone_form.person_type }}
+                                        </div>
+                                      </div>
 
-                          <div class="form-group">
-                            <label for="input-text" class="col-sm-3 control-label">
-                                {{ phone_form.type.label }}
-                            </label>
-                            <div class="col-sm-10">
-                                {{ phone_form.type }}
-                            </div>
-                          </div>
+                                      <div class="form-group">
+                                        <label for="input-text" class="col-sm-3 control-label">
+                                            {{ phone_form.type.label }}
+                                        </label>
+                                        <div class="col-sm-10">
+                                            {{ phone_form.type }}
+                                        </div>
+                                      </div>
 
-                          <div class="form-group">
-                            <label for="input-text" class="col-sm-3 control-label">
-                                {{ phone_form.description.label }}
-                            </label>
-                            <div class="col-sm-10">
-                                {{ phone_form.description }}
-                            </div>
-                          </div>
+                                      <div class="form-group">
+                                        <label for="input-text" class="col-sm-3 control-label">
+                                            {{ phone_form.description.label }}
+                                        </label>
+                                        <div class="col-sm-10">
+                                            {{ phone_form.description }}
+                                        </div>
+                                      </div>
 
-                            <div class="col-lg-12">
-                                {% csrf_token %}
-                                <input type="submit" value="ایجاد" class="btn btn-success">
+                                        <div class="col-lg-12">
+                                            {% csrf_token %}
+                                            <input type="submit" value="ایجاد" onclick="off()" class="btn btn-success">
+                                            <a href="#" onclick="off()" class="btn btn-danger md-close">بستن</a>
+                                        </div>
+                                        <hr>
+                                    </form>
+                                </p>
                             </div>
-                            <hr>
-                        </form>
-                    </p>
+                        </div><!-- End div .md-content -->
+		            </div>
+
                     <div class="widget-content">
 								<div class="table-responsive">
 										<table data-sortable="" class="table" data-sortable-initialized="true">
@@ -491,42 +501,52 @@
 							</div>
                 </div>
                 <div class="tab-pane fade" id="demo5-dropdown5">
-                    <p style="text-align:justify">
-                        <form class="form-horizontal" role="form" action="" enctype="multipart/form-data" method="post">
-                          <div class="form-group">
-                            <label for="input-text" class="col-sm-3 control-label">
-                                {{ document_form.type.label }}
-                            </label>
-                            <div class="col-sm-10">
-                                {{ document_form.type }}
-                            </div>
-                          </div>
+                    <button data-modal="md-newspaper1" onclick="on()"  class="btn btn-default btn-sm md-trigger">تصویر جدید</button>
+                    <div class="md-modal md-newspaper" id="md-newspaper1">
+                        <div class="md-content">
+                            <h3>ثبت تصویر سند</h3>
+                            <div>
+                                <p style="text-align:justify">
+                                    <form class="form-horizontal" role="form" action="" enctype="multipart/form-data" method="post">
+                                      <div class="form-group">
+                                        <label for="input-text" class="col-sm-3 control-label">
+                                            {{ document_form.type.label }}
+                                        </label>
+                                        <div class="col-sm-10">
+                                            {{ document_form.type }}
+                                        </div>
+                                      </div>
 
-                          <div class="form-group">
-                            <label for="input-text" class="col-sm-3 control-label">
-                                {{ document_form.description.label }}
-                            </label>
-                            <div class="col-sm-10">
-                                {{ document_form.description }}
-                            </div>
-                          </div>
+                                      <div class="form-group">
+                                        <label for="input-text" class="col-sm-3 control-label">
+                                            {{ document_form.description.label }}
+                                        </label>
+                                        <div class="col-sm-10">
+                                            {{ document_form.description }}
+                                        </div>
+                                      </div>
 
-                          <div class="form-group">
-                            <label for="input-text" class="col-sm-3 control-label">
-                                {{ document_form.image_upload.label }}
-                            </label>
-                            <div class="col-sm-10">
-                                {{ document_form.image_upload }}
-                            </div>
-                          </div>
+                                      <div class="form-group">
+                                        <label for="input-text" class="col-sm-3 control-label">
+                                            {{ document_form.image_upload.label }}
+                                        </label>
+                                        <div class="col-sm-10">
+                                            {{ document_form.image_upload }}
+                                        </div>
+                                      </div>
 
-                            <div class="col-lg-12">
-                                {% csrf_token %}
-                                <input type="submit" value="ایجاد" class="btn btn-success">
+                                        <div class="col-lg-12">
+                                            {% csrf_token %}
+                                            <input type="submit" value="ایجاد" onclick="off()" class="btn btn-success">
+                                            <a href="#" onclick="off()" class="btn btn-danger md-close">بستن</a>
+                                        </div>
+                                        <hr>
+                                    </form>
+                                </p>
                             </div>
-                            <hr>
-                        </form>
-                    </p>
+                        </div><!-- End div .md-content -->
+		            </div>
+
 
                     <div class="box-info animated fadeInDown">
                             <div class="gallery-wrap">
@@ -611,5 +631,14 @@
 
         </div>
 						</div>
+    <script>
+        function on() {
+            document.getElementById("overlay").style.display = "block";
+        }
+
+        function off() {
+            document.getElementById("overlay").style.display = "none";
+        }
+    </script>
 
 {% endblock %}
