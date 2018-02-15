@@ -13,8 +13,8 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 import os
 import locale
 
-LANGUAGE_CODE = 'fa-ir'
-locale.setlocale(locale.LC_ALL, "fa_IR")
+# LANGUAGE_CODE = 'fa-ir'
+# locale.setlocale(locale.LC_ALL, "fa_IR")
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
