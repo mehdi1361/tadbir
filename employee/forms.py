@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import Profile, FollowUp, PhoneFile, AddressFile, DocumentFile
+from .models import Profile, FollowUp, PhoneFile, AddressFile, DocumentFile, FileReminder
 from ckeditor.widgets import CKEditorWidget
 from django.core.exceptions import ValidationError
 
@@ -163,3 +163,18 @@ class DocumentForm(forms.ModelForm):
             })
         }
 
+
+# class ReminderForm(forms.ModelForm):
+#     class Meta:
+#         model = DocumentFile
+#         fields = [
+#             'type',
+#             'description',
+#             'image_upload',
+#         ]
+#         widgets = {
+#             'type': forms.Select(attrs={'class': 'form-control'}),
+#             'description': forms.Textarea(attrs={
+#                 'class': 'form-control'
+#             })
+#         }

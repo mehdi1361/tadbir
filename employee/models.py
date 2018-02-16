@@ -176,8 +176,26 @@ class DocumentFile(Base, Document):
         return self.file.file_code
 
 
+@python_2_unicode_compatible
+class FileReminder(Base):
+    file = models.ForeignKey(File, verbose_name=_('پرونده'), related_name='reminders')
+    subject = models.CharField(_('موضوع'), max_length=100)
+    detail = models.TextField(_('شرح'))
+
+    class Meta:
+        verbose_name = _('file_reminder')
+        verbose_name_plural = _('file_reminders')
+        db_table = 'file_reminders'
+
+    def __str__(self):
+        return self.subject
+
+
 @receiver(post_save, sender=User)
 def create_or_update_user_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
     instance.profile.save()
+
+
+

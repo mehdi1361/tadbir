@@ -27,6 +27,7 @@ urlpatterns = [
     url(r'^admin/login/', login, name='login'),
     url(r'^bank/', include('bank.urls', namespace='bank', app_name='bank')),
     url(r'^employee/', include('employee.urls', namespace='employee', app_name='employee')),
+    url(r'^reports/', include('reports.urls', namespace='reports', app_name='reports')),
     url(r'^logout/$', logout, {'next_page': settings.LOGIN_REDIRECT_URL}, name='logout'),
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
 ]

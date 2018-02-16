@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     # 'material',
     # 'material.frontend',
     # 'material.admin',
+    'django_jalali',
+    'django_cron',
     'dal',
     'dal_select2',
     'django.contrib.admin',
@@ -49,8 +51,8 @@ INSTALLED_APPS = [
     'states',
     'bank',
     'employee',
-    'ckeditor',
-    'ckeditor_uploader',
+    'reports',
+    'chartit',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -151,3 +153,8 @@ CKEDITOR_UPLOAD_PATH = "uploads/"
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+CRON_CLASSES = [
+    "reports.crons.PersonDailyReportJob",
+    # ...
+]
