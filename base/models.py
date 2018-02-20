@@ -26,6 +26,10 @@ class Human(models.Model):
     class Meta:
         abstract = True
 
+    @property
+    def full_name(self):
+        return '{} {}'.format(self.first_name, self.last_name)
+
 
 class Location(models.Model):
     name = models.CharField(_('نام'), max_length=200)

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.db import models
-from bank.models import File
+from bank.models import File, PersonFile
 from base.models import Base, Human, Document
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
@@ -32,8 +32,8 @@ class EmployeeFile(Base):
     files = FileManager()
 
     class Meta:
-        verbose_name = _('employee_file')
-        verbose_name_plural = _('employee_files')
+        verbose_name = _('تخصیص پرونده')
+        verbose_name_plural = _('تخصیص پرونده')
         db_table = 'employee_files'
 
     def __str__(self):
@@ -99,22 +99,9 @@ class SmsCaution(Base):
 
 @python_2_unicode_compatible
 class PhoneFile(Base):
-    PERSON_TYPE = (
-        ('مدیون', 'مدیون'),
-        ('ضامن', 'ضامن'),
-        ('متفرقه', 'متفرقه'),
-    )
-
-    TYPE = (
-        ('ثابت', 'ثابت'),
-        ('همراه', 'همراه'),
-    )
-
     phone_number = models.CharField(_('شماره تماس'), max_length=20)
-    phone_owner = models.CharField(_('نام شخص'), max_length=20, null=True)
+    phone_owner = models.ForeignKey(PersonFile, verbose_name=_('نام شخص'), null=True)
     file = models.ForeignKey(File, verbose_name=_('پرونده'), related_name='phones')
-    person_type = models.CharField(_('مالک'), max_length=10, choices=PERSON_TYPE, default='مدیون')
-    type = models.CharField(_('نوع خط'), max_length=10, choices=TYPE, default='ثابت')
     description = models.TextField(_('توضیحات'), null=True, default=None)
 
     class Meta:
@@ -172,8 +159,8 @@ class DocumentFile(Base, Document):
 
     class Meta:
         unique_together = ('type', 'file', 'description')
-        verbose_name = _('document_file')
-        verbose_name_plural = _('document_file')
+        verbose_name = _('نوع وثایق')
+        verbose_name_plural = _('نوع وثایق')
         db_table = 'document_file'
 
     def __str__(self):
@@ -194,6 +181,32 @@ class FileReminder(Base):
 
     def __str__(self):
         return self.subject
+
+
+@python_2_unicode_compatible
+class FileRecovery(Base):
+    RECOVERY_TYPE = (
+        ('نقدی', 'نقدی'),
+        ('چک', 'چک'),
+        ('فروش رهنی', 'فروش رهنی'),
+    )
+    file = models.ForeignKey(File, verbose_name=_('پرونده'), related_name='recoveries')
+    recovery_type = models.CharField(_('نوع وصولی'), max_length=100, choices=RECOVERY_TYPE, default='نقدی')
+    value = models.PositiveIntegerField(_('مبلغ وصولی'), default=0)
+    value_code = models.CharField(_('شماره سند'), max_length=200, default='0')
+    detail = models.TextField(_('شرح'))
+    recovery_date = jmodels.jDateField(_('تاریخ'), null=True)
+    created_at = jmodels.jDateField(_('تاریخ'), null=True, auto_now_add=True)
+    assurance_confirm = models.BooleanField(_('تاییدیه مالی'), default=False)
+
+    class Meta:
+        unique_together = ('file', 'recovery_type', 'value_code')
+        verbose_name = _('file_recovery')
+        verbose_name_plural = _('file_recoveries')
+        db_table = 'file_recoveries'
+
+    def __str__(self):
+        return self.value_code
 
 
 @receiver(post_save, sender=User)

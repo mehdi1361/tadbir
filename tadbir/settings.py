@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     # 'material',
     # 'material.frontend',
     # 'material.admin',
+    'bootstrap_admin',
     'django_jalali',
     'django_cron',
     'dal',
@@ -158,3 +159,11 @@ CRON_CLASSES = [
     "reports.crons.PersonDailyReportJob",
     # ...
 ]
+
+SMS_SENDER_USERNAME = "9120351390"
+SMS_SENDER_PASSWORD = "9605"
+SMS_SENDER_UDH = ""
+SMS_SENDER_IS_FLASH = True
+SMS_SENDER_FROM = "50009666456444"
+SMS_SENDER_URL = "http://87.107.121.52/post/send.asmx?wsdl"
+

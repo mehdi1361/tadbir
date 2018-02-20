@@ -2,14 +2,16 @@ from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from .forms import LoginForm, UserRegistrationForm, \
-    ProfileForm, FollowUpForm, PhoneFileForm, AddressForm, DocumentForm, ReminderForm
+    ProfileForm, FollowUpForm, PhoneFileForm, AddressForm, \
+    DocumentForm, ReminderForm, RecoveryForm
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from .models import EmployeeFile, DocumentFile
 from bank.models import File
 from django.shortcuts import get_object_or_404
-from django.db.models import Q
+from django.db.models import Q, Sum
+from bank.models import PersonFile
 # Create your views here.
 
 
@@ -86,11 +88,16 @@ def register_profile(request):
 @login_required(login_url='/employee/login/')
 def file_document(request, file_id):
     file = get_object_or_404(File, pk=file_id)
+    recovery_sum = file.recoveries.filter(assurance_confirm=True).aggregate(sum=Sum('value'))
     follow_form = FollowUpForm(request.POST)
-    phone_form = PhoneFileForm(request.POST, file_id=file_id)
+    phone_form = PhoneFileForm(request.POST)
+    phone_form.fields['phone_owner'].queryset = PersonFile.objects.filter(file=file)
+
     address_form = AddressForm(request.POST)
     document_form = DocumentForm(request.POST, request.FILES or None)
     reminder_form = ReminderForm(request.POST)
+
+    recovery_form = RecoveryForm(request.POST)
 
     if request.method == 'POST':
         if follow_form.is_valid():
@@ -112,9 +119,13 @@ def file_document(request, file_id):
 
             except:
                 messages.add_message(request, messages.ERROR, 'هشدار شماره تلفن تکراری است.')
+                phone_form = PhoneFileForm()
+                phone_form.fields['phone_owner'].queryset = PersonFile.objects.filter(file=file)
 
         else:
+            print(phone_form.errors)
             phone_form = PhoneFileForm()
+            phone_form.fields['phone_owner'].queryset = PersonFile.objects.filter(file=file)
 
         if address_form.is_valid():
             try:
@@ -157,23 +168,37 @@ def file_document(request, file_id):
             print(reminder_form.errors)
             reminder_form = ReminderForm()
 
+        if recovery_form.is_valid():
+            try:
+                result_recovery_form = recovery_form.save(commit=False)
+                result_recovery_form.file = file
+                result_recovery_form.save()
+                recovery_form = RecoveryForm()
+
+            except:
+                recovery_form = RecoveryForm()
+
     else:
         follow_form = FollowUpForm()
-        phone_form = PhoneFileForm(file_id=file_id)
+        phone_form = PhoneFileForm()
+        phone_form.fields['phone_owner'].queryset = PersonFile.objects.filter(file=file)
         address_form = AddressForm()
         document_form = DocumentForm()
         reminder_form = ReminderForm()
+        recovery_form = RecoveryForm()
 
     return render(
         request,
         'bank/employee/file_detail.html',
         {
             'file': file,
+            'recovery_sum': recovery_sum['sum'] if recovery_sum['sum'] is not None else 0,
             'follow_form': follow_form,
             'phone_form': phone_form,
             'address_form': address_form,
             'document_form': document_form,
-            'reminder_form': reminder_form
+            'reminder_form': reminder_form,
+            'recovery_form': recovery_form
         }
     )
 

@@ -68,6 +68,11 @@ class File(Base):
         ('اعتباری خرید کالا', 'اعتباری خرید کالا'),
         ('خرید خودرو', 'خرید خودرو'),
     )
+    ASSURANCE_TYPE = (
+        ('خرد', 'خرد'),
+        ('متوسط', 'متوسط'),
+        ('کلان', 'کلان'),
+    )
     file_code = models.CharField(_(u'کد پرونده'), max_length=200, unique=True)
     contract_code = models.CharField(_(u'شماره قرارداد'), max_length=200, unique=True)
     main_deposit = models.PositiveIntegerField(_(u'اصل مبلغ بدهی'), default=100)
@@ -88,6 +93,17 @@ class File(Base):
 
     def __str__(self):
         return "{}".format(self.file_code)
+
+    @property
+    def assurance(self):
+        if self.main_deposit < 10000000:
+            return 'خرد'
+
+        if 10000000 < self.main_deposit < 1000000000:
+            return 'متوسط'
+
+        if self.main_deposit < 1000000000:
+            return 'کلان'
 
 
 @python_2_unicode_compatible

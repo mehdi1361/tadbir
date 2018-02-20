@@ -55,8 +55,8 @@
 						<div class="widget darkblue-2 animated fadeInDown">
 							<div class="widget-content padding">
 								<div class="text-box">
-									<p class="maindata"><b>وجه التزام</b></p>
-									<h2><span class="animate-number" data-value="{{ file.nc_deposit }}" data-duration="3000">6,399</span></h2>
+									<p class="maindata"><b>مبلغ وصولی</b></p>
+									<h2><span class="animate-number" data-value="{{ recovery_sum }}" data-duration="3000">6,399</span></h2>
 
 									<div class="clearfix"></div>
 								</div>
@@ -175,6 +175,9 @@
                 </li>
                 <li class="">
                     <a href="#demo5-dropdown6" data-toggle="tab">یادآوری</a>
+                </li>
+                <li class="">
+                    <a href="#demo5-dropdown7" data-toggle="tab">وصولی</a>
                 </li>
             </ul>
 
@@ -384,13 +387,12 @@
                                             {{ phone_form.phone_number }}
                                         </div>
                                       </div>
-
                                       <div class="form-group">
                                         <label for="input-text" class="col-sm-3 control-label">
-                                            {{ phone_form.person_type.label }}
+                                            {{ phone_form.phone_owner.label }}
                                         </label>
                                         <div class="col-sm-10">
-                                            {{ phone_form.person_type }}
+                                            {{ phone_form.phone_owner }}
                                         </div>
                                       </div>
 
@@ -432,6 +434,7 @@
 												<th>شماره</th>
 												<th>پرونده</th>
 												<th>نوع پیگیری</th>
+												<th>نام صاحب خط</th>
 												<th>شرح</th>
 											</tr>
 										</thead>
@@ -442,7 +445,7 @@
                                                     <td>{{ forloop.counter }}</td>
                                                     <td><strong>{{ phone.phone_number }}</strong></td>
                                                     <td>{{ phone.person_type }}</td>
-                                                    <td>{{ phone.type }}</td>
+                                                    <td>{{ phone.phone_owner.person.full_name }}</td>
                                                     <td>{{ phone.description }}</td>
                                                 </tr>
                                             {% endfor %}
@@ -726,6 +729,114 @@
 							</div>
 
                 </div>
+
+                <div class="tab-pane fade" id="demo5-dropdown7">
+                    <p style="text-align:justify">
+                        <form class="form-horizontal" role="form" action="" enctype="multipart/form-data" method="post">
+                                      <div class="form-group">
+                                        <label for="input-text" class="col-sm-3 control-label">
+                                            {{ recovery_form.recovery_type.label }}
+                                        </label>
+                                        <div class="col-sm-10">
+                                            {{ recovery_form.recovery_type }}
+                                        </div>
+                                      </div>
+
+                                      <div class="form-group">
+                                        <label for="input-text" class="col-sm-3 control-label">
+                                            {{ recovery_form.recovery_date.label }}
+                                        </label>
+                                        <div class="col-sm-10">
+                                            {{ recovery_form.recovery_date }}
+                                            <script>
+                                                Calendar.setup({
+                                                    inputField: 'recovery_date',
+                                                    button: 'date_btn',
+                                                    ifFormat: '%Y-%m-%d',
+                                                    dateType: 'jalali'
+                                                });
+                                            </script>
+                                        </div>
+                                      </div>
+
+                                      <div class="form-group">
+                                        <label for="input-text" class="col-sm-3 control-label">
+                                            {{ recovery_form.value.label }}
+                                        </label>
+                                        <div class="col-sm-10">
+                                            {{ recovery_form.value }}
+                                        </div>
+                                      </div>
+
+                                      <div class="form-group">
+                                        <label for="input-text" class="col-sm-3 control-label">
+                                            {{ recovery_form.value_code.label }}
+                                        </label>
+                                        <div class="col-sm-10">
+                                            {{ recovery_form.value_code }}
+                                        </div>
+                                      </div>
+
+                                      <div class="form-group">
+                                        <label for="input-text" class="col-sm-3 control-label">
+                                            {{ recovery_form.detail.label }}
+                                        </label>
+                                        <div class="col-sm-10">
+                                            {{ recovery_form.detail }}
+                                        </div>
+                                      </div>
+                                        <div class="col-lg-12">
+                                            {% csrf_token %}
+                                            <input type="submit" value="ایجاد" onclick="off()" class="btn btn-success">
+                                            <a href="#" onclick="off()" class="btn btn-danger md-close">بستن</a>
+                                        </div>
+                                        <hr>
+                                    </form>
+                    </p>
+
+                    <div class="widget-content">
+								<div class="table-responsive">
+										<table data-sortable="" class="table" data-sortable-initialized="true">
+										<thead>
+											<tr>
+												<th>شماره</th>
+												<th>نوع وصولی</th>
+												<th>مبلغ</th>
+												<th>شماره سند</th>
+												<th>شرح</th>
+												<th> تاریخ وصول</th>
+												<th> تاریخ ثبت</th>
+												<th>تاییدیه مالی</th>
+											</tr>
+										</thead>
+
+										<tbody>
+                                            {% for recovery in file.recoveries.all %}
+                                                <tr>
+                                                    <td>{{ forloop.counter }}</td>
+                                                    <td>{{ recovery.recovery_type }}</td>
+                                                    <td>{{ recovery.value }}</td>
+                                                    <td>{{ recovery.value_code }}</td>
+                                                    <td>{{ recovery.detail }}</td>
+                                                    <td>{{ recovery.recovery_date }}</td>
+                                                    <td>{{ recovery.created_at }}</td>
+                                                    <td>
+                                                        {% if recovery.assurance_confirm == True %}
+                                                            <span style="font-family: wingdings; font-size: 100%;">
+                                                                &#10003;
+                                                            </span>
+                                                        {% endif %}
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+										</tbody>
+									</table>
+								</div>
+							</div>
+
+                </div>
+
+
             </div> <!-- / .tab-content -->
 
         </div>

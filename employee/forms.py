@@ -1,7 +1,8 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import Profile, FollowUp, PhoneFile, AddressFile, DocumentFile, FileReminder
-from ckeditor.widgets import CKEditorWidget
+
+from .models import Profile, FollowUp, PhoneFile, AddressFile, \
+    DocumentFile, FileReminder, FileRecovery
 from django.core.exceptions import ValidationError
 
 
@@ -93,9 +94,22 @@ class FollowUpForm(forms.ModelForm):
 
 
 class PhoneFileForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        self.file_id = kwargs.pop('file_id')
-        super(PhoneFileForm, self).__init__(*args, **kwargs)
+    class Meta:
+        model = PhoneFile
+        fields = [
+            'phone_number',
+            'phone_owner',
+            'description'
+        ]
+        widgets = {
+            'phone_number': forms.TextInput(attrs={
+                'class': 'form-control'
+            }),
+            'person_owner': forms.Select(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={
+                'class': 'form-control'
+            }),
+        }
 
     def clean(self):
         cleaned_data = self.cleaned_data
@@ -110,27 +124,6 @@ class PhoneFileForm(forms.ModelForm):
             raise ValidationError(msg)
 
         return cleaned_data
-
-    class Meta:
-        model = PhoneFile
-        fields = [
-            'phone_number',
-            'phone_owner',
-            'person_type',
-            'type',
-            'description'
-        ]
-        widgets = {
-            'phone_number': forms.TextInput(attrs={
-                'class': 'form-control'
-            }),
-            'person_owner': forms.Select(attrs={'class': 'form-control'}),
-            'person_type': forms.Select(attrs={'class': 'form-control'}),
-            'type': forms.Select(attrs={'class': 'form-control'}),
-            'description': forms.Textarea(attrs={
-                'class': 'form-control'
-            }),
-        }
 
 
 class AddressForm(forms.ModelForm):
@@ -184,4 +177,25 @@ class ReminderForm(forms.ModelForm):
                 'class': 'form-control'
             }),
             'persian_date': forms.TextInput(attrs={'id': 'persian_date'})
+        }
+
+
+class RecoveryForm(forms.ModelForm):
+    class Meta:
+        model = FileRecovery
+        fields = [
+            'recovery_type',
+            'value',
+            'value_code',
+            'recovery_date',
+            'detail'
+        ]
+        widgets = {
+            'recovery_type': forms.Select(attrs={'class': 'form-control'}),
+            'value': forms.TextInput(attrs={'class': 'form-control'}),
+            'value_code': forms.TextInput(attrs={'class': 'form-control'}),
+            'recovery_date': forms.TextInput(attrs={'id': 'recovery_date'}),
+            'detail': forms.Textarea(attrs={
+                'class': 'form-control'
+            }),
         }
