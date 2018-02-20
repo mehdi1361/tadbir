@@ -1,5 +1,7 @@
 from django import forms
-from .models import Bank, ManagementAreas, Branch, File, Assurance, PersonFile, Person, Office, FileOffice
+from .models import Bank, ManagementAreas, Branch, \
+    File, Assurance, PersonFile, Person, Office, FileOffice, SmsType
+
 from dal import autocomplete
 from django.forms.models import inlineformset_factory
 
@@ -173,6 +175,21 @@ class AssuranceForm(forms.ModelForm):
             'assurance_number': forms.TextInput(attrs={'class': 'form-control'}),
             'assurance_value': forms.TextInput(attrs={'class': 'form-control'}),
             'description': forms.Textarea(attrs={'class': 'form-control'}),
+
+        }
+
+
+class SmsTypeForm(forms.ModelForm):
+    class Meta:
+        model = SmsType
+
+        fields = [
+            'subject',
+            'detail',
+        ]
+        widgets = {
+            'subject': forms.TextInput(attrs={'class': 'form-control'}),
+            'detail': forms.Textarea(attrs={'class': 'form-control'}),
 
         }
 

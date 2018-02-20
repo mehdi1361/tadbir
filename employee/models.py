@@ -7,7 +7,8 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils.encoding import python_2_unicode_compatible
-from ckeditor.fields import RichTextField
+from django_jalali.db import models as jmodels
+from bank.models import SmsType
 
 
 @python_2_unicode_compatible
@@ -74,16 +75,18 @@ class FollowUp(Base):
 
 @python_2_unicode_compatible
 class SmsCaution(Base):
-    TYPE = (
-        ('caution1', 'اخطار اول'),
-        ('caution2', 'اخطار دوم'),
-        ('caution3', 'اخطار سوم'),
+    STATUS_TYPE = (
+        ('در صف ارسال', 'در صف ارسال'),
+        ('ارسال شد', 'ارسال شد'),
+        ('دریافت شد', 'دریافت شد'),
+        ('خطا در زمان ارسال', 'خطا در زمان ارسال'),
     )
 
-    caution_type = models.CharField(_('نوع اخطار'), max_length=20, choices=TYPE, default='caution1')
+    type = models.ForeignKey(SmsType, verbose_name=_('نوع پیامک'), null=True)
+    mobile_number = models.CharField(_('شماره تلفن'), max_length=12, default=None)
     file = models.ForeignKey(File, verbose_name=_('پرونده'), related_name='sms_cautions')
+    status = models.CharField(_('وضعیت'), max_length=100, choices=STATUS_TYPE, default='در صف ارسال')
     description = models.TextField(_('توضیحات'), null=True, default=None)
-    # description = RichTextField(null=True)
 
     class Meta:
         verbose_name = _('employee_file_sms_caution')
@@ -108,6 +111,7 @@ class PhoneFile(Base):
     )
 
     phone_number = models.CharField(_('شماره تماس'), max_length=20)
+    phone_owner = models.CharField(_('نام شخص'), max_length=20, null=True)
     file = models.ForeignKey(File, verbose_name=_('پرونده'), related_name='phones')
     person_type = models.CharField(_('مالک'), max_length=10, choices=PERSON_TYPE, default='مدیون')
     type = models.CharField(_('نوع خط'), max_length=10, choices=TYPE, default='ثابت')
@@ -181,6 +185,7 @@ class FileReminder(Base):
     file = models.ForeignKey(File, verbose_name=_('پرونده'), related_name='reminders')
     subject = models.CharField(_('موضوع'), max_length=100)
     detail = models.TextField(_('شرح'))
+    persian_date = jmodels.jDateField(_('تاریخ'), null=True)
 
     class Meta:
         verbose_name = _('file_reminder')

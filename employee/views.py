@@ -2,11 +2,11 @@ from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from .forms import LoginForm, UserRegistrationForm, \
-    ProfileForm, FollowUpForm, PhoneFileForm, AddressForm, DocumentForm
+    ProfileForm, FollowUpForm, PhoneFileForm, AddressForm, DocumentForm, ReminderForm
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
-from .models import EmployeeFile,DocumentFile
+from .models import EmployeeFile, DocumentFile
 from bank.models import File
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
@@ -87,9 +87,10 @@ def register_profile(request):
 def file_document(request, file_id):
     file = get_object_or_404(File, pk=file_id)
     follow_form = FollowUpForm(request.POST)
-    phone_form = PhoneFileForm(request.POST)
+    phone_form = PhoneFileForm(request.POST, file_id=file_id)
     address_form = AddressForm(request.POST)
     document_form = DocumentForm(request.POST, request.FILES or None)
+    reminder_form = ReminderForm(request.POST)
 
     if request.method == 'POST':
         if follow_form.is_valid():
@@ -142,13 +143,26 @@ def file_document(request, file_id):
         else:
             print(document_form.errors)
 
-        document_form = DocumentForm()
+        if reminder_form.is_valid():
+            try:
+
+                result_reminder_form = reminder_form.save(commit=False)
+                result_reminder_form.file = file
+                result_reminder_form.save()
+                reminder_form = ReminderForm()
+            except:
+                reminder_form = ReminderForm()
+
+        else:
+            print(reminder_form.errors)
+            reminder_form = ReminderForm()
 
     else:
         follow_form = FollowUpForm()
-        phone_form = PhoneFileForm()
+        phone_form = PhoneFileForm(file_id=file_id)
         address_form = AddressForm()
         document_form = DocumentForm()
+        reminder_form = ReminderForm()
 
     return render(
         request,
@@ -158,7 +172,8 @@ def file_document(request, file_id):
             'follow_form': follow_form,
             'phone_form': phone_form,
             'address_form': address_form,
-            'document_form': document_form
+            'document_form': document_form,
+            'reminder_form': reminder_form
         }
     )
 

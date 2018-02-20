@@ -93,10 +93,29 @@ class FollowUpForm(forms.ModelForm):
 
 
 class PhoneFileForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        self.file_id = kwargs.pop('file_id')
+        super(PhoneFileForm, self).__init__(*args, **kwargs)
+
+    def clean(self):
+        cleaned_data = self.cleaned_data
+
+        objects = PhoneFile.objects.filter(
+            file=cleaned_data.get('file'),
+            phone_number=cleaned_data.get('phone_number')
+        )
+
+        if len(objects) > 0:
+            msg = u"This row is not unique"
+            raise ValidationError(msg)
+
+        return cleaned_data
+
     class Meta:
         model = PhoneFile
         fields = [
             'phone_number',
+            'phone_owner',
             'person_type',
             'type',
             'description'
@@ -105,26 +124,13 @@ class PhoneFileForm(forms.ModelForm):
             'phone_number': forms.TextInput(attrs={
                 'class': 'form-control'
             }),
+            'person_owner': forms.Select(attrs={'class': 'form-control'}),
             'person_type': forms.Select(attrs={'class': 'form-control'}),
             'type': forms.Select(attrs={'class': 'form-control'}),
             'description': forms.Textarea(attrs={
                 'class': 'form-control'
             }),
         }
-
-        def clean(self):
-            cleaned_data = self.cleaned_data
-
-            objects = PhoneFile.objects.filter(
-                file=cleaned_data.get('file'),
-                phone_number=cleaned_data.get('phone_number')
-            )
-
-            if len(objects) > 0:
-                msg = u"This row is not unique"
-                raise ValidationError(msg)
-
-            return cleaned_data
 
 
 class AddressForm(forms.ModelForm):
@@ -164,17 +170,18 @@ class DocumentForm(forms.ModelForm):
         }
 
 
-# class ReminderForm(forms.ModelForm):
-#     class Meta:
-#         model = DocumentFile
-#         fields = [
-#             'type',
-#             'description',
-#             'image_upload',
-#         ]
-#         widgets = {
-#             'type': forms.Select(attrs={'class': 'form-control'}),
-#             'description': forms.Textarea(attrs={
-#                 'class': 'form-control'
-#             })
-#         }
+class ReminderForm(forms.ModelForm):
+    class Meta:
+        model = FileReminder
+        fields = [
+            'subject',
+            'detail',
+            'persian_date'
+        ]
+        widgets = {
+            'subject': forms.TextInput(attrs={'class': 'form-control'}),
+            'detail': forms.Textarea(attrs={
+                'class': 'form-control'
+            }),
+            'persian_date': forms.TextInput(attrs={'id': 'persian_date'})
+        }

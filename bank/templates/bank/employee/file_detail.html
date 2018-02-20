@@ -173,6 +173,9 @@
                 <li class="">
                     <a href="#demo5-dropdown5" data-toggle="tab">اسناد</a>
                 </li>
+                <li class="">
+                    <a href="#demo5-dropdown6" data-toggle="tab">یادآوری</a>
+                </li>
             </ul>
 
             <div class="tab-content">
@@ -647,6 +650,81 @@
 {#                                </div>#}
                             </div>
                     </div>
+                </div>
+                <div class="tab-pane fade" id="demo5-dropdown6">
+                    <p style="text-align:justify">
+                                    <form class="form-horizontal" role="form" action="" enctype="multipart/form-data" method="post">
+                                      <div class="form-group">
+                                        <label for="input-text" class="col-sm-3 control-label">
+                                            {{ reminder_form.subject.label }}
+                                        </label>
+                                        <div class="col-sm-10">
+                                            {{ reminder_form.subject }}
+                                        </div>
+                                      </div>
+
+                                      <div class="form-group">
+                                        <label for="input-text" class="col-sm-3 control-label">
+                                            {{ reminder_form.persian_date.label }}
+                                        </label>
+                                        <div class="col-sm-10">
+                                            {{ reminder_form.persian_date }}
+                                            <script>
+                                                Calendar.setup({
+                                                    inputField: 'persian_date',
+                                                    button: 'date_btn',
+                                                    ifFormat: '%Y-%m-%d',
+                                                    dateType: 'jalali'
+                                                });
+                                            </script>
+                                        </div>
+                                      </div>
+
+                                      <div class="form-group">
+                                        <label for="input-text" class="col-sm-3 control-label">
+                                            {{ reminder_form.detail.label }}
+                                        </label>
+                                        <div class="col-sm-10">
+                                            {{ reminder_form.detail }}
+                                        </div>
+                                      </div>
+
+                                        <div class="col-lg-12">
+                                            {% csrf_token %}
+                                            <input type="submit" value="ایجاد" onclick="off()" class="btn btn-success">
+                                            <a href="#" onclick="off()" class="btn btn-danger md-close">بستن</a>
+                                        </div>
+                                        <hr>
+                                    </form>
+                    </p>
+
+                    <div class="widget-content">
+								<div class="table-responsive">
+										<table data-sortable="" class="table" data-sortable-initialized="true">
+										<thead>
+											<tr>
+												<th>شماره</th>
+												<th>موضوع</th>
+												<th>شرح</th>
+											</tr>
+										</thead>
+
+										<tbody>
+                                            {% for reminder in file.reminders.all %}
+                                                <tr>
+                                                    <td>{{ forloop.counter }}</td>
+                                                    <td>{{ reminder.subject }}</td>
+                                                    <td>{{ reminder.detail }}</td>
+                                                    <td>
+                                                        {{ reminder.persian_date }}
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+										</tbody>
+									</table>
+								</div>
+							</div>
+
                 </div>
             </div> <!-- / .tab-content -->
 

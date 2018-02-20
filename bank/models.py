@@ -186,5 +186,15 @@ class Assurance(Base, Document):
         return "{}-{}".format(self.assurance_type, self.file)
 
 
+@python_2_unicode_compatible
+class SmsType(Base):
+    subject = models.CharField(_('موضوع پیامک'), max_length=50)
+    detail = models.TextField(_('مشروح پیامک'))
 
+    class Meta:
+        verbose_name = _('sms_type')
+        verbose_name_plural = _('sms_types')
+        db_table = 'sms_types'
 
+    def __str__(self):
+        return "{}".format(self.subject)

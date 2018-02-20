@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Bank, ManagementAreas, Branch, File
+from .models import Bank, ManagementAreas, Branch, File, SmsType
 
 
 class ManagementInline(admin.TabularInline):
@@ -30,4 +30,12 @@ class FileAdmin(admin.ModelAdmin):
         'status',
         'created_at',
         'update_at'
+    )
+
+
+@admin.register(SmsType)
+class SmsTypeAdmin(admin.ModelAdmin):
+    list_display = (
+        'subject',
+        'detail'
     )
