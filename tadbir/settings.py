@@ -35,9 +35,6 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    # 'material',
-    # 'material.frontend',
-    # 'material.admin',
     'bootstrap_admin',
     'django_jalali',
     'django_cron',
@@ -53,7 +50,6 @@ INSTALLED_APPS = [
     'bank',
     'employee',
     'reports',
-    'chartit',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -157,6 +153,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 CRON_CLASSES = [
     "reports.crons.PersonDailyReportJob",
+    "employee.crons.SmsSenderJob",
     # ...
 ]
 

@@ -1,6 +1,7 @@
 {% extends 'bank/base.html' %}
 
 {% block content %}
+    <div id="overlay"></div>
     <ul>
             <div class="row">
                 <div class="col-md-12 portlets ui-sortable">
@@ -122,4 +123,14 @@
 					</div>
 				</div>
     </ul>
+     <script>
+        function on() {
+            document.getElementById("overlay").style.display = "block";
+        }
+
+        function off() {
+            document.getElementById("overlay").style.display = "none";
+        }
+    </script>
+
 {% endblock %}

@@ -82,13 +82,14 @@ class SmsCaution(Base):
         ('خطا در زمان ارسال', 'خطا در زمان ارسال'),
     )
 
-    type = models.ForeignKey(SmsType, verbose_name=_('نوع پیامک'), null=True)
-    mobile_number = models.CharField(_('شماره تلفن'), max_length=12, default=None)
+    type = models.ForeignKey(SmsType, verbose_name=_('نوع پیامک'), null=True, related_name='sms_cautions')
+    mobile_number = models.ForeignKey('PhoneFile', verbose_name=_('شماره تلفن'))
     file = models.ForeignKey(File, verbose_name=_('پرونده'), related_name='sms_cautions')
     status = models.CharField(_('وضعیت'), max_length=100, choices=STATUS_TYPE, default='در صف ارسال')
     description = models.TextField(_('توضیحات'), null=True, default=None)
 
     class Meta:
+        unique_together = ('mobile_number', 'file', 'type')
         verbose_name = _('employee_file_sms_caution')
         verbose_name_plural = _('employee_file_sms_caution')
         db_table = 'employee_file_sms_caution'
@@ -100,7 +101,7 @@ class SmsCaution(Base):
 @python_2_unicode_compatible
 class PhoneFile(Base):
     phone_number = models.CharField(_('شماره تماس'), max_length=20)
-    phone_owner = models.ForeignKey(PersonFile, verbose_name=_('نام شخص'), null=True)
+    phone_owner = models.ForeignKey(PersonFile, verbose_name=_('نام شخص'), null=True, related_name='phones')
     file = models.ForeignKey(File, verbose_name=_('پرونده'), related_name='phones')
     description = models.TextField(_('توضیحات'), null=True, default=None)
 

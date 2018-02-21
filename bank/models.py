@@ -204,7 +204,7 @@ class Assurance(Base, Document):
 
 @python_2_unicode_compatible
 class SmsType(Base):
-    subject = models.CharField(_('موضوع پیامک'), max_length=50)
+    subject = models.CharField(_('موضوع پیامک'), max_length=50, unique=True)
     detail = models.TextField(_('مشروح پیامک'))
     enable = models.BooleanField(_('فعال'), default=True)
 

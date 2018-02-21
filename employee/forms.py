@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 
 from .models import Profile, FollowUp, PhoneFile, AddressFile, \
-    DocumentFile, FileReminder, FileRecovery
+    DocumentFile, FileReminder, FileRecovery, SmsCaution
 from django.core.exceptions import ValidationError
 
 
@@ -196,6 +196,23 @@ class RecoveryForm(forms.ModelForm):
             'value_code': forms.TextInput(attrs={'class': 'form-control'}),
             'recovery_date': forms.TextInput(attrs={'id': 'recovery_date'}),
             'detail': forms.Textarea(attrs={
+                'class': 'form-control'
+            }),
+        }
+
+
+class SmsCautionForm(forms.ModelForm):
+    class Meta:
+        model = SmsCaution
+        fields = [
+            'type',
+            'mobile_number',
+            'description'
+        ]
+        widgets = {
+            'type': forms.Select(attrs={'class': 'form-control'}),
+            'mobile_number': forms.Select(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={
                 'class': 'form-control'
             }),
         }

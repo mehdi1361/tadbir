@@ -3,11 +3,11 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from .forms import LoginForm, UserRegistrationForm, \
     ProfileForm, FollowUpForm, PhoneFileForm, AddressForm, \
-    DocumentForm, ReminderForm, RecoveryForm
+    DocumentForm, ReminderForm, RecoveryForm, SmsCautionForm
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
-from .models import EmployeeFile, DocumentFile
+from .models import EmployeeFile, DocumentFile, PhoneFile
 from bank.models import File
 from django.shortcuts import get_object_or_404
 from django.db.models import Q, Sum
@@ -98,6 +98,8 @@ def file_document(request, file_id):
     reminder_form = ReminderForm(request.POST)
 
     recovery_form = RecoveryForm(request.POST)
+    sms_form = SmsCautionForm(request.POST)
+    sms_form.fields['mobile_number'].queryset = PhoneFile.objects.filter(file=file)
 
     if request.method == 'POST':
         if follow_form.is_valid():
@@ -177,6 +179,23 @@ def file_document(request, file_id):
             except:
                 recovery_form = RecoveryForm()
 
+        if sms_form.is_valid():
+            try:
+                result_sms_form = sms_form.save(commit=False)
+                result_sms_form.file = file
+                result_sms_form.save()
+                messages.add_message(request, messages.SUCCESS, 'پیامک با موفقیت ثبت شد')
+                sms_form = SmsCautionForm()
+                sms_form.fields['mobile_number'].queryset = PhoneFile.objects.filter(file=file)
+
+            except:
+                messages.add_message(request, messages.ERROR, 'هشدار پیامک تکراری است.')
+                sms_form = SmsCautionForm()
+                sms_form.fields['mobile_number'].queryset = PhoneFile.objects.filter(file=file)
+
+        else:
+            sms_form = SmsCautionForm()
+
     else:
         follow_form = FollowUpForm()
         phone_form = PhoneFileForm()
@@ -185,6 +204,8 @@ def file_document(request, file_id):
         document_form = DocumentForm()
         reminder_form = ReminderForm()
         recovery_form = RecoveryForm()
+        sms_form = SmsCautionForm()
+        sms_form.fields['mobile_number'].queryset = PhoneFile.objects.filter(file=file)
 
     return render(
         request,
@@ -197,7 +218,8 @@ def file_document(request, file_id):
             'address_form': address_form,
             'document_form': document_form,
             'reminder_form': reminder_form,
-            'recovery_form': recovery_form
+            'recovery_form': recovery_form,
+            'sms_form': sms_form
         }
     )
 
