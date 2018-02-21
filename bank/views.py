@@ -4,9 +4,10 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 
-from .models import Bank, ManagementAreas, Branch, File, Person, Office
+from .models import Bank, ManagementAreas, Branch, File, Person, Office, SmsType
 from django.views.generic import ListView
-from .forms import BankForm, AreaForm, BranchForm, FileForm, PersonForm, AssuranceForm, PersonFileForm, FileOfficeForm
+from .forms import BankForm, AreaForm, BranchForm, FileForm, \
+    PersonForm, AssuranceForm, PersonFileForm, FileOfficeForm, SmsTypeForm
 from django.shortcuts import get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from dal import autocomplete
@@ -298,3 +299,26 @@ def get_person_office(request):
         persons_office = paginator.page(paginator.num_pages)
 
     return render(request, 'bank/person_office/list.html', {'persons_office': persons_office, 'page': page})
+
+
+@login_required(login_url='/employee/login/')
+def sms_type_list(request):
+    if request.method == 'POST':
+        form = SmsTypeForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.add_message(request, messages.SUCCESS, 'نوع پیامک با موفقیت ذخیره شد.')
+            form = SmsTypeForm()
+
+        else:
+            messages.add_message(request, messages.WARNING, form.errors)
+            form = SmsTypeForm(request.POST)
+
+    else:
+        form = SmsTypeForm()
+
+    types = SmsType.objects.all()
+    return render(request, 'bank/sms_type/list.html',
+                  {'types': types,
+                   'form': form}
+                  )

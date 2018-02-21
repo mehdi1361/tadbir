@@ -165,7 +165,6 @@ def file_document(request, file_id):
                 reminder_form = ReminderForm()
 
         else:
-            print(reminder_form.errors)
             reminder_form = ReminderForm()
 
         if recovery_form.is_valid():

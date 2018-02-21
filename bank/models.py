@@ -206,6 +206,7 @@ class Assurance(Base, Document):
 class SmsType(Base):
     subject = models.CharField(_('موضوع پیامک'), max_length=50)
     detail = models.TextField(_('مشروح پیامک'))
+    enable = models.BooleanField(_('فعال'), default=True)
 
     class Meta:
         verbose_name = _('sms_type')
