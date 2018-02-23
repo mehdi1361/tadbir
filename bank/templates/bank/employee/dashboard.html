@@ -1,6 +1,231 @@
 {% extends 'bank/base.html' %}
 {%  load staticfiles %}
 {% block content %}
+    <script>
+    $(document).ready(function(){
+        var endpoint = '/api/user/daily/'
+        var defaultData = []
+        var labels = [];
+        $.ajax({
+            method: "GET",
+            url: endpoint,
+            success: function(data){
+                labels = data.labels
+                defaultData = data.default
+                setChart()
+            },
+            error: function(error_data){
+                console.log("error")
+                console.log(error_data)
+            }
+        })
+
+        var endpoint_file = '/api/user/daily/value/'
+{#        var defaultData_file = []#}
+{#        var labels_file = [];#}
+        $.ajax({
+            method: "GET",
+            url: endpoint_file,
+            success: function(data){
+                labels = data.labels
+                defaultData = data.default
+                setChart2()
+            },
+            error: function(error_data){
+                console.log("error")
+                console.log(error_data)
+            }
+        })
+
+        function setChart(){
+            var ctx = document.getElementById("myChart");
+            var ctx2 = document.getElementById("myChart2");
+            var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'آمار روزانه پیگیری ها',
+                    data: defaultData,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero:true
+                        }
+                    }]
+                }
+            }
+        });
+
+            var myChart2 = new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'آمار روزانه وصولی ها',
+                    data: defaultData,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(255,99,132,1)',
+                        'rgba(255,99,132,1)',
+                        'rgba(255,99,132,1)',
+                        'rgba(255,99,132,1)',
+                        'rgba(255,99,132,1)',
+                        'rgba(255,99,132,1)',
+                        'rgba(255,99,132,1)',
+                        'rgba(255,99,132,1)',
+                        'rgba(255,99,132,1)',
+                        'rgba(255,99,132,1)',
+                        'rgba(255,99,132,1)',
+                        'rgba(255,99,132,1)',
+                        'rgba(255,99,132,1)',
+                        'rgba(255,99,132,1)',
+                        'rgba(255,99,132,1)',
+                        'rgba(255,99,132,1)',
+                        'rgba(255,99,132,1)',
+                        'rgba(255,99,132,1)',
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero:true
+                        }
+                    }]
+                }
+            }
+        });
+        }
+        function setChart2(){
+            var ctx2 = document.getElementById("myChart2");
+
+            var myChart2 = new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'آمار روزانه وصولی ها',
+                    data: defaultData,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(255,99,132,1)',
+                        'rgba(255,99,132,1)',
+                        'rgba(255,99,132,1)',
+                        'rgba(255,99,132,1)',
+                        'rgba(255,99,132,1)',
+                        'rgba(255,99,132,1)',
+                        'rgba(255,99,132,1)',
+                        'rgba(255,99,132,1)',
+                        'rgba(255,99,132,1)',
+                        'rgba(255,99,132,1)',
+                        'rgba(255,99,132,1)',
+                        'rgba(255,99,132,1)',
+                        'rgba(255,99,132,1)',
+                        'rgba(255,99,132,1)',
+                        'rgba(255,99,132,1)',
+                        'rgba(255,99,132,1)',
+                        'rgba(255,99,132,1)',
+                        'rgba(255,99,132,1)',
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero:true
+                        }
+                    }]
+                }
+            }
+        });
+        }
+    })
+    // var ctx = document.getElementById("myChart");
+    {#{% endblock %}#}
+    </script>
 <div class="row top-summary">
     <div class="col-lg-3 col-md-6">
         <div class="widget green-1 animated fadeInDown">
@@ -86,345 +311,109 @@
     </div>
 </div>
 <!-- End of info box -->
-
+<div class="row">
+    <div class="col-lg-12 portlets ui-sortable">
+        <div id="website-statistics1" class="widget">
+            <canvas id="myChart" width="200" height="50"></canvas>
+        </div>
+    </div>
+</div>
 <div class="row">
     <div class="col-lg-8 portlets ui-sortable">
         <div id="website-statistics1" class="widget">
-            <div class="widget-header transparent">
-                <h2><i class="icon-chart-line"></i> <strong>آمار </strong> وصولی ماه گذشته</h2>
+            <canvas id="myChart2" width="200" height="87"></canvas>
+        </div>
+    </div>
+    <div class="col-lg-4 portlets ui-sortable">
+        <div id="todo-app" class="widget">
+            <div class="widget-header centered">
+                <div class="left-btn"><a class="btn btn-sm btn-default add-todo"><i class="fa fa-plus"></i></a></div>
+                <h2>لیست رویدادها</h2>
                 <div class="additional-btn">
                     <a href="#" class="hidden reload"><i class="icon-ccw-1"></i></a>
-                      <a class="hidden" id="dropdownMenu1" data-toggle="dropdown">
-                        <i class="fa fa-cogs"></i>
-                      </a>
-                      <ul class="dropdown-menu pull-right" role="menu" aria-labelledby="dropdownMenu1">
-                            <li><a href="#">فعالیت</a></li>
-                            <li><a href="#">سایر فعالیت ها</a></li>
-                            <li><a href="#">چیز دیگری اینجاست</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#">لینک های جداکننده</a></li>
-                      </ul>
-                     <a href="#" class="widget-popout hidden tt" title="Pop Out/In"><i class="icon-publish"></i></a>
+                    <a href="#" class="widget-popout hidden tt" title="Pop Out/In"><i class="icon-publish"></i></a>
                     <a href="#" class="widget-maximize hidden"><i class="icon-resize-full-1"></i></a>
                     <a href="#" class="widget-toggle"><i class="icon-down-open-2"></i></a>
                     <a href="#" class="widget-close"><i class="icon-cancel-3"></i></a>
                 </div>
             </div>
-            <div class="widget-content">
-                <div id="website-statistic" class="statistic-chart">
-                    <div class="row stacked">
-                        <div class="col-sm-12">
-                            <div class="toolbar">
-                                <div class="pull-left">
-                                    <div class="btn-group">
-                                        <a href="#" class="btn btn-default btn-xs">روزانه</a>
-                                        <a href="#" class="btn btn-default btn-xs active">ماهانه</a>
-                                        <a href="#" class="btn btn-default btn-xs">سالانه</a>
-                                    </div>
-                                </div>
-                                <div class="pull-right">
-                                    <div class="btn-group">
-                                      <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
-                                        خروجی سازی <i class="icon-down-open-2"></i>
-                                      </a>
-                                      <ul class="dropdown-menu pull-right" role="menu">
-                                        <li><a href="#">خروجی پی دی اف</a></li>
-                                        <li><a href="#">خروجی با فرمت CSV</a></li>
-                                        <li><a href="#">خروجی با فرمت PNG</a></li>
-                                        <li class="divider"></li>
-                                        <li><a href="#">لینکهای جداگانه</a></li>
-                                      </ul>
-                                    </div>
-                                    <a href="#" class="btn btn-primary btn-xs"><i class="icon-cog-2"></i></a>
-                                </div>
-                                <div class="clearfix"></div>
-                            </div>
-                            <div class="clearfix"></div>
-                            <div id="morris-home" class="morris-chart" style="height: 270px; position: relative;"><svg height="270" version="1.1" width="703" xmlns="http://www.w3.org/2000/svg" style="overflow: hidden; position: relative; top: -0.716675px;"><desc>Created with Raphaël 2.1.2</desc><defs></defs><text style="text-anchor: end; font: normal normal normal normal 12px sans-serif;" x="49" y="245" text-anchor="end" font="10px &quot;Arial&quot;" stroke="none" fill="#888888" font-size="12px" font-family="sans-serif" font-weight="normal"><tspan dy="4">0</tspan></text><path style="" fill="none" stroke="#dddddd" d="M54,245H693" stroke-width="0.5"></path><text style="text-anchor: end; font: normal normal normal normal 12px sans-serif;" x="49" y="186.25" text-anchor="end" font="10px &quot;Arial&quot;" stroke="none" fill="#888888" font-size="12px" font-family="sans-serif" font-weight="normal"><tspan dy="4">5,000</tspan></text><path style="" fill="none" stroke="#dddddd" d="M54,186.25H693" stroke-width="0.5"></path><text style="text-anchor: end; font: normal normal normal normal 12px sans-serif;" x="49" y="127.5" text-anchor="end" font="10px &quot;Arial&quot;" stroke="none" fill="#888888" font-size="12px" font-family="sans-serif" font-weight="normal"><tspan dy="4">10,000</tspan></text><path style="" fill="none" stroke="#dddddd" d="M54,127.5H693" stroke-width="0.5"></path><text style="text-anchor: end; font: normal normal normal normal 12px sans-serif;" x="49" y="68.75" text-anchor="end" font="10px &quot;Arial&quot;" stroke="none" fill="#888888" font-size="12px" font-family="sans-serif" font-weight="normal"><tspan dy="4">15,000</tspan></text><path style="" fill="none" stroke="#dddddd" d="M54,68.75H693" stroke-width="0.5"></path><text style="text-anchor: end; font: normal normal normal normal 12px sans-serif;" x="49" y="10" text-anchor="end" font="10px &quot;Arial&quot;" stroke="none" fill="#888888" font-size="12px" font-family="sans-serif" font-weight="normal"><tspan dy="4">20,000</tspan></text><path style="" fill="none" stroke="#dddddd" d="M54,10H693" stroke-width="0.5"></path><text style="text-anchor: middle; font: normal normal normal normal 12px sans-serif;" x="575.0093666143487" y="250" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#888888" font-size="12px" font-family="sans-serif" font-weight="normal" transform="matrix(1,0,0,1,0,7.5)"><tspan dy="4">2012</tspan></text><text style="text-anchor: middle; font: normal normal normal normal 12px sans-serif;" x="291.5989063844869" y="250" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#888888" font-size="12px" font-family="sans-serif" font-weight="normal" transform="matrix(1,0,0,1,0,7.5)"><tspan dy="4">2011</tspan></text><path style="fill-opacity: 0.85;" fill="#a7b6b6" stroke="none" d="M54,190.1745C71.85065313148701,190.8354375,107.55195939446105,195.51279579558326,125.40261252594806,192.81825C143.261353855501,190.12248329558324,178.97883651460685,173.40872643979057,196.8375778441598,168.61325C214.51029061819656,163.86772643979057,249.85571616627004,151.3925906214039,267.5284289403068,154.65425C284.99893676269556,157.8785906214039,319.939952407473,191.93032991756354,337.41046022986177,194.55725C355.26111336134875,197.24132991756355,390.9624196243228,177.79985043884486,408.8130727558098,175.89825000000002C426.6718140853627,173.99578793884487,462.38929674446865,192.91243455497386,480.24803807402157,179.341C497.92075084805833,165.91093455497384,533.2661763961318,75.38312040798807,550.9388891701685,67.89224999999999C568.6035137461394,60.40480790798808,603.9327628980811,115.56909923707583,621.597387474052,119.42775C639.448040605539,123.32703673707584,675.149346868513,104.0499375,693,98.924L693,245L54,245Z" fill-opacity="0.85"></path><path style="" fill="none" stroke="#869d9d" d="M54,190.1745C71.85065313148701,190.8354375,107.55195939446105,195.51279579558326,125.40261252594806,192.81825C143.261353855501,190.12248329558324,178.97883651460685,173.40872643979057,196.8375778441598,168.61325C214.51029061819656,163.86772643979057,249.85571616627004,151.3925906214039,267.5284289403068,154.65425C284.99893676269556,157.8785906214039,319.939952407473,191.93032991756354,337.41046022986177,194.55725C355.26111336134875,197.24132991756355,390.9624196243228,177.79985043884486,408.8130727558098,175.89825000000002C426.6718140853627,173.99578793884487,462.38929674446865,192.91243455497386,480.24803807402157,179.341C497.92075084805833,165.91093455497384,533.2661763961318,75.38312040798807,550.9388891701685,67.89224999999999C568.6035137461394,60.40480790798808,603.9327628980811,115.56909923707583,621.597387474052,119.42775C639.448040605539,123.32703673707584,675.149346868513,104.0499375,693,98.924" stroke-width="0"></path><circle cx="54" cy="190.1745" r="0" fill="#869d9d" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="125.40261252594806" cy="192.81825" r="0" fill="#869d9d" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="196.8375778441598" cy="168.61325" r="0" fill="#869d9d" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="267.5284289403068" cy="154.65425" r="0" fill="#869d9d" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="337.41046022986177" cy="194.55725" r="0" fill="#869d9d" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="408.8130727558098" cy="175.89825000000002" r="0" fill="#869d9d" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="480.24803807402157" cy="179.341" r="0" fill="#869d9d" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="550.9388891701685" cy="67.89224999999999" r="0" fill="#869d9d" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="621.597387474052" cy="119.42775" r="0" fill="#869d9d" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="693" cy="98.924" r="0" fill="#869d9d" stroke="#ffffff" style="" stroke-width="1"></circle><path style="fill-opacity: 0.85;" fill="#eed78b" stroke="none" d="M54,201.9245C71.85065313148701,202.5854375,107.55195939446105,205.79437846828992,125.40261252594806,204.56825C143.261353855501,203.34156596828993,178.97883651460685,196.90872643979057,196.8375778441598,192.11325C214.51029061819656,187.36772643979057,249.85571616627004,164.6197914269275,267.5284289403068,166.40425C284.99893676269556,168.16829142692748,319.939952407473,202.22738739409206,337.41046022986177,206.30725C355.26111336134875,210.47588739409207,390.9624196243228,199.83143311155152,408.8130727558098,199.39825C426.6718140853627,198.96487061155153,462.38929674446865,210.35017277486912,480.24803807402157,202.841C497.92075084805833,195.41004777486913,533.2661763961318,140.9187931448844,550.9388891701685,139.63774999999998C568.6035137461394,138.35729314488438,603.9327628980811,187.84072147574582,621.597387474052,192.595C639.448040605539,197.39934647574583,675.149346868513,181.5529375,693,177.87225L693,245L54,245Z" fill-opacity="0.85"></path><path style="" fill="none" stroke="#efc94c" d="M54,201.9245C71.85065313148701,202.5854375,107.55195939446105,205.79437846828992,125.40261252594806,204.56825C143.261353855501,203.34156596828993,178.97883651460685,196.90872643979057,196.8375778441598,192.11325C214.51029061819656,187.36772643979057,249.85571616627004,164.6197914269275,267.5284289403068,166.40425C284.99893676269556,168.16829142692748,319.939952407473,202.22738739409206,337.41046022986177,206.30725C355.26111336134875,210.47588739409207,390.9624196243228,199.83143311155152,408.8130727558098,199.39825C426.6718140853627,198.96487061155153,462.38929674446865,210.35017277486912,480.24803807402157,202.841C497.92075084805833,195.41004777486913,533.2661763961318,140.9187931448844,550.9388891701685,139.63774999999998C568.6035137461394,138.35729314488438,603.9327628980811,187.84072147574582,621.597387474052,192.595C639.448040605539,197.39934647574583,675.149346868513,181.5529375,693,177.87225" stroke-width="0"></path><circle cx="54" cy="201.9245" r="0" fill="#efc94c" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="125.40261252594806" cy="204.56825" r="0" fill="#efc94c" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="196.8375778441598" cy="192.11325" r="0" fill="#efc94c" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="267.5284289403068" cy="166.40425" r="0" fill="#efc94c" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="337.41046022986177" cy="206.30725" r="0" fill="#efc94c" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="408.8130727558098" cy="199.39825" r="0" fill="#efc94c" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="480.24803807402157" cy="202.841" r="0" fill="#efc94c" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="550.9388891701685" cy="139.63774999999998" r="0" fill="#efc94c" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="621.597387474052" cy="192.595" r="0" fill="#efc94c" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="693" cy="177.87225" r="0" fill="#efc94c" stroke="#ffffff" style="" stroke-width="1"></circle><path style="fill-opacity: 0.85;" fill="#69beae" stroke="none" d="M54,213.6745C71.85065313148701,214.3354375,107.55195939446105,216.0759611409966,125.40261252594806,216.31825C143.261353855501,216.56064864099662,178.97883651460685,220.40872643979057,196.8375778441598,215.61325C214.51029061819656,210.86772643979057,249.85571616627004,177.84699223245107,267.5284289403068,178.15425C284.99893676269556,178.4579922324511,319.939952407473,212.52444487062058,337.41046022986177,218.05725C355.26111336134875,223.71044487062056,390.9624196243228,221.8630157842582,408.8130727558098,222.89825C426.6718140853627,223.9339532842582,462.38929674446865,231.2043926701571,480.24803807402157,226.341C497.92075084805833,221.52826767015708,533.2661763961318,184.8401479171435,550.9388891701685,184.19375C568.6035137461394,183.5476479171435,603.9327628980811,219.14889751764971,621.597387474052,221.171C639.448040605539,223.21439751764973,675.149346868513,205.6345625,693,200.45575L693,245L54,245Z" fill-opacity="0.85"></path><path style="" fill="none" stroke="#45b29d" d="M54,213.6745C71.85065313148701,214.3354375,107.55195939446105,216.0759611409966,125.40261252594806,216.31825C143.261353855501,216.56064864099662,178.97883651460685,220.40872643979057,196.8375778441598,215.61325C214.51029061819656,210.86772643979057,249.85571616627004,177.84699223245107,267.5284289403068,178.15425C284.99893676269556,178.4579922324511,319.939952407473,212.52444487062058,337.41046022986177,218.05725C355.26111336134875,223.71044487062056,390.9624196243228,221.8630157842582,408.8130727558098,222.89825C426.6718140853627,223.9339532842582,462.38929674446865,231.2043926701571,480.24803807402157,226.341C497.92075084805833,221.52826767015708,533.2661763961318,184.8401479171435,550.9388891701685,184.19375C568.6035137461394,183.5476479171435,603.9327628980811,219.14889751764971,621.597387474052,221.171C639.448040605539,223.21439751764973,675.149346868513,205.6345625,693,200.45575" stroke-width="0"></path><circle cx="54" cy="213.6745" r="0" fill="#45b29d" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="125.40261252594806" cy="216.31825" r="0" fill="#45b29d" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="196.8375778441598" cy="215.61325" r="0" fill="#45b29d" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="267.5284289403068" cy="178.15425" r="0" fill="#45b29d" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="337.41046022986177" cy="218.05725" r="0" fill="#45b29d" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="408.8130727558098" cy="222.89825" r="0" fill="#45b29d" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="480.24803807402157" cy="226.341" r="0" fill="#45b29d" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="550.9388891701685" cy="184.19375" r="0" fill="#45b29d" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="621.597387474052" cy="221.171" r="0" fill="#45b29d" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="693" cy="200.45575" r="0" fill="#45b29d" stroke="#ffffff" style="" stroke-width="1"></circle></svg><div class="morris-hover morris-default-style" style="left: 120.338px; top: 111px; display: none;"><div class="morris-hover-row-label">2010 Q3</div><div class="morris-hover-point" style="color: #869d9d">
-All Visitors:
-6,501
-</div><div class="morris-hover-point" style="color: #EFC94C">
-Returning Visitors:
-4,501
-</div><div class="morris-hover-point" style="color: #45B29D">
-Unique Visitors:
-2,501
-</div></div></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-<div class="col-lg-4 portlets ui-sortable">
-        <div class="row">
-            <div class="col-sm-12">
-                <div id="todo-app" class="widget">
-                    <div class="widget-header centered">
-                        <div class="left-btn"><a class="btn btn-sm btn-default add-todo"><i class="fa fa-plus"></i></a></div>
-                        <h2>لیست یادداشت ها</h2>
-                        <div class="additional-btn">
-                            <a href="#" class="hidden reload"><i class="icon-ccw-1"></i></a>
-                            <a href="#" class="widget-popout hidden tt" title="Pop Out/In"><i class="icon-publish"></i></a>
-                            <a href="#" class="widget-maximize hidden"><i class="icon-resize-full-1"></i></a>
-                            <a href="#" class="widget-toggle"><i class="icon-down-open-2"></i></a>
-                            <a href="#" class="widget-close"><i class="icon-cancel-3"></i></a>
-                        </div>
-                    </div>
-                    <div class="widget-content padding-sm">
-                        <ul class="todo-list ui-sortable">
-                            <li>
-                                <span class="check-icon"><div class="icheckbox_square-aero" style="position: relative;" aria-checked="false" aria-disabled="false"><input style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255) none repeat scroll 0% 0%; border: 0px none; opacity: 0;" type="checkbox"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255) none repeat scroll 0% 0%; border: 0px none; opacity: 0;"></ins></div></span>
-                                <span class="todo-item editable editable-click">تولید گزارش فروش ماهانه برای محمد شجاع</span>
-                                <span class="todo-options pull-right">
-                                    <a href="javascript:;" class="todo-delete"><i class="icon-cancel-3"></i></a>
-                                </span>
-                                <span class="todo-tags pull-right">
-                                    <div class="label label-success">جدید</div>
-                                </span>
-                            </li>
-                            <li class="high">
-                                <span class="check-icon"><div class="icheckbox_square-aero" style="position: relative;" aria-checked="false" aria-disabled="false"><input style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255) none repeat scroll 0% 0%; border: 0px none; opacity: 0;" type="checkbox">
-                                    <ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255) none repeat scroll 0% 0%; border: 0px none; opacity: 0;"></ins>
-                                </div></span>
-                                <span class="todo-item editable editable-click">گزارشات را برای محمد شجاع بفرستید</span>
-                                <span class="todo-options pull-right">
-                                    <a href="javascript:;" class="todo-delete"><i class="icon-cancel-3"></i></a>
-                                </span>
-                            </li>
-                            <li>
-                                <span class="check-icon"><div class="icheckbox_square-aero" style="position: relative;" aria-checked="false" aria-disabled="false"><input style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255) none repeat scroll 0% 0%; border: 0px none; opacity: 0;" type="checkbox"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255) none repeat scroll 0% 0%; border: 0px none; opacity: 0;"></ins></div></span>
-                                <span class="todo-item editable editable-click">فراموش نکنید که این گزارش ها را به جان ارسال کنید</span>
-                                <span class="todo-options pull-right">
-                                    <a href="javascript:;" class="todo-delete"><i class="icon-cancel-3"></i></a>
-                                </span>
-                            </li>
-                            <li class="medium">
-                                <span class="check-icon"><div class="icheckbox_square-aero" style="position: relative;" aria-checked="false" aria-disabled="false"><input style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255) none repeat scroll 0% 0%; border: 0px none; opacity: 0;" type="checkbox"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255) none repeat scroll 0% 0%; border: 0px none; opacity: 0;"></ins></div></span>
-                                <span class="todo-item editable editable-click">اگر فراموش کرده اید، به دفتر بازگردید</span>
-                                <span class="todo-options pull-right">
-                                    <a href="javascript:;" class="todo-delete"><i class="icon-cancel-3"></i></a>
-                                </span>
-                                <span class="todo-tags pull-right">
-                                    <div class="label label-info">امروز</div>
-                                </span>
-                            </li>
-                            <li>
-                                <span class="check-icon"><div class="icheckbox_square-aero" style="position: relative;" aria-checked="false" aria-disabled="false"><input style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255) none repeat scroll 0% 0%; border: 0px none; opacity: 0;" type="checkbox"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255) none repeat scroll 0% 0%; border: 0px none; opacity: 0;"></ins></div></span>
-                                <span class="todo-item editable editable-click">کار خود را شروع کنید ....</span>
-                                <span class="todo-options pull-right">
-                                    <a href="javascript:;" class="todo-delete"><i class="icon-cancel-3"></i></a>
-                                </span>
-                                <span class="todo-tags pull-right">
-                                    <div class="label label-danger">بسیار مهم</div>
-                                </span>
-                            </li>
-                            <li>
-                                <span class="check-icon"><div class="icheckbox_square-aero" style="position: relative;" aria-checked="false" aria-disabled="false"><input style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255) none repeat scroll 0% 0%; border: 0px none; opacity: 0;" type="checkbox"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255) none repeat scroll 0% 0%; border: 0px none; opacity: 0;"></ins></div></span>
-                                <span class="todo-item editable editable-click">به دنبال یک شغل جدید</span>
-                                <span class="todo-options pull-right">
-                                    <a href="javascript:;" class="todo-delete"><i class="icon-cancel-3"></i></a>
-                                </span>
-                                <span class="todo-tags pull-right">
-                                    <div class="label label-warning"><i class="icon-search"></i></div>
-                                </span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+            <div class="widget-content padding-sm">
+                <ul class="todo-list ui-sortable">
+                    {% for reminder in reminders %}
+                        <li>
+                        <span class="todo-item editable editable-click">
+                            {{ reminder.detail }}
+                        </span>
+
+                    </li>
+                    {% endfor %}
+
+                </ul>
             </div>
         </div>
     </div>
 </div>
 <div class="row">
-    <div class="col-lg-8 col-md-6 portlets ui-sortable">
-
-    </div>
-    <div class="col-lg-4 col-md-6 portlets ui-sortable">
-        <div id="stock-app" class="widget green-3" style="display: none;">
-            <div class="widget-header transparent">
-                <h2><strong>موجودی فروشگاه</strong> </h2>
-                <div class="additional-btn">
-                    <a href="#" class="hidden reload"><i class="icon-ccw-1"></i></a>
-                      <a class="hidden" id="dropdownMenu1" data-toggle="dropdown">
-                        <i class="fa fa-cogs"></i>
-                      </a>
-                      <ul class="dropdown-menu pull-right" role="menu" aria-labelledby="dropdownMenu1">
-                        <li><a href="#">فعالیت</a></li>
-                            <li><a href="#">سایر فعالیت ها</a></li>
-                            <li><a href="#">چیز دیگری اینجاست</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#">لینک های جداکننده</a></li>
-                      </ul>
-                     <a href="#" class="widget-popout hidden tt" title="Pop Out/In"><i class="icon-publish"></i></a>
-                    <a href="#" class="widget-maximize hidden"><i class="icon-resize-full-1"></i></a>
-                    <a href="#" class="widget-toggle"><i class="icon-down-open-2"></i></a>
-                    <a href="#" class="widget-close"><i class="icon-cancel-3"></i></a>
-                </div>
-            </div>
-            <div class="widget-content">
-                <div id="website-statistic3" class="statistic-chart">
-                    <div class="row">
-                        <div class="col-xs-6">
-                            <h2>شماره 1</h2>
-                        </div>
-                        <div class="col-xs-6">
-                            <label id="nasdaq-status" class="stock-status"><i class="fa fa-caret-up"></i> 77.72</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-6">
-                            <h2>شماره عنوان</h2>
-                        </div>
-                        <div class="col-xs-6">
-                            <label id="dow-status" class="stock-status text-danger"><i class="fa fa-caret-down"></i> 77.22</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-6">
-                            <h2>اس &amp; پی</h2>
-                        </div>
-                        <div class="col-xs-6">
-                            <label id="sp-status" class="stock-status"><i class="fa fa-caret-up"></i> 79.02</label>
-                        </div>
-                    </div>
-                </div>
-                <div id="home-chart-3" class="rickshaw_graph"><svg width="400" height="150"><path class="path" d="M0,25.554627626894998L10.256410256410255,1.4851485148514882L20.51282051282051,18.185015139882296L30.76923076923077,6.131051683999459L41.02564102564102,24.075141164866295L51.28205128205128,26.799151333467535L61.53846153846154,8.646348493532201L71.7948717948718,27.791595895770072L82.05128205128204,23.600728397542383L92.3076923076923,10.066904736144636L102.56410256410255,17.68730247230775L112.82051282051282,15.653916331073077L123.07692307692308,11.297019081871639L133.33333333333331,12.960769492052236L143.5897435897436,4.289017515017434L153.84615384615387,24.48295408253597L164.1025641025641,8.05973763779292L174.35897435897436,30.645280515973468L184.6153846153846,12.508311201582075L194.87179487179486,24.512467300034075L205.1282051282051,7.980054182033427L215.3846153846154,14.950512768064641L225.64102564102564,13.092209072297067L235.8974358974359,28.72727624998771L246.15384615384616,30.680648454343867L256.4102564102564,14.948347020795893L266.66666666666663,21.546909437843027L276.9230769230769,25.361439539517946L287.1794871794872,24.15582333914726L297.43589743589746,20.027494000016958L307.69230769230774,29.03340316810639L317.94871794871796,18.276003210829998L328.2051282051282,28.084367379106723L338.46153846153845,19.875879351117874L348.71794871794873,16.966612938744674L358.974358974359,36.08924200178441L369.2307692307692,20.61801086641688L379.48717948717945,32.404366777471054L389.7435897435897,33.38400858651248L400,32.69400513810595" fill="none" stroke="rgba(0,0,0,0.4)" stroke-width="2"></path><path class="path" d="M0,38.58686327774049L10.256410256410255,10.218197979378289L20.51282051282051,14.330807389683685L30.76923076923077,19.375048604670894L41.02564102564102,19.08502754933957L51.28205128205128,22.092017590645042L61.53846153846154,30.141694382994558L71.7948717948718,23.250593524853656L82.05128205128204,32.1775113895622L92.3076923076923,36.06280466748686L102.56410256410255,30.944085616839033L112.82051282051282,24.833516902786457L123.07692307692308,8.77668405408113L133.33333333333331,22.280992027687518L143.5897435897436,22.507730196490428L153.84615384615387,28.10144333270331L164.1025641025641,35.5193781118396L174.35897435897436,29.47597813545849L184.6153846153846,29.331035139848623L194.87179487179486,29.615482764603428L205.1282051282051,28.789552769059327L215.3846153846154,32.53866192657421L225.64102564102564,13.318365398109592L235.8974358974359,24.491915418699563L246.15384615384616,37.719734836857114L256.4102564102564,30.875188604750704L266.66666666666663,26.163266606449753L276.9230769230769,20.06900543915276L287.1794871794872,15.74164051406646L297.43589743589746,20.487284309503224L307.69230769230774,35.55202014960963L317.94871794871796,15.403801883778698L328.2051282051282,21.711939078080405L338.46153846153845,40.17097196950928L348.71794871794873,44.645269581139914L358.974358974359,41.299655479689946L369.2307692307692,32.56093821692231L379.48717948717945,32.928286214517215L389.7435897435897,31.797719539495446L400,35.3650284142045" fill="none" stroke="rgba(0,0,0,0.3)" stroke-width="2"></path><path class="path" d="M0,29.780468758375406L10.256410256410255,18.509516164472274L20.51282051282051,43.62036675804225L30.76923076923077,31.41924453608256L41.02564102564102,25.449603031186456L51.28205128205128,46.527221936840434L61.53846153846154,35.66071312653453L71.7948717948718,41.7284104812225L82.05128205128204,45.25117815974936L92.3076923076923,42.82221137959216L102.56410256410255,17.547393665698507L112.82051282051282,38.140438930705784L123.07692307692308,26.91633709323669L133.33333333333331,37.745679264054544L143.5897435897436,33.78013982377617L153.84615384615387,22.24699627126104L164.1025641025641,18.626385375020817L174.35897435897436,29.70491405949815L184.6153846153846,31.53693032562198L194.87179487179486,47.08119832133971L205.1282051282051,31.098724142802936L215.3846153846154,47.09503648005932L225.64102564102564,25.90631694799174L235.8974358974359,34.48700462978307L246.15384615384616,43.54240083031506L256.4102564102564,38.043941838840155L266.66666666666663,39.20239859608657L276.9230769230769,27.36283330085105L287.1794871794872,40.69188468767548L297.43589743589746,41.581649500840314L307.69230769230774,24.666553402582366L317.94871794871796,34.72921911239936L328.2051282051282,37.222944561299684L338.46153846153845,53.425079293932825L348.71794871794873,33.839498785068855L358.974358974359,45.024612640873755L369.2307692307692,48.79031203834873L379.48717948717945,56.07447563409541L389.7435897435897,47.816370514683086L400,34.617437137994926" fill="none" stroke="rgba(0,0,0,0.2)" stroke-width="2"></path><path class="stroke"></path><path class="stroke"></path><path class="stroke"></path></svg><div class="detail"></div></div>
-            </div>
-            <div class="widget-footer">
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
-					<div class="col-lg-4 portlets ui-sortable">
-						<div id="calendar-widget2" class="widget blue-1">
+					<div class="col-md-12">
+						<div class="widget">
 							<div class="widget-header transparent">
-								<h2><strong>ابزارک تقویم</strong></h2>
+								<h2><strong>فهرست آخرین پرونده ها</strong> </h2>
 								<div class="additional-btn">
 									<a href="#" class="hidden reload"><i class="icon-ccw-1"></i></a>
-									<a href="#" class="widget-popout hidden tt" title="Pop Out/In"><i class="icon-publish"></i></a>
 									<a href="#" class="widget-toggle"><i class="icon-down-open-2"></i></a>
 									<a href="#" class="widget-close"><i class="icon-cancel-3"></i></a>
 								</div>
 							</div>
-							<div id="calendar-box2" class="widget-content col-sm-12">
+							<div class="widget-content">
+								<div class="table-responsive">
+									<table data-sortable="" class="table" data-sortable-initialized="true">
+										<thead>
+											<tr>
+												<th>شماره</th>
+												<th>شماره پرونده</th>
+												<th>اصل مبلغ بدهی</th>
+												<th>مدیونین حقیقی</th>
+												<th>مدیونین حقوقی</th>
+												<th data-sortable="false">سرفصل</th>
+												<th>وضعیت</th>
+												<th data-sortable="false">گزینه ها</th>
+											</tr>
+										</thead>
 
-							<div class="bic_calendar row" id="bic_calendar"><table class="table header"><tbody><tr><td><a href="#" class="button-month-previous"><i class="fa fa-angle-left"></i></a></td><td colspan="5" class="monthAndYear span6"><div class="visualmonth">February</div></td><td><a href="#" class="button-month-next"><i class="fa fa-angle-right"></i></a></td></tr></tbody></table><table class="table"><tbody><tr class="days-month"><td class="first">S</td><td>M</td><td>T</td><td>W</td><td>T</td><td>F</td><td class="sunday last">S</td></tr><tr><td class="invalid-day week-day-0" "=""></td><td class="invalid-day week-day-1" "=""></td><td class="invalid-day week-day-2" "=""></td><td id="bic_calendar_1_2_2018" data-date="2/1/2018" class="day week-day-3"><div><a>1</a></div></td><td id="bic_calendar_2_2_2018" data-date="2/2/2018" class="day week-day-4"><div><a>2</a></div></td><td id="bic_calendar_3_2_2018" data-date="2/3/2018" class="day week-day-5"><div><a>3</a></div></td><td id="bic_calendar_4_2_2018" data-date="2/4/2018" class="day week-day-6 event event_popover" style="background: rgba(255, 255, 255, 0.2);"><div><a data-original-title="Meet a friend" href="javascript:;" rel="popover" data-content="Contents here">4</a></div></td></tr><tr><td id="bic_calendar_5_2_2018" data-date="2/5/2018" class="day week-day-0"><div><a>5</a></div></td><td id="bic_calendar_6_2_2018" data-date="2/6/2018" class="day week-day-1"><div><a>6</a></div></td><td id="bic_calendar_7_2_2018" data-date="2/7/2018" class="day week-day-2 event event_popover" style="background: rgba(255, 255, 255, 0.2);"><div><a data-original-title="Kick off meeting!" href="javascript:;" rel="popover" data-content="Have a kick off meeting with .inc company">7</a></div></td><td id="bic_calendar_8_2_2018" data-date="2/8/2018" class="day week-day-3"><div><a>8</a></div></td><td id="bic_calendar_9_2_2018" data-date="2/9/2018" class="day week-day-4"><div><a>9</a></div></td><td id="bic_calendar_10_2_2018" data-date="2/10/2018" class="day week-day-5"><div><a>10</a></div></td><td id="bic_calendar_11_2_2018" data-date="2/11/2018" class="day week-day-6"><div><a>11</a></div></td></tr><tr><td id="bic_calendar_12_2_2018" data-date="2/12/2018" class="day week-day-0"><div><a>12</a></div></td><td id="bic_calendar_13_2_2018" data-date="2/13/2018" class="day week-day-1"><div><a>13</a></div></td><td id="bic_calendar_14_2_2018" data-date="2/14/2018" class="day week-day-2"><div><a>14</a></div></td><td id="bic_calendar_15_2_2018" data-date="2/15/2018" class="day week-day-3"><div><a>15</a></div></td><td id="bic_calendar_16_2_2018" data-date="2/16/2018" class="day week-day-4"><div><a>16</a></div></td><td id="bic_calendar_17_2_2018" data-date="2/17/2018" class="day week-day-5"><div><a>17</a></div></td><td id="bic_calendar_18_2_2018" data-date="2/18/2018" class="day week-day-6"><div><a>18</a></div></td></tr><tr><td id="bic_calendar_19_2_2018" data-date="2/19/2018" class="day week-day-0 event event_tooltip" style="background: rgba(255, 255, 255, 0.2);"><div><a data-original-title="Link to Google" href="http://www.google.com" rel="tooltip">19</a></div></td><td id="bic_calendar_20_2_2018" data-date="2/20/2018" class="day week-day-1"><div><a>20</a></div></td><td id="bic_calendar_21_2_2018" data-date="2/21/2018" class="day week-day-2"><div><a>21</a></div></td><td id="bic_calendar_22_2_2018" data-date="2/22/2018" class="day week-day-3"><div><a>22</a></div></td><td id="bic_calendar_23_2_2018" data-date="2/23/2018" class="day week-day-4"><div><a>23</a></div></td><td id="bic_calendar_24_2_2018" data-date="2/24/2018" class="day week-day-5"><div><a>24</a></div></td><td id="bic_calendar_25_2_2018" data-date="2/25/2018" class="day week-day-6"><div><a>25</a></div></td></tr><tr><td id="bic_calendar_26_2_2018" data-date="2/26/2018" class="day week-day-0"><div><a>26</a></div></td><td id="bic_calendar_27_2_2018" data-date="2/27/2018" class="day week-day-1"><div><a>27</a></div></td><td id="bic_calendar_28_2_2018" data-date="2/28/2018" class="day week-day-2"><div><a>28</a></div></td><td class="invalid-day week-day-3" "=""></td><td class="invalid-day week-day-4" "=""></td><td class="invalid-day week-day-5" "=""></td><td class="invalid-day week-day-6" "=""></td></tr></tbody></table></div></div>
-						</div>
-					</div>
-					<div class="col-lg-4 portlets ui-sortable">
-						<div id="weather-widget" class="widget">
-							<div class="widget-header transparent">
-								<h2><strong>ابزارک وضعیت هوا</strong></h2>
-								<div class="additional-btn">
-									<a href="#" class="hidden reload"><i class="icon-ccw-1"></i></a>
-									  <a class="hidden" id="dropdownMenu1" data-toggle="dropdown">
-										<i class="fa fa-cogs"></i>
-									  </a>
-									  <ul class="dropdown-menu pull-right" role="menu" aria-labelledby="dropdownMenu1">
-										<li><a href="#">فعالیت</a></li>
-										<li><a href="#">سایر فعالیت ها</a></li>
-										<li><a href="#">چیز دیگری اینجاست</a></li>
-										<li class="divider"></li>
-										<li><a href="#">لینک های جداکننده</a></li>
-									  </ul>
-									 <a href="#" class="widget-popout hidden tt" title="Pop Out/In"><i class="icon-publish"></i></a>
-									<a href="#" class="widget-maximize hidden"><i class="icon-resize-full-1"></i></a>
-									<a href="#" class="widget-toggle"><i class="icon-down-open-2"></i></a>
-									<a href="#" class="widget-close"><i class="icon-cancel-3"></i></a>
-								</div>
-							</div>
-							<div id="weather" class="widget-content">
+										<tbody>
+                                                {%  for file in files %}
+                                                    <tr>
+                                                    <td>{{ forloop.counter }}</td>
+                                                    <td><strong>{{ file.file.file_code }}</strong></td>
+                                                    <td>{{ file.file.main_deposit }}</td>
+                                                    <td>{{ file.file.person_list }}</td>
+                                                    <td>{{ file.file.offices }}</td>
+                                                    {% if file.file.status == 'سر رسید گذشته' %}
+                                                        <td><span class="label label-success">{{ file.file.status }}</span></td>
+                                                    {% elif file.file.status == 'معوق' %}
+                                                        <td><span class="label label-warning">{{ file.file.status }}</span></td>
+                                                    {% else %}
+                                                        <td><span class="label label-danger">{{ file.file.status }}</span></td>
 
-							</div><i class="wi-day-rain-mix"></i>
-							<button class="js-geolocation btn btn-sm btn-default" style="">Use Your Location</button>
-						</div>
-					</div>
-					<div class="col-lg-4 portlets ui-sortable">
-						<div id="todo-app" class="widget">
-							<div class="widget-header centered">
-								<div class="left-btn"><a class="btn btn-sm btn-default add-todo"><i class="fa fa-plus"></i></a></div>
-								<h2>لیست کارها</h2>
-								<div class="additional-btn">
-									<a href="#" class="hidden reload"><i class="icon-ccw-1"></i></a>
-									<a href="#" class="widget-popout hidden tt" title="Pop Out/In"><i class="icon-publish"></i></a>
-									<a href="#" class="widget-maximize hidden"><i class="icon-resize-full-1"></i></a>
-									<a href="#" class="widget-toggle"><i class="icon-down-open-2"></i></a>
-									<a href="#" class="widget-close"><i class="icon-cancel-3"></i></a>
+                                                    {% endif %}
+                                                    {% if file.file.assurance == 'خرد' %}
+                                                        <td><span class="label label-success">{{ file.file.assurance }}</span></td>
+                                                    {% elif file.file.assurance == 'متوسط' %}
+                                                        <td><span class="label label-info">{{ file.file.assurance }}</span></td>
+                                                    {% else %}
+                                                        <td><span class="label label-danger">{{ file.file.assurance }}</span></td>
+
+                                                    {% endif %}
+                                                    <td>
+                                                        <div class="btn-group btn-group-xs">
+                                                            <a href="{% url "employee:employee_file_detail" file.file.id %}" data-toggle="tooltip" title="مشاهده پرونده" class="btn btn-default"><i class="fa fa-edit"></i></a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                {% endfor %}
+										</tbody>
+									</table>
 								</div>
-							</div>
-							<div class="widget-content padding-sm">
-								<ul class="todo-list ui-sortable">
-									<li>
-										<span class="check-icon"><div class="icheckbox_square-aero" aria-checked="false" aria-disabled="false" style="position: relative;"><input type="checkbox" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div></span>
-										<span class="todo-item editable editable-click">تولید گزارش فروش ماهانه برای محمد شجاع</span>
-										<span class="todo-options pull-right">
-											<a href="javascript:;" class="todo-delete"><i class="icon-cancel-3"></i></a>
-										</span>
-										<span class="todo-tags pull-right">
-											<div class="label label-success">جدید</div>
-										</span>
-									</li>
-									<li class="high">
-										<span class="check-icon"><div class="icheckbox_square-aero" aria-checked="false" aria-disabled="false" style="position: relative;"><input type="checkbox" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div></span>
-										<span class="todo-item editable editable-click">گزارشات را برای محمد شجاع بفرستید</span>
-										<span class="todo-options pull-right">
-											<a href="javascript:;" class="todo-delete"><i class="icon-cancel-3"></i></a>
-										</span>
-									</li>
-									<li>
-										<span class="check-icon"><div class="icheckbox_square-aero" aria-checked="false" aria-disabled="false" style="position: relative;"><input type="checkbox" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div></span>
-										<span class="todo-item editable editable-click">فراموش نکنید که این گزارش ها را به جان ارسال کنید</span>
-										<span class="todo-options pull-right">
-											<a href="javascript:;" class="todo-delete"><i class="icon-cancel-3"></i></a>
-										</span>
-									</li>
-									<li class="medium">
-										<span class="check-icon"><div class="icheckbox_square-aero" aria-checked="false" aria-disabled="false" style="position: relative;"><input type="checkbox" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div></span>
-										<span class="todo-item editable editable-click">اگر فراموش کرده اید، به دفتر بازگردید</span>
-										<span class="todo-options pull-right">
-											<a href="javascript:;" class="todo-delete"><i class="icon-cancel-3"></i></a>
-										</span>
-										<span class="todo-tags pull-right">
-											<div class="label label-info">امروز</div>
-										</span>
-									</li>
-									<li class="low">
-										<span class="check-icon"><div class="icheckbox_square-aero" aria-checked="false" aria-disabled="false" style="position: relative;"><input type="checkbox" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div></span>
-										<span class="todo-item editable editable-click">ارسال گزارش به دست به محمد شجاع</span>
-										<span class="todo-options pull-right">
-											<a href="javascript:;" class="todo-delete"><i class="icon-cancel-3"></i></a>
-										</span>
-									</li>
-									<li>
-										<span class="check-icon"><div class="icheckbox_square-aero" aria-checked="false" aria-disabled="false" style="position: relative;"><input type="checkbox" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div></span>
-										<span class="todo-item editable editable-click">ابراز تاسف توسط کاربر</span>
-										<span class="todo-options pull-right">
-											<a href="javascript:;" class="todo-delete"><i class="icon-cancel-3"></i></a>
-										</span>
-									</li>
-									<li>
-										<span class="check-icon"><div class="icheckbox_square-aero" aria-checked="false" aria-disabled="false" style="position: relative;"><input type="checkbox" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div></span>
-										<span class="todo-item editable editable-click">کار خود را شروع کنید ....</span>
-										<span class="todo-options pull-right">
-											<a href="javascript:;" class="todo-delete"><i class="icon-cancel-3"></i></a>
-										</span>
-										<span class="todo-tags pull-right">
-											<div class="label label-danger">بسیار مهم</div>
-										</span>
-									</li>
-									<li>
-										<span class="check-icon"><div class="icheckbox_square-aero" aria-checked="false" aria-disabled="false" style="position: relative;"><input type="checkbox" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div></span>
-										<span class="todo-item editable editable-click">به دنبال یک شغل جدید</span>
-										<span class="todo-options pull-right">
-											<a href="javascript:;" class="todo-delete"><i class="icon-cancel-3"></i></a>
-										</span>
-										<span class="todo-tags pull-right">
-											<div class="label label-warning"><i class="icon-search"></i></div>
-										</span>
-									</li>
-								</ul>
 							</div>
 						</div>
 					</div>

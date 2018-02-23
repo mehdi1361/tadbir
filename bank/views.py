@@ -322,3 +322,13 @@ def sms_type_list(request):
                   {'types': types,
                    'form': form}
                   )
+
+
+def error_404(request):
+    data = {}
+    return render(request, 'bank/bank/404.html', data)
+
+
+def error_500(request):
+    data = {}
+    return render(request, 'bank/bank/500.html', data)

@@ -40,6 +40,7 @@ class ManagementAreas(Base, Location):
 @python_2_unicode_compatible
 class Branch(Base, Location):
     name = models.CharField(_('branch name'), max_length=100)
+    code = models.CharField(_('کد شعبه'), max_length=100, null=True)
     area = models.ForeignKey(ManagementAreas, verbose_name=_('area'), related_name='branches',
                              on_delete=models.CASCADE)
     city = models.ForeignKey(City, verbose_name=_('city'), related_name='areas', on_delete=models.CASCADE)
@@ -73,6 +74,7 @@ class File(Base):
         ('متوسط', 'متوسط'),
         ('کلان', 'کلان'),
     )
+
     file_code = models.CharField(_(u'کد پرونده'), max_length=200, unique=True)
     contract_code = models.CharField(_(u'شماره قرارداد'), max_length=200, unique=True)
     main_deposit = models.PositiveIntegerField(_(u'اصل مبلغ بدهی'), default=100)
@@ -104,6 +106,22 @@ class File(Base):
 
         if self.main_deposit < 1000000000:
             return 'کلان'
+
+    @property
+    def person_list(self):
+        person_str = ''
+        for person in self.file_persons.all():
+            person_str += '{}-'.format(person.person.full_name)
+
+        return person_str
+
+    @property
+    def offices(self):
+        office_str = ''
+        for office in self.related_office.all():
+            office_str += '{}-'.format(office.office.name)
+
+        return office_str
 
 
 @python_2_unicode_compatible

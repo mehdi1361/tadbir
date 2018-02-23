@@ -18,7 +18,7 @@ class PersonDailyReport(Base):
     value_recovery = models.PositiveIntegerField(_('مبلغ کل وصولی روز'), default=0)
     count_file_peygiri = models.PositiveIntegerField(_('تعداد پیگیری های روز'), default=0)
     persian_date = jmodels.jDateField(_('تاریخ'), null=True)
-    user = models.ForeignKey(User, verbose_name=_('پرسنل'))
+    user = models.ForeignKey(User, verbose_name=_('پرسنل'), related_name='reports')
 
     class Meta:
         unique_together = ('user', 'persian_date')
@@ -27,4 +27,4 @@ class PersonDailyReport(Base):
         db_table = 'persons_daily_report'
 
     def __str__(self):
-        return '{}-{}'.format(self.user.useername, self.count_file)
+        return '{}'.format(self.count_file)

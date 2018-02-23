@@ -11,6 +11,7 @@
         <meta name="author" content="Huban Creative">
 
 
+
 {#        <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" media="all" />#}
 {#        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript">#}
 {#        </script> <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js" type="text/javascript"></script>#}
@@ -57,6 +58,7 @@
         <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+
         <![endif]-->
 
         <link rel="shortcut icon" href="{% static "assets/img/favicon.ico" %}">
@@ -74,6 +76,9 @@
         <script src="{% static "jalalijscalendar/calendar.js" %}"></script>
         <script src="{% static "jalalijscalendar/calendar-setup.js" %}"></script>
         <script src="{% static "jalalijscalendar/lang/calendar-fa.js" %}"></script>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js"></script>
         <style>
             #overlay {
                 position: fixed;
@@ -213,7 +218,7 @@
 {#                                    <a href="javascript:;" data-app="todo-app" data-status="active"><i class="icon-check"></i>لیست کارها</a>#}
 {#                                </div>#}
 {#                                <div class="col-xs-4">#}
-{#                                    <a href="javascript:;" data-app="calc" data-status="inactive"><i class="fa fa-calculator"></i>ماشین حساب</a>#}
+{#                                    <a href="javascript:;" data-app="calc" data-status="active"><i class="fa fa-calculator"></i>ماشین حساب</a>#}
 {#                                </div>#}
 {#                            </div>#}
 {#                            <div class="row stacked">#}
@@ -229,15 +234,6 @@
 {#                            </div>#}
 {#                            <div class="clearfix"></div>#}
 {#                        </div>#}
-{#                    </li>#}
-{#                    <li class="language_bar dropdown hidden-xs">#}
-{#                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">فارسی (fa) <i class="fa fa-caret-down"></i></a>#}
-{#                        <ul class="dropdown-menu pull-right">#}
-{#                            <li><a href="#">German</a></li>#}
-{#                            <li><a href="#">French</a></li>#}
-{#                            <li><a href="#">Italian</a></li>#}
-{#                            <li><a href="#">Spanish</a></li>#}
-{#                        </ul>#}
 {#                    </li>#}
 {#                </ul>#}
                 <ul class="nav navbar-nav navbar-right top-navbar">
@@ -333,7 +329,6 @@
                             <li><a href="{% url 'employee:profile' %}">پروفایل من</a></li>
                             <li><a href="#">تغییر رمز عبور</a></li>
                             <li class="divider"></li>
-                            <li><a href="#"><i class="icon-help-2"></i>کمک رسانی</a></li>
                             <li><a class="md-trigger" data-modal="logout-modal"><i class="icon-logout-1"></i> خروج</a></li>
                         </ul>
                     </li>
@@ -406,7 +401,7 @@
 						<li class='has_sub'>
 							<a href='javascript:void(0);'>
 								<i class='icon-feather'></i>
-								<span>اطلاعات پایه</span>
+								<span>بانک ها و مناطق</span>
 								<span class="pull-left">
 									<i class="fa fa-angle-down"></i>
 								</span>
@@ -437,7 +432,7 @@
 						</li>
                         <li class='has_sub'>
 							<a href='javascript:void(0);'>
-								<i class='icon-feather'></i>
+								<i class='icon-pencil-3'></i>
 								<span>پرونده ها</span>
 								<span class="pull-left">
 									<i class="fa fa-angle-down"></i>
@@ -480,36 +475,59 @@
 						</li>
                         <li>
 							<a href="/admin/" target="_blank">
-								<i class='icon-feather'></i>
+								<i class='icon-megaphone'></i>
 								<span>پنل مدیریت</span>
 								<span class="pull-left">
 									<i class="fa fa-angle-down"></i>
 								</span>
 							</a>
 						</li>
+                        <li class='has_sub'>
+							<a href='javascript:void(0);'>
+								<i class='icon-chart-line'></i>
+								<span>گزارش ها</span>
+								<span class="pull-left">
+									<i class="fa fa-angle-down"></i>
+								</span>
+							</a>
+							<ul>
+								<li>
+									<a href={% url "bank:files_list" %}>
+										<span>لیست پرونده ها</span>
+									</a>
+								</li>
+                                <li>
+									<a href={% url "bank:new_file" %}>
+										<span>پرونده جدید</span>
+									</a>
+								</li>
+                                <li>
+									<a href={% url "bank:get_persons" %}>
+										<span>لیست اشخاص حقیقی</span>
+									</a>
+								</li>
+                                <li>
+									<a href={% url "bank:new_person" %}>
+										<span>اشخاص حقیقی جدید</span>
+									</a>
+								</li>
+                                </li>
+                                <li>
+									<a href={% url "bank:persons_office" %}>
+										<span>لیست اشخاص حقوقی</span>
+									</a>
+								</li>
+                                <li>
+									<a href={% url "bank:new_person_office" %}>
+										<span>اشخاص حقوقی جدید</span>
+									</a>
+								</li>
+
+							</ul>
+						</li>
                     </ul>
                     <div class="clearfix"></div>
                 </div>
-            <div class="clearfix"></div>
-            <div class="portlets">
-                <div id="chat_groups" class="widget transparent nomargin">
-                    <h2>گروه های چت</h2>
-                    <div class="widget-content">
-                        <ul class="list-unstyled">
-                            <li><a href="javascript:;"><i class="fa fa-circle-o text-red-1"></i>تیم</a></li>
-                            <li><a href="javascript:;"><i class="fa fa-circle-o text-blue-1"></i> دفتر</a></li>
-                            <li><a href="javascript:;"><i class="fa fa-circle-o text-green-1"></i> شرکت</a></li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div id="recent_tickets" class="widget transparent nomargin">
-                    <h2>فعالیت های اخیر</h2>
-                    <div class="widget-content">
-
-                    </div>
-                </div>
-            </div>
             <div class="clearfix"></div><br><br><br>
         </div>
             <div class="left-footer" style="display:none">
@@ -735,6 +753,7 @@
                 {%  block content %}
                 {% endblock %}
 				<!-- End of info box -->
+
 
 
 

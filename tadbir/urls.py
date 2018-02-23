@@ -20,6 +20,9 @@ from django.conf import settings
 from employee.views import dashboard, login
 from bank.views import BranchAutoComplete
 from django.conf.urls.static import static
+from reports.views import get_daily_user, get_g
+from django.conf.urls import handler404, handler500
+from bank import views as myapp_views
 
 urlpatterns = [
     url(r'^$', dashboard, name='main'),
@@ -30,7 +33,13 @@ urlpatterns = [
     url(r'^reports/', include('reports.urls', namespace='reports', app_name='reports')),
     url(r'^logout/$', logout, {'next_page': settings.LOGIN_REDIRECT_URL}, name='logout'),
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
+  #  url(r'^api/chart/data/$', get_daily_user, name='api-data'),
+    url(r'^api/', include('reports.urls')),
+    url(r'^test/$', get_g, name='t'),
 ]
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+handler404 = myapp_views.error_404
+handler500 = myapp_views.error_500

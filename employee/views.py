@@ -7,11 +7,12 @@ from .forms import LoginForm, UserRegistrationForm, \
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
-from .models import EmployeeFile, DocumentFile, PhoneFile
+from .models import EmployeeFile, DocumentFile, PhoneFile, FollowUp, FileReminder
 from bank.models import File
 from django.shortcuts import get_object_or_404
 from django.db.models import Q, Sum
 from bank.models import PersonFile
+from django.contrib.auth.decorators import permission_required
 # Create your views here.
 
 
@@ -55,8 +56,22 @@ def register(request):
 
 
 @login_required(login_url='/employee/login/')
+@permission_required('employee.profile.dashboard')
 def dashboard(request):
-    return render(request, 'bank/employee/dashboard.html')
+    files_emp = EmployeeFile.objects.filter(employee=request.user).values_list('file', flat=True)
+    follows = FollowUp.objects.filter(file__in=files_emp)[:8]
+    reminders = FileReminder.objects.filter(file__in=files_emp).order_by('-created_at')[:10]
+    last_files = EmployeeFile.files.filter(employee=request.user).order_by('-created_at')[:10]
+
+    return render(
+        request,
+        'bank/employee/dashboard.html',
+        {
+            'follows': follows,
+            'reminders': reminders,
+            'files': last_files
+        }
+    )
 
 
 @login_required(login_url='/employee/login/')
