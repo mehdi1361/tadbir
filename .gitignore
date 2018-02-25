@@ -11,7 +11,8 @@ py27venv/*
 py27venv
 /py27venv
 .idea/workspace.xml
-
+.idea/misc.xml
+.idea/tadbir.iml
 
 py34venv/*
 py34venv

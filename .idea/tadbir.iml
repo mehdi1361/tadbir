@@ -12,7 +12,11 @@
   </component>
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$" />
+<<<<<<< Updated upstream
     <orderEntry type="jdk" jdkName="Python 3.5.3 virtualenv at ~/Python-Project/tadbir/venv" jdkType="Python SDK" />
+=======
+    <orderEntry type="jdk" jdkName="Python 3.6.2 virtualenv at C:\Users\mehdi\Documents\python-project\tadbir\venv" jdkType="Python SDK" />
+>>>>>>> Stashed changes
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
   <component name="TemplatesService">
