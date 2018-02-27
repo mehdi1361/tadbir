@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 
 from .models import Profile, FollowUp, PhoneFile, AddressFile, \
-    DocumentFile, FileReminder, FileRecovery, SmsCaution
+    DocumentFile, FileReminder, FileRecovery, SmsCaution, EmployeeFile
 from django.core.exceptions import ValidationError
 
 
@@ -215,4 +215,17 @@ class SmsCautionForm(forms.ModelForm):
             'description': forms.Textarea(attrs={
                 'class': 'form-control'
             }),
+        }
+
+
+class EmployeeFileForm(forms.Form):
+    class Meta:
+        model = EmployeeFile
+        fields = [
+            'status',
+            'auth_status'
+        ]
+        widgets = {
+            'status': forms.Select(attrs={'class': 'form-control'}),
+            'auth_status': forms.Select(attrs={'class': 'form-control'})
         }

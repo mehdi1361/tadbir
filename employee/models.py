@@ -19,14 +19,19 @@ class FileManager(models.Manager):
 
 @python_2_unicode_compatible
 class EmployeeFile(Base):
+    AUTH_STATUS = (
+        ('کارشناس', 'کارشناس'),
+        ('وکیل', 'وکیل'),
+    )
     STATUS = (
-        ('enable', 'enable'),
-        ('disable', 'disable'),
+        ('فعال', 'enable'),
+        ('غیرفعال', 'disable'),
     )
 
     file = models.ForeignKey(File, verbose_name=_('پرونده'), related_name='employees')
     employee = models.ForeignKey(User, verbose_name=_('کاربر'), related_name='files')
     status = models.CharField(_('وضعیت'), max_length=50, default='enable', choices=STATUS)
+    auth_status = models.CharField(_('نوع تخصیص'), max_length=50, default='کارشناس', choices=AUTH_STATUS)
 
     objects = models.Manager()
     files = FileManager()

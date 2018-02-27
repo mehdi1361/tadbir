@@ -22,7 +22,17 @@
 								</div>
 							</div>
 							<div class="widget-content padding" style="display: block;">
-								<a href="{% url "bank:new_file" %}" class="btn btn-success">پر.نده جدید</a>
+                                    <p>شماره قرارداد یا شماره پرونده را وارد نمایید.</p>
+                                    <form method="post" action="#" class="navbar-form pull-right">
+                                        <div class="input-group">
+                                          <input class="form-control" type="text" id="searchBox"  name="q" placeholder="شماره قرارداد یا شماره پرونده یا نام و نام خانوادگی مدیون">
+                                          <span class="input-group-btn">
+{#                                            <button class="btn btn-default" type="button">جستجو</button>#}
+                                              {% csrf_token %}
+                                            <input type="submit" class="btn btn-default" value="جستجو" >
+                                          </span>
+                                        </div><!-- /input-group -->
+                                    </form>
 							</div>
 						</div>
 					</div>

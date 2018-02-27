@@ -1,10 +1,12 @@
 import json
 
+from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 
-from .models import Bank, ManagementAreas, Branch, File, Person, Office, SmsType
+from employee.forms import PhoneFileForm, AddressForm, DocumentForm
+from .models import Bank, ManagementAreas, Branch, File, Person, Office, SmsType, PersonFile
 from django.views.generic import ListView
 from .forms import BankForm, AreaForm, BranchForm, FileForm, \
     PersonForm, AssuranceForm, PersonFileForm, FileOfficeForm, SmsTypeForm
@@ -120,7 +122,13 @@ def new_branch(request):
 
 @login_required(login_url='/employee/login/')
 def file_list(request):
-    object_list = File.objects.all().order_by('-created_at')
+    query = request.POST.get('q')
+    if query:
+        object_list = File.objects.filter(
+            Q(file_code__contains=query) | Q(contract_code__contains=query)
+        ).order_by('-created_at')
+    else:
+        object_list = File.objects.all().order_by('-created_at')
     paginator = Paginator(object_list, 15)
     page = request.GET.get('page')
 
@@ -167,6 +175,10 @@ def file_document(request, file_id):
         person_form = PersonFileForm(request.POST)
         person_office = FileOfficeForm(request.POST)
         assurance_form = AssuranceForm(request.POST)
+        phone_form = PhoneFileForm(request.POST)
+        phone_form.fields['phone_owner'].queryset = PersonFile.objects.filter(file=file)
+        address_form = AddressForm(request.POST)
+        document_form = DocumentForm(request.POST, request.FILES or None)
 
         if person_form.is_valid():
             new_person_file = person_form.save(commit=False)
@@ -183,9 +195,59 @@ def file_document(request, file_id):
             new_assurance_file.file = file
             new_assurance_file.save()
 
-    person_form = PersonFileForm()
-    person_office = FileOfficeForm()
-    assurance_form = AssuranceForm()
+        if phone_form.is_valid():
+            try:
+                result_phone_form = phone_form.save(commit=False)
+                result_phone_form.file = file
+                result_phone_form.save()
+                messages.add_message(request, messages.SUCCESS, 'شماره تماس با موفقیت ثبت شد')
+
+            except:
+                messages.add_message(request, messages.ERROR, 'هشدار شماره تلفن تکراری است.')
+                phone_form = PhoneFileForm()
+                phone_form.fields['phone_owner'].queryset = PersonFile.objects.filter(file=file)
+
+        else:
+            print(phone_form.errors)
+            phone_form = PhoneFileForm()
+            phone_form.fields['phone_owner'].queryset = PersonFile.objects.filter(file=file)
+
+        if address_form.is_valid():
+            try:
+                result_address_form = address_form.save(commit=False)
+                result_address_form.file = file
+                result_address_form.save()
+                messages.add_message(request, messages.SUCCESS, 'آدرس با موفقیت ثبت شد.')
+
+            except:
+                messages.add_message(request, messages.ERROR, 'هشدار آدرس تکراری است.')
+                address_form = AddressForm()
+
+        else:
+            address_form = AddressForm()
+
+        if document_form.is_valid():
+            try:
+
+                result_document_form = document_form.save(commit=False)
+                result_document_form.file = file
+                result_document_form.save()
+
+            except:
+                document_form = DocumentForm()
+
+        else:
+            document_form = DocumentForm()
+            print(document_form.errors)
+
+    else:
+        person_form = PersonFileForm()
+        person_office = FileOfficeForm()
+        assurance_form = AssuranceForm()
+        phone_form = PhoneFileForm()
+        phone_form.fields['phone_owner'].queryset = PersonFile.objects.filter(file=file)
+        address_form = AddressForm()
+        document_form = DocumentForm()
 
     return render(
         request,
@@ -194,7 +256,10 @@ def file_document(request, file_id):
             'person_form': person_form,
             'person_office': person_office,
             'assurance_form': assurance_form,
-            'file': file
+            'file': file,
+            'phone_form': phone_form,
+            'address_form': address_form,
+            'document_form': document_form
         }
     )
 

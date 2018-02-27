@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.contrib.auth.views import logout
 from django.conf import settings
 from employee.views import dashboard, login
-from bank.views import BranchAutoComplete
+# from bank.views import BranchAutoComplete
 from django.conf.urls.static import static
 from reports.views import get_daily_user, get_g
 from django.conf.urls import handler404, handler500

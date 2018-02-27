@@ -2,7 +2,7 @@
 
 {% block content %}
     <div>
-
+        <div id="overlay"></div>
     </div>
 
     {%  if file %}
@@ -141,7 +141,16 @@
                     <a href="#demo5-dropdown1" data-toggle="tab">وثایق</a>
                 </li>
                 <li class="">
-                    <a href="#demo5-dropdown2" data-toggle="tab">یک چیز دیگر...</a>
+                    <a href="#demo5-dropdown2" data-toggle="tab">شماره های تماس</a>
+                </li>
+                <li class="">
+                    <a href="#demo5-dropdown3" data-toggle="tab">آدرس</a>
+                </li>
+                <li class="">
+                    <a href="#demo5-dropdown4" data-toggle="tab">اسناد</a>
+                </li>
+                <li class="">
+                    <a href="#demo5-dropdown5" data-toggle="tab">تخصیص</a>
                 </li>
             </ul>
 
@@ -366,11 +375,343 @@
 
                 </div> <!-- / .tab-pane -->
                 <div class="tab-pane fade" id="demo5-dropdown2">
-                    <p style="text-align:justify">لورم ایپسوم یا طرح‌نما به متنی آزمایشی و بی‌معنی در صنعت چاپ، صفحه‌آرایی و طراحی گرافیک گفته می‌شود. طراح گرافیک از این متن به عنوان عنصری از ترکیب بندی برای پر کردن صفحه و ارایه اولیه شکل ظاهری و کلی طرح سفارش گرفته شده استفاده می نماید، تا از نظر گرافیکی نشانگر چگونگی نوع و اندازه فونت و ظاهر متن باشد. معمولا طراحان گرافیک برای صفحه‌آرایی، نخست از متن‌های آزمایشی و بی‌معنی استفاده می‌کنند تا صرفا به مشتری یا صاحب کار خود نشان دهند که صفحه طراحی یا صفحه بندی شده بعد از اینکه متن در آن قرار گیرد چگونه به نظر می‌رسد و قلم‌ها و اندازه‌بندی‌ها چگونه در نظر گرفته شده‌است. از آنجایی که طراحان عموما نویسنده متن نیستند و وظیفه رعایت حق تکثیر متون را ندارند و در همان حال کار آنها به نوعی وابسته به متن می‌باشد آنها با استفاده از محتویات ساختگی، صفحه گرافیکی خود را صفحه‌آرایی می‌کنند تا مرحله طراحی و صفحه‌بندی را به پایان برند.</p>
-                </div> <!-- / .tab-pane -->
+                    <button data-modal="md-newspaper" onclick="on()"  class="btn btn-default btn-sm md-trigger">شماره تلفن جدید</button>
+                    <div class="md-modal md-newspaper" id="md-newspaper">
+                        <div class="md-content">
+                            <h3>ثبت شماره تماس</h3>
+                            <div>
+                                <p style="text-align:justify">
+                                    <form class="form-horizontal" role="form" action="" method="post">
+                                      <div class="form-group">
+                                        <label for="input-text" class="col-sm-3 control-label">
+                                            {{ phone_form.phone_number.label }}
+                                        </label>
+                                        <div class="col-sm-10">
+                                            {{ phone_form.phone_number }}
+                                        </div>
+                                      </div>
+                                      <div class="form-group">
+                                        <label for="input-text" class="col-sm-3 control-label">
+                                            {{ phone_form.phone_owner.label }}
+                                        </label>
+                                        <div class="col-sm-10">
+                                            {{ phone_form.phone_owner }}
+                                        </div>
+                                      </div>
+
+                                      <div class="form-group">
+                                        <label for="input-text" class="col-sm-3 control-label">
+                                            {{ phone_form.type.label }}
+                                        </label>
+                                        <div class="col-sm-10">
+                                            {{ phone_form.type }}
+                                        </div>
+                                      </div>
+
+                                      <div class="form-group">
+                                        <label for="input-text" class="col-sm-3 control-label">
+                                            {{ phone_form.description.label }}
+                                        </label>
+                                        <div class="col-sm-10">
+                                            {{ phone_form.description }}
+                                        </div>
+                                      </div>
+
+                                        <div class="col-lg-12">
+                                            {% csrf_token %}
+                                            <input type="submit" value="ایجاد" onclick="off()" class="btn btn-success">
+                                            <a href="#" onclick="off()" class="btn btn-danger md-close">بستن</a>
+                                        </div>
+                                        <hr>
+                                    </form>
+                                </p>
+                            </div>
+                        </div><!-- End div .md-content -->
+		            </div>
+
+                    <div class="widget-content">
+								<div class="table-responsive">
+										<table data-sortable="" class="table" data-sortable-initialized="true">
+										<thead>
+											<tr>
+												<th>شماره</th>
+												<th>پرونده</th>
+												<th>نوع پیگیری</th>
+												<th>نام صاحب خط</th>
+												<th>شرح</th>
+											</tr>
+										</thead>
+
+										<tbody>
+                                            {% for phone in file.phones.all %}
+                                                <tr>
+                                                    <td>{{ forloop.counter }}</td>
+                                                    <td><strong>{{ phone.phone_number }}</strong></td>
+                                                    <td>{{ phone.person_type }}</td>
+                                                    <td>{{ phone.phone_owner.person.full_name }}</td>
+                                                    <td>{{ phone.description }}</td>
+                                                </tr>
+                                            {% endfor %}
+										</tbody>
+									</table>
+								</div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="demo5-dropdown3">
+                    <p style="text-align:justify">
+                        <form class="form-horizontal" role="form" action="" method="post">
+                          <div class="form-group">
+                            <label for="input-text" class="col-sm-3 control-label">
+                                {{ address_form.person_type.label }}
+                            </label>
+                            <div class="col-sm-10">
+                                {{ address_form.person_type }}
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <label for="input-text" class="col-sm-3 control-label">
+                                {{ address_form.type.label }}
+                            </label>
+                            <div class="col-sm-10">
+                                {{ address_form.type }}
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <label for="input-text" class="col-sm-3 control-label">
+                                {{ address_form.address.label }}
+                            </label>
+                            <div class="col-sm-10">
+                                {{ address_form.address }}
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <label for="input-text" class="col-sm-3 control-label">
+                                {{ address_form.description.label }}
+                            </label>
+                            <div class="col-sm-10">
+                                {{ address_form.description }}
+                            </div>
+                          </div>
+
+                            <div class="col-lg-12">
+                                {% csrf_token %}
+                                <input type="submit" value="ایجاد" class="btn btn-success">
+                            </div>
+                            <hr>
+                        </form>
+                    </p>
+                    <div class="widget-content">
+								<div class="table-responsive">
+										<table data-sortable="" class="table" data-sortable-initialized="true">
+										<thead>
+											<tr>
+												<th>شماره</th>
+												<th>پرونده</th>
+												<th>نوع پیگیری</th>
+												<th>شرح</th>
+											</tr>
+										</thead>
+
+										<tbody>
+                                            {% for address in file.addresses.all %}
+                                                <tr>
+                                                    <td>{{ forloop.counter }}</td>
+                                                    <td>{{ address.person_type }}</td>
+                                                    <td>{{ address.type }}</td>
+                                                    <td><strong>{{ address.address }}</strong></td>
+                                                    <td>{{ address.description }}</td>
+                                                </tr>
+                                            {% endfor %}
+										</tbody>
+									</table>
+								</div>
+							</div>
+                </div>
+                <div class="tab-pane fade" id="demo5-dropdown4">
+                    <button data-modal="md-newspaper1" onclick="on()"  class="btn btn-default btn-sm md-trigger">تصویر جدید</button>
+                    <div class="md-modal md-newspaper" id="md-newspaper1">
+                        <div class="md-content">
+                            <h3>ثبت تصویر سند</h3>
+                            <div>
+                                <p style="text-align:justify">
+                                    <form class="form-horizontal" role="form" action="" enctype="multipart/form-data" method="post">
+                                      <div class="form-group">
+                                        <label for="input-text" class="col-sm-3 control-label">
+                                            {{ document_form.type.label }}
+                                        </label>
+                                        <div class="col-sm-10">
+                                            {{ document_form.type }}
+                                        </div>
+                                      </div>
+
+                                      <div class="form-group">
+                                        <label for="input-text" class="col-sm-3 control-label">
+                                            {{ document_form.description.label }}
+                                        </label>
+                                        <div class="col-sm-10">
+                                            {{ document_form.description }}
+                                        </div>
+                                      </div>
+
+                                      <div class="form-group">
+                                        <label for="input-text" class="col-sm-3 control-label">
+                                            {{ document_form.image_upload.label }}
+                                        </label>
+                                        <div class="col-sm-10">
+                                            {{ document_form.image_upload }}
+                                        </div>
+                                      </div>
+
+                                        <div class="col-lg-12">
+                                            {% csrf_token %}
+                                            <input type="submit" value="ایجاد" onclick="off()" class="btn btn-success">
+                                            <a href="#" onclick="off()" class="btn btn-danger md-close">بستن</a>
+                                        </div>
+                                        <hr>
+                                    </form>
+                                </p>
+                            </div>
+                        </div><!-- End div .md-content -->
+		            </div>
+
+
+                    <div class="box-info animated fadeInDown">
+                            <div class="gallery-wrap">
+                                {% for document in file.documents.all %}
+                                     <div class="column">
+                                    <div class="inner">
+                                        <a class="zooming" href="{{ document.image_upload.url }}" title="{{ document.description }}">
+                                        <div class="img-wrap">
+                                            <img src="{{ document.image_upload.url }}" alt="Image gallery" title="{{ document.description }}" class="mfp-fade">
+                                        </div>
+                                        {% if document.type == 'وثیقه' %}
+                                            <div class="caption-static success">
+                                                {{ document.type }}
+                                            </div>
+                                        {% endif %}
+                                        {% if document.type == 'ضمانی' %}
+                                            <div class="caption-static danger">
+                                                {{ document.type }}
+                                            </div>
+                                        {% endif %}
+                                        {% if document.type == 'متفرقه' %}
+                                            <div class="caption-static warning">
+                                                {{ document.type }}
+                                            </div>
+                                        {% endif %}
+                                        </a>
+                                    </div>
+                                </div>
+                                {%  endfor %}
+{#                                <div class="column">#}
+{#                                    <div class="inner">#}
+{#                                        <a class="zooming" href="images/big/img007.jpg" title="عنوان تصویر در اینجا">#}
+{#                                        <div class="img-wrap">#}
+{#                                            <img src="images/small/img007_small.jpg" alt="Image gallery" title="عنوان تصویر در اینجا" class="mfp-fade">#}
+{#                                        </div>#}
+{#                                        <div class="caption-static success">#}
+{#                                        سلام ! من یک عنوان هستم#}
+{#                                        </div>#}
+{#                                        </a>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <div class="column">#}
+{#                                    <div class="inner">#}
+{#                                        <a class="zooming" href="images/big/img008.jpg" title="عنوان تصویر در اینجا">#}
+{#                                        <div class="img-wrap">#}
+{#                                            <img src="images/small/img008_small.jpg" alt="Image gallery" title="عنوان تصویر در اینجا" class="mfp-fade">#}
+{#                                        </div>#}
+{#                                        <div class="caption-static warning">#}
+{#                                        سلام ! من یک عنوان هستم#}
+{#                                        </div>#}
+{#                                        </a>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <div class="column">#}
+{#                                    <div class="inner">#}
+{#                                        <a class="zooming" href="images/big/img009.jpg" title="عنوان تصویر در اینجا">#}
+{#                                        <div class="img-wrap">#}
+{#                                            <img src="images/small/img009_small.jpg" alt="Image gallery" title="عنوان تصویر در اینجا" class="mfp-fade">#}
+{#                                        </div>#}
+{#                                        <div class="caption-static danger">#}
+{#                                        سلام ! من یک عنوان هستم#}
+{#                                        </div>#}
+{#                                        </a>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <div class="column">#}
+{#                                    <div class="inner">#}
+{#                                        <a class="zooming" href="images/big/img010.jpg" title="عنوان تصویر در اینجا">#}
+{#                                        <div class="img-wrap">#}
+{#                                            <img src="images/small/img010_small.jpg" alt="Image gallery" title="عنوان تصویر در اینجا" class="mfp-fade">#}
+{#                                        </div>#}
+{#                                        <div class="caption-static info">#}
+{#                                        سلام ! من یک عنوان هستم#}
+{#                                        </div>#}
+{#                                        </a>#}
+{#                                    </div>#}
+{#                                </div>#}
+                            </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="demo5-dropdown5">
+                    <div class="widget-content">
+                        <div class="table-responsive">
+										<table data-sortable="" class="table" data-sortable-initialized="true">
+										<thead>
+											<tr>
+												<th>شماره</th>
+												<th>نام کارشناس</th>
+												<th>نوع دسترسی کارشناس</th>
+												<th>دسترسی کارشناس</th>
+												<th>عملیات</th>
+											</tr>
+										</thead>
+
+										<tbody>
+                                            {% for employee in file.employees.all %}
+                                                <tr>
+                                                    <td>{{ forloop.counter }}</td>
+                                                    <td><strong>{{ employee.employee.profile.full_name }}</strong></td>
+                                                    <td>{{ employee.auth_status }}</td>
+                                                    <td>{{ employee.get_status_display }}</td>
+                                                    <td>
+                                                        <div class="btn-group btn-group-xs">
+{#                                                            <a data-toggle="tooltip" title="خاموش" class="btn btn-default"><i class="fa fa-power-off"></i></a>#}
+                                                            <a href="{% url "bank:file_detail" employee.id %}" data-toggle="tooltip" title="ویرایش" class="btn btn-default"><i class="fa fa-edit"></i></a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+										</tbody>
+									</table>
+								</div>
+                    </div>
+                </div>
+
             </div> <!-- / .tab-content -->
 
         </div>
 						</div>
+    <script>
+        function on() {
+            document.getElementById("overlay").style.display = "block";
+        }
+
+        function off() {
+            document.getElementById("overlay").style.display = "none";
+        }
+
+        function myFunction() {
+            document.getElementById("overlay").style.display = "none";
+            var x = document.getElementById("snackbar")
+            x.style.backgroundColor = "#8e0b0b";
+            x.className = "show";
+            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+        }
+    </script>
 
 {% endblock %}
