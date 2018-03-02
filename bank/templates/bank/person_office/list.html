@@ -1,5 +1,11 @@
 {% extends 'bank/base.html' %}
-
+{% block breadcrumb %}
+    <ul class="breadcrumb">
+        <li><a href="{% url "main" %}">داشبورد</a> <span class="divider">/</span></li>
+        <li><a href="#">پرونده</a> <span class="divider">/</span></li>
+        <li class="active">اشخاص حقوقی</li>
+    </ul>
+{% endblock %}
 {% block content %}
     <ul>
             <div class="row">

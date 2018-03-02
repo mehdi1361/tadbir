@@ -340,11 +340,11 @@
                             <li><a class="md-trigger" data-modal="logout-modal"><i class="icon-logout-1"></i> خروج</a></li>
                         </ul>
                     </li>
-                    <li class="right-opener">
-                        <a href="javascript:;" class="open-right">
-                            <i class="fa fa-angle-double-left"></i><i class="fa fa-angle-double-right"></i>
-                        </a>
-                    </li>
+{#                    <li class="right-opener">#}
+{#                        <a href="javascript:;" class="open-right">#}
+{#                            <i class="fa fa-angle-double-left"></i><i class="fa fa-angle-double-right"></i>#}
+{#                        </a>#}
+{#                    </li>#}
                 </ul>
             </div>
             <!--/.nav-collapse -->
@@ -500,18 +500,18 @@
 							</a>
 							<ul>
 								<li>
-									<a href={% url "bank:files_list" %}>
-										<span>لیست پرونده ها</span>
+									<a href={% url "api:user-report" %}>
+										<span> عملکرد کارشناس</span>
 									</a>
 								</li>
                                 <li>
 									<a href={% url "bank:new_file" %}>
-										<span>پرونده جدید</span>
+										<span>به تفکیک بانک</span>
 									</a>
 								</li>
                                 <li>
-									<a href={% url "bank:get_persons" %}>
-										<span>لیست اشخاص حقیقی</span>
+									<a href="{% url "report_builder" %}" target="_blank">
+										<span>گزارش ساز</span>
 									</a>
 								</li>
                                 <li>
@@ -752,14 +752,20 @@
     </div>
     <!-- Right Sidebar End -->
     <!-- Start right content -->
+
         <div class="content-page">
+            {%  block breadcrumb %}
+
+            {% endblock %}
+
 			<!-- ============================================================== -->
 			<!-- Start Content here -->
 			<!-- ============================================================== -->
             <div class="content">
+
 				<!-- Start info box -->
                 {%  block content %}
-                    {% render_breadcrumbs %}
+
                 {% endblock %}
 				<!-- End of info box -->
 

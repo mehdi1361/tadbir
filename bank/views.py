@@ -9,7 +9,8 @@ from employee.forms import PhoneFileForm, AddressForm, DocumentForm
 from .models import Bank, ManagementAreas, Branch, File, Person, Office, SmsType, PersonFile
 from django.views.generic import ListView
 from .forms import BankForm, AreaForm, BranchForm, FileForm, \
-    PersonForm, AssuranceForm, PersonFileForm, FileOfficeForm, SmsTypeForm
+    PersonForm, AssuranceForm, PersonFileForm, FileOfficeForm, SmsTypeForm, EmployeeFileForm, PersonOfficeForm, \
+    OfficeForm
 from django.shortcuts import get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from dal import autocomplete
@@ -179,6 +180,7 @@ def file_document(request, file_id):
         phone_form.fields['phone_owner'].queryset = PersonFile.objects.filter(file=file)
         address_form = AddressForm(request.POST)
         document_form = DocumentForm(request.POST, request.FILES or None)
+        employee_file_form = EmployeeFileForm(request.POST)
 
         if person_form.is_valid():
             new_person_file = person_form.save(commit=False)
@@ -240,6 +242,21 @@ def file_document(request, file_id):
             document_form = DocumentForm()
             print(document_form.errors)
 
+        if employee_file_form.is_valid():
+            try:
+                result_employee_file_form = employee_file_form.save(commit=False)
+                result_employee_file_form.file = file
+                result_employee_file_form.save()
+                messages.add_message(request, messages.SUCCESS, 'تخصیص با موفقیت ثبت شد.')
+
+            except:
+                messages.add_message(request, messages.ERROR, 'هشدار آدرس تکراری است.')
+                employee_file_form = AddressForm()
+
+        else:
+            employee_file_form = EmployeeFileForm()
+            print(employee_file_form.errors)
+
     else:
         person_form = PersonFileForm()
         person_office = FileOfficeForm()
@@ -248,6 +265,7 @@ def file_document(request, file_id):
         phone_form.fields['phone_owner'].queryset = PersonFile.objects.filter(file=file)
         address_form = AddressForm()
         document_form = DocumentForm()
+        employee_file_form = EmployeeFileForm()
 
     return render(
         request,
@@ -259,7 +277,8 @@ def file_document(request, file_id):
             'file': file,
             'phone_form': phone_form,
             'address_form': address_form,
-            'document_form': document_form
+            'document_form': document_form,
+            'employee_file_form': employee_file_form
         }
     )
 
@@ -328,18 +347,18 @@ def get_persons(request):
 @login_required(login_url='/employee/login/')
 def new_person_office(request):
     if request.method == 'POST':
-        form = PersonOfficeForm(request.POST)
+        form = OfficeForm(request.POST)
         if form.is_valid():
             form.save()
             messages.add_message(request, messages.SUCCESS, 'شرکت با موفقیت ذخیره شد.')
-            form = PersonOfficeForm
+            form = OfficeForm
 
         else:
             messages.add_message(request, messages.WARNING, form.errors)
             form = PersonOfficeForm(request.POST)
 
     else:
-        form = PersonOfficeForm()
+        form = OfficeForm()
 
     return render(
         request,

@@ -1,5 +1,12 @@
 {% extends 'bank/base.html' %}
-
+{% block breadcrumb %}
+    <ul class="breadcrumb">
+        <li><a href="#">کارتابل</a> <span class="divider">/</span></li>
+        <li><a href="{% url "main" %}">داشبورد</a> <span class="divider">/</span></li>
+        <li><a href="{% url "employee:list" %}">پرونده</a> <span class="divider">/</span></li>
+        <li class="active">جزییات<span class="divider">/</span></li>
+    </ul>
+{% endblock %}
 {% block content %}
     <div>
 {#    <button onclick="myFunction()">Show Snackbar</button>#}
@@ -256,6 +263,7 @@
                                                     <td>{{ forloop.counter }}</td>
                                                     <td><strong>{{ document.relation_type }}</strong></td>
                                                     <td>{{ document.office.name }}</td>
+                                                    <td>{{ document.office.description }}</td>
                                                 </tr>
                                             {% endfor %}
 										</tbody>

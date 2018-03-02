@@ -33,9 +33,9 @@ urlpatterns = [
     url(r'^reports/', include('reports.urls', namespace='reports', app_name='reports')),
     url(r'^logout/$', logout, {'next_page': settings.LOGIN_REDIRECT_URL}, name='logout'),
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
-  #  url(r'^api/chart/data/$', get_daily_user, name='api-data'),
-    url(r'^api/', include('reports.urls')),
+    url(r'^api/', include('reports.urls', namespace='api', app_name='api')),
     url(r'^test/$', get_g, name='t'),
+    url(r'^report_builder/', include('report_builder.urls'), name='report_builder')
 ]
 
 if settings.DEBUG:

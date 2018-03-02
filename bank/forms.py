@@ -1,4 +1,6 @@
 from django import forms
+
+from employee.models import EmployeeFile
 from .models import Bank, ManagementAreas, Branch, \
     File, Assurance, PersonFile, Person, Office, FileOffice, SmsType
 
@@ -193,5 +195,34 @@ class SmsTypeForm(forms.ModelForm):
 
         }
 
+
+class EmployeeFileForm(forms.ModelForm):
+    class Meta:
+        model = EmployeeFile
+        fields = [
+            'status',
+            'auth_status',
+            'employee'
+        ]
+        widgets = {
+            'status': forms.Select(attrs={'class': 'form-control'}),
+            'auth_status': forms.Select(attrs={'class': 'form-control'}),
+            'employee': forms.Textarea(attrs={'class': 'form-control'})
+        }
+
+
+class PersonOfficeForm(forms.ModelForm):
+    class Meta:
+        model = FileOffice
+        fields = [
+            'office',
+            'relation_type',
+            'description'
+        ]
+        widgets = {
+            'office': forms.Select(attrs={'class': 'form-control'}),
+            'relation_type': forms.Select(attrs={'class': 'form-control'}),
+            'description': forms.Select(attrs={'class': 'form-control'})
+        }
 
 inlineformset_factory(Person, PersonFile, form=PersonFileForm, extra=2)

@@ -1,4 +1,12 @@
 {% extends 'bank/base.html' %}
+{% block breadcrumb %}
+    <ul class="breadcrumb">
+        <li><a href="{% url "main" %}">داشبورد</a> <span class="divider">/</span></li>
+        <li><a href="#">پرونده</a> <span class="divider">/</span></li>
+        <li><a href="{% url "bank:files_list" %}">لیست پرونده</a> <span class="divider">/</span></li>
+        <li class="active">پرونده جدید</li>
+    </ul>
+{% endblock %}
 {% block content %}
     <div>
 

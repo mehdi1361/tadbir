@@ -164,6 +164,7 @@ class FileOffice(Base):
     file = models.ForeignKey(File, verbose_name=_('پرونده'), related_name='related_office')
     office = models.ForeignKey(Office, verbose_name=_('شرکت'), related_name='related_office')
     relation_type = models.CharField(_('ارتباط'), max_length=10, default='مدیون', choices=TYPE)
+    description = models.TextField(_('توضیحات'), null=True)
 
     class Meta:
         unique_together = ['file', 'office']

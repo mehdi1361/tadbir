@@ -1,5 +1,12 @@
 {% extends 'bank/base.html' %}
-
+{% block breadcrumb %}
+    <ul class="breadcrumb">
+        <li><a href="{% url "main" %}">داشبورد</a> <span class="divider">/</span></li>
+        <li><a href="#">تنظیمات</a> <span class="divider">/</span></li>
+        <li><a href="{% url "bank:areas_list" %}">مناطق</a> <span class="divider">/</span></li>
+        <li class="active">شعبه جدید</li>
+    </ul>
+{% endblock %}
 {% block content %}
     <div>
 

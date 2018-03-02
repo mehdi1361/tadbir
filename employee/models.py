@@ -37,6 +37,7 @@ class EmployeeFile(Base):
     files = FileManager()
 
     class Meta:
+        unique_together = ('file', 'employee')
         verbose_name = _('تخصیص پرونده')
         verbose_name_plural = _('تخصیص پرونده')
         db_table = 'employee_files'
