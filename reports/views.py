@@ -85,6 +85,7 @@ def get_g(request):
 
 @login_required(login_url='/employee/login/')
 def get_users_reports(request):
+    # TODO complete report from request persian calendar
     start_date = request.POST.get('start_date')
     end_date = request.POST.get('end_date')
     if start_date and end_date:
