@@ -24,8 +24,8 @@ class EmployeeFile(Base):
         ('وکیل', 'وکیل'),
     )
     STATUS = (
-        ('فعال', 'enable'),
-        ('غیرفعال', 'disable'),
+        ('enable', 'فعال'),
+        ('disable', 'غیر فعال'),
     )
 
     file = models.ForeignKey(File, verbose_name=_('پرونده'), related_name='employees')

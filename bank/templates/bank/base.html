@@ -1,4 +1,11 @@
 {% load staticfiles %}
+{% load django_bootstrap_breadcrumbs %}
+{% block breadcrumbs %}
+    {% clear_breadcrumbs %}
+    {% breadcrumb "Home" "/" %}
+    {% breadcrumb "Users and groups" "users_and_groups_index" %}
+{% endblock %}
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -752,6 +759,7 @@
             <div class="content">
 				<!-- Start info box -->
                 {%  block content %}
+                    {% render_breadcrumbs %}
                 {% endblock %}
 				<!-- End of info box -->
 

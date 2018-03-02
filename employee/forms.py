@@ -218,7 +218,7 @@ class SmsCautionForm(forms.ModelForm):
         }
 
 
-class EmployeeFileForm(forms.Form):
+class EmployeeFileForm(forms.ModelForm):
     class Meta:
         model = EmployeeFile
         fields = [

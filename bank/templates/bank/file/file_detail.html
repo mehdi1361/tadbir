@@ -1,7 +1,12 @@
 {% extends 'bank/base.html' %}
+{% load django_bootstrap_breadcrumbs %}
 
 {% block content %}
     <div>
+        {% block breadcrumbs %}
+            {{ block.super }}
+            {% breadcrumb user "users.views.profile" user.username %}
+        {% endblock %}
         <div id="overlay"></div>
     </div>
 
@@ -681,7 +686,7 @@
                                                     <td>
                                                         <div class="btn-group btn-group-xs">
 {#                                                            <a data-toggle="tooltip" title="خاموش" class="btn btn-default"><i class="fa fa-power-off"></i></a>#}
-                                                            <a href="{% url "bank:file_detail" employee.id %}" data-toggle="tooltip" title="ویرایش" class="btn btn-default"><i class="fa fa-edit"></i></a>
+                                                            <a href="{% url "employee:auth_edit" employee.id %}" data-toggle="tooltip" title="ویرایش" class="btn btn-default"><i class="fa fa-edit"></i></a>
                                                         </div>
                                                     </td>
                                                 </tr>

@@ -1,6 +1,6 @@
 from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .forms import LoginForm, UserRegistrationForm, \
     ProfileForm, FollowUpForm, PhoneFileForm, AddressForm, \
     DocumentForm, ReminderForm, RecoveryForm, SmsCautionForm, EmployeeFileForm
@@ -240,15 +240,16 @@ def file_document(request, file_id):
 
 
 @login_required(login_url='/employee/login/')
-def edit_auth_employee_file(request):
-    emp_file = EmployeeFile.objects.get(pk=request.GET.get('id'))
+def edit_auth_employee_file(request, id):
+    emp_file = EmployeeFile.objects.get(pk=id)
     if request.method == 'POST':
         form = EmployeeFileForm(request.POST, instance=emp_file)
 
         if form.is_valid():
             form.save()
+            return redirect('bank:file_detail', file_id=emp_file.file.id)
 
     else:
         form = EmployeeFileForm(instance=emp_file)
 
-    return render(request, 'bank/employee/profile.html', {'form': form})
+    return render(request, 'bank/employee/employee_edit_auth.html', {'form': form})
