@@ -36,6 +36,9 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'bootstrap_admin',
+    # 'material',
+    # 'material.frontend',
+    # 'material.admin',
     'django_jalali',
     'django_cron',
     'dal',
