@@ -230,10 +230,7 @@ def file_document(request, file_id):
                 messages.add_message(request, messages.SUCCESS, 'تصویر با موفقیت ثبت شد.')
 
             except:
-                pass
-
-        else:
-            messages.add_message(request, messages.ERROR, 'مشکل در ثبت تضویر')
+                messages.add_message(request, messages.ERROR, 'مشکل در ثبت تضویر')
 
         if employee_file_form.is_valid():
             try:
