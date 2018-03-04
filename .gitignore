@@ -16,3 +16,4 @@ py27venv
 
 py34venv/*
 py34venv
+db.sqlite3
