@@ -218,9 +218,6 @@ def file_document(request, file_id):
             except:
                 messages.add_message(request, messages.ERROR, 'هشدار آدرس تکراری است.')
 
-        else:
-            print(document_form.errors)
-
         if document_form.is_valid():
             try:
 

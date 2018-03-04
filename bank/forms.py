@@ -207,7 +207,7 @@ class EmployeeFileForm(forms.ModelForm):
         widgets = {
             'status': forms.Select(attrs={'class': 'form-control'}),
             'auth_status': forms.Select(attrs={'class': 'form-control'}),
-            'employee': forms.Textarea(attrs={'class': 'form-control'})
+            'employee': forms.Select(attrs={'class': 'form-control'})
         }
 
 
