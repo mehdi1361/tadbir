@@ -227,12 +227,13 @@ def file_document(request, file_id):
                 result_document_form = document_form.save(commit=False)
                 result_document_form.file = file
                 result_document_form.save()
+                messages.add_message(request, messages.SUCCESS, 'تصویر با موفقیت ثبت شد.')
 
             except:
                 pass
 
         else:
-            print(document_form.errors)
+            messages.add_message(request, messages.ERROR, 'مشکل در ثبت تضویر')
 
         if employee_file_form.is_valid():
             try:
