@@ -124,8 +124,7 @@ def file_document(request, file_id):
             messages.add_message(request, messages.SUCCESS, 'پیگیری با موفقیت ثبت شد.')
 
         else:
-            follow_form = FollowUpForm()
-            # messages.add_message(request, messages.ERROR, 'خطا در ثبت پیگیری')
+            messages.add_message(request, messages.ERROR, 'خطا در ثبت پیگیری')
 
         if phone_form.is_valid():
             try:
@@ -133,6 +132,8 @@ def file_document(request, file_id):
                 result_phone_form.file = file
                 result_phone_form.save()
                 messages.add_message(request, messages.SUCCESS, 'شماره تماس با موفقیت ثبت شد')
+                phone_form = PhoneFileForm()
+                phone_form.fields['phone_owner'].queryset = PersonFile.objects.filter(file=file)
 
             except:
                 messages.add_message(request, messages.ERROR, 'هشدار شماره تلفن تکراری است.')
@@ -149,14 +150,11 @@ def file_document(request, file_id):
                 result_address_form = address_form.save(commit=False)
                 result_address_form.file = file
                 result_address_form.save()
+
                 messages.add_message(request, messages.SUCCESS, 'آدرس با موفقیت ثبت شد.')
 
             except:
                 messages.add_message(request, messages.ERROR, 'هشدار آدرس تکراری است.')
-                address_form = AddressForm()
-
-        else:
-            address_form = AddressForm()
 
         if document_form.is_valid():
             try:
@@ -166,10 +164,7 @@ def file_document(request, file_id):
                 result_document_form.save()
 
             except:
-                document_form = DocumentForm()
-
-        else:
-            print(document_form.errors)
+                pass
 
         if reminder_form.is_valid():
             try:
@@ -177,22 +172,18 @@ def file_document(request, file_id):
                 result_reminder_form = reminder_form.save(commit=False)
                 result_reminder_form.file = file
                 result_reminder_form.save()
-                reminder_form = ReminderForm()
-            except:
-                reminder_form = ReminderForm()
 
-        else:
-            reminder_form = ReminderForm()
+            except:
+                pass
 
         if recovery_form.is_valid():
             try:
                 result_recovery_form = recovery_form.save(commit=False)
                 result_recovery_form.file = file
                 result_recovery_form.save()
-                recovery_form = RecoveryForm()
 
             except:
-                recovery_form = RecoveryForm()
+                pass
 
         if sms_form.is_valid():
             try:
@@ -200,27 +191,19 @@ def file_document(request, file_id):
                 result_sms_form.file = file
                 result_sms_form.save()
                 messages.add_message(request, messages.SUCCESS, 'پیامک با موفقیت ثبت شد')
-                sms_form = SmsCautionForm()
-                sms_form.fields['mobile_number'].queryset = PhoneFile.objects.filter(file=file)
 
             except:
                 messages.add_message(request, messages.ERROR, 'هشدار پیامک تکراری است.')
-                sms_form = SmsCautionForm()
-                sms_form.fields['mobile_number'].queryset = PhoneFile.objects.filter(file=file)
 
-        else:
-            sms_form = SmsCautionForm()
-
-    else:
-        follow_form = FollowUpForm()
-        phone_form = PhoneFileForm()
-        phone_form.fields['phone_owner'].queryset = PersonFile.objects.filter(file=file)
-        address_form = AddressForm()
-        document_form = DocumentForm()
-        reminder_form = ReminderForm()
-        recovery_form = RecoveryForm()
-        sms_form = SmsCautionForm()
-        sms_form.fields['mobile_number'].queryset = PhoneFile.objects.filter(file=file)
+    follow_form = FollowUpForm()
+    phone_form = PhoneFileForm()
+    phone_form.fields['phone_owner'].queryset = PersonFile.objects.filter(file=file)
+    address_form = AddressForm()
+    document_form = DocumentForm()
+    reminder_form = ReminderForm()
+    recovery_form = RecoveryForm()
+    sms_form = SmsCautionForm()
+    sms_form.fields['mobile_number'].queryset = PhoneFile.objects.filter(file=file)
 
     return render(
         request,

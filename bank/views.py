@@ -41,7 +41,7 @@ def new_bank(request):
         form = BankForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect(reverse('bank:bank_list'))
+            return redirect('bank:bank_list')
 
     else:
         form = BankForm(request.POST)
@@ -76,7 +76,7 @@ def new_area(request):
         form = AreaForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect(reverse('bank:area_list'))
+            return redirect(reverse('bank:areas_list'))
 
     else:
         form = AreaForm(request.POST)
@@ -161,10 +161,11 @@ def new_file(request):
         form = FileForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect(reverse('bank:new_file_detail'))
+            return redirect(reverse('bank:files_list'))
+        else:
+            print(form.errors)
 
-    else:
-        form = FileForm(request.POST)
+    form = FileForm()
 
     return render(request, 'bank/file/new.html', {'form': form})
 
@@ -206,13 +207,6 @@ def file_document(request, file_id):
 
             except:
                 messages.add_message(request, messages.ERROR, 'هشدار شماره تلفن تکراری است.')
-                phone_form = PhoneFileForm()
-                phone_form.fields['phone_owner'].queryset = PersonFile.objects.filter(file=file)
-
-        else:
-            print(phone_form.errors)
-            phone_form = PhoneFileForm()
-            phone_form.fields['phone_owner'].queryset = PersonFile.objects.filter(file=file)
 
         if address_form.is_valid():
             try:
@@ -223,10 +217,9 @@ def file_document(request, file_id):
 
             except:
                 messages.add_message(request, messages.ERROR, 'هشدار آدرس تکراری است.')
-                address_form = AddressForm()
 
         else:
-            address_form = AddressForm()
+            print(document_form.errors)
 
         if document_form.is_valid():
             try:
@@ -236,10 +229,9 @@ def file_document(request, file_id):
                 result_document_form.save()
 
             except:
-                document_form = DocumentForm()
+                pass
 
         else:
-            document_form = DocumentForm()
             print(document_form.errors)
 
         if employee_file_form.is_valid():
@@ -250,22 +242,19 @@ def file_document(request, file_id):
                 messages.add_message(request, messages.SUCCESS, 'تخصیص با موفقیت ثبت شد.')
 
             except:
-                messages.add_message(request, messages.ERROR, 'هشدار آدرس تکراری است.')
-                employee_file_form = AddressForm()
+                messages.add_message(request, messages.ERROR, 'خطا در ثبت')
 
         else:
-            employee_file_form = EmployeeFileForm()
             print(employee_file_form.errors)
 
-    else:
-        person_form = PersonFileForm()
-        person_office = FileOfficeForm()
-        assurance_form = AssuranceForm()
-        phone_form = PhoneFileForm()
-        phone_form.fields['phone_owner'].queryset = PersonFile.objects.filter(file=file)
-        address_form = AddressForm()
-        document_form = DocumentForm()
-        employee_file_form = EmployeeFileForm()
+    person_form = PersonFileForm()
+    person_office = FileOfficeForm()
+    assurance_form = AssuranceForm()
+    phone_form = PhoneFileForm()
+    phone_form.fields['phone_owner'].queryset = PersonFile.objects.filter(file=file)
+    address_form = AddressForm()
+    document_form = DocumentForm()
+    employee_file_form = EmployeeFileForm()
 
     return render(
         request,
