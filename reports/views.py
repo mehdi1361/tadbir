@@ -4,7 +4,8 @@ from django.shortcuts import render, render_to_response
 from chartit import DataPool, Chart, PivotDataPool
 from .models import PersonDailyReport
 from django.http import JsonResponse
-from django.db.models import Q, Sum
+from django.db.models import Q, Sum, Count
+from bank.models import File, ManagementAreas, Branch
 
 
 def weather_chart_view(request):
@@ -89,7 +90,7 @@ def get_users_reports(request):
     start_date = request.POST.get('start_date')
     end_date = request.POST.get('end_date')
     if start_date and end_date:
-        employee_report = PersonDailyReport.objects.values('user') \
+        employee_report = PersonDailyReport.objects.values('user__username') \
             .filter(Q(persian_date__lte=end_date), Q(persian_date__gte=start_date)) \
             .annotate(
                 sum_count_file=Sum('count_file'),
@@ -101,7 +102,7 @@ def get_users_reports(request):
             )
 
     else:
-        employee_report = PersonDailyReport.objects.values('user') \
+        employee_report = PersonDailyReport.objects.values('user__username') \
             .annotate(
                 sum_count_file=Sum('count_file'),
                 sum_value_file=Sum('value_file'),
@@ -111,4 +112,36 @@ def get_users_reports(request):
                 sum_value_file_recovery=Sum('value_file_recovery')
             )
 
-    return render(request, 'bank/reports/list.html', {'report': employee_report})
+    return render(request, 'bank/reports/list.html', {'reports': employee_report})
+
+
+def get_area_files(request, *args, **kwargs):
+    areas = ManagementAreas.objects.filter(status=True).annotate(count_f=Count('branches__files'))
+    labels = []
+    default_items = []
+
+    for area in areas:
+        labels.append(area.name)
+        default_items.append(area.count_f)
+
+    data = {
+        "labels": labels,
+        "default": default_items,
+    }
+    return JsonResponse(data)  # http response
+
+
+def get_branch_files(request, *args, **kwargs):
+    branches = Branch.objects.annotate(count_f=Count('files'))
+    labels = []
+    default_items = []
+
+    for branch in branches:
+        labels.append(branch.name)
+        default_items.append(branch.count_f)
+
+    data = {
+        "labels": labels,
+        "default": default_items,
+    }
+    return JsonResponse(data)  # http response

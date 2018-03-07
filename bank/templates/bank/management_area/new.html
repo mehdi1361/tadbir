@@ -3,7 +3,7 @@
     <ul class="breadcrumb">
         <li><a href="{% url "main" %}">داشبورد</a> <span class="divider">/</span></li>
         <li><a href="#">تنظیمات</a> <span class="divider">/</span></li>
-        <li><a href="{% url "bank:areas_list" %}">مناطق</a> <span class="divider">/</span></li>
+        <li><a href="{% url "bank:areas_list" %}">سرپرستی</a> <span class="divider">/</span></li>
         <li class="active">جدید</li>
     </ul>
 {% endblock %}
@@ -13,7 +13,7 @@
     </div>
     <div class="widget">
 					<div class="widget-header transparent">
-						<h2><strong>منطقه جدید</strong></h2>
+						<h2><strong>سرپرستی جدید</strong></h2>
 						<div class="additional-btn">
 							<a href="#" class="hidden reload"><i class="icon-ccw-1"></i></a>
 							<a href="#" class="widget-toggle"><i class="icon-down-open-2"></i></a>
@@ -23,25 +23,33 @@
 					<div class="widget-content padding">
 						<form class="form-horizontal" role="form" action="" method="post">
 						  <div class="form-group">
-							<label for="input-text" class="col-sm-2 control-label">نام منطقه</label>
+							<label for="input-text" class="col-sm-2 control-label">
+                                {{ form.name.label }}
+                            </label>
 							<div class="col-sm-10">
                                 {{ form.name }}
 							</div>
 						  </div>
                           <div class="form-group">
-							<label for="input-text" class="col-sm-2 control-label">کد پستی</label>
+							<label for="input-text" class="col-sm-2 control-label">
+                                {{ form.postal_code.label }}
+                            </label>
 							<div class="col-sm-10">
                                 {{ form.postal_code }}
 							</div>
 						  </div>
                           <div class="form-group">
-							<label for="input-text" class="col-sm-2 control-label">بانک</label>
+							<label for="input-text" class="col-sm-2 control-label">
+                                {{ form.bank.label }}
+                            </label>
 							<div class="col-sm-10">
                                 {{ form.bank }}
 							</div>
 						  </div>
                           <div class="form-group">
-							<label for="input-text" class="col-sm-2 control-label">استان</label>
+							<label for="input-text" class="col-sm-2 control-label">
+                                {{ form.state.label }}
+                            </label>
 							<div class="col-sm-10">
                                 {{ form.state }}
 							</div>

@@ -20,7 +20,7 @@ class BankForm(forms.ModelForm):
 class AreaForm(forms.ModelForm):
     class Meta:
         model = ManagementAreas
-        fields = ['name', 'postal_code', 'address', 'state', 'bank']
+        fields = ['name', 'postal_code', 'address', 'state', 'bank', 'status']
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control'}),
             'postal_code': forms.TextInput(attrs={'class': 'form-control'}),

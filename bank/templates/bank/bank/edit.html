@@ -14,21 +14,56 @@
 						</div>
 					</div>
 					<div class="widget-content padding">
-						<form class="form-horizontal" role="form"  method="post">
+						<form class="form-horizontal" role="form" action="" method="post">
 						  <div class="form-group">
-							<label for="input-text" class="col-sm-2 control-label">نام جدید</label>
+							<label for="input-text" class="col-sm-2 control-label">
+                                {{ form.name.label }}
+                            </label>
 							<div class="col-sm-10">
-                                {{ form.name }}
-                                {% csrf_token %}
+                                {{ form.name  }}
 							</div>
-
+						  </div>
+                          <div class="form-group">
+							<label for="input-text" class="col-sm-2 control-label">
+                                {{ form.postal_code.label }}
+                            </label>
+							<div class="col-sm-10">
+                                {{ form.postal_code }}
+							</div>
+						  </div>
+                          <div class="form-group">
+							<label for="input-text" class="col-sm-2 control-label">
+                                {{ form.bank.label }}
+                            </label>
+							<div class="col-sm-10">
+                                {{ form.bank }}
+							</div>
+						  </div>
+                          <div class="form-group">
+							<label for="input-text" class="col-sm-2 control-label">{{ form.state.label }}</label>
+							<div class="col-sm-10">
+                                {{ form.state }}
+							</div>
+						  </div>
+                          <div class="form-group">
+							<label for="input-text" class="col-sm-2 control-label">{{ form.address.label }}</label>
+							<div class="col-sm-10">
+                                {{ form.address }}
+							</div>
+						  </div>
+                          <div class="form-group">
+							<label for="input-text" class="col-sm-2 control-label">
+                                {{ form.status.label }}
+                            </label>
+							<div class="col-sm-10">
+                                {{ form.status }}
+							</div>
 						  </div>
                             <div class="col-lg-12">
-                                <a class="btn btn-danger autohidebut" href="javascript:;" onclick="autohidenotify('error')">حالت مخفی خودکار در 3 ثانیه</a>
-                                <input type="submit" value="بروز رسانی" class="btn btn-success">
-                                <br>
-                                <br>
+                                {% csrf_token %}
+                                <input type="submit" value="بروزرسانی" class="btn btn-success">
                             </div>
+                            <hr>
 						</form>
 					</div>
 

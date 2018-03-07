@@ -84,39 +84,16 @@
 										</thead>
 
 										<tbody>
-                                            {% for report in employee_report %}
+                                            {% for report in reports %}
                                                 <tr>
                                                     <td><strong>{{ forloop.counter }}</strong></td>
+                                                    <td>{{ report.user__username }}</td>
                                                     <td>{{ report.sum_count_file }}</td>
-                                                    <td>{{ employee_files.file.file_type }}</td>
-                                                    <td>{{ employee_files.file.branch }}</td>
-                                                    <td>{{ employee_files.file.main_deposit }}</td>
-                                                    <td>{{ employee_files.file.nc_deposit }}</td>
-                                                    <td>{{ employee_files.file.so_deposit }}</td>
-                                                    <td>{{ employee_files.file.cost_proceeding }}</td>
-                                                    {% if employee_files.file.status == 'سر رسید گذشته' %}
-                                                        <td><span class="label label-success">{{ employee_files.file.status }}</span></td>
-                                                    {% elif employee_files.file.status == 'معوق' %}
-                                                        <td><span class="label label-warning">{{ employee_files.file.status }}</span></td>
-                                                    {% else %}
-                                                        <td><span class="label label-danger">{{ employee_files.file.status }}</span></td>
-
-                                                    {% endif %}
-
-                                                    {% if employee_files.file.assurance == 'خرد' %}
-                                                        <td><span class="label label-success">{{ employee_files.file.assurance }}</span></td>
-                                                    {% elif employee_files.file.assurance == 'متوسط' %}
-                                                        <td><span class="label label-info">{{ employee_files.file.assurance }}</span></td>
-                                                    {% else %}
-                                                        <td><span class="label label-danger">{{ employee_files.file.assurance }}</span></td>
-
-                                                    {% endif %}
-                                                    <td>
-                                                        <div class="btn-group btn-group-xs">
-{#                                                            <a data-toggle="tooltip" title="خاموش" class="btn btn-default"><i class="fa fa-power-off"></i></a>#}
-                                                            <a href="{% url "employee:employee_file_detail" employee_files.file.id %}" data-toggle="tooltip" title="جزییات پرونده" class="btn btn-default"><i class="fa fa-edit"></i></a>
-                                                        </div>
-                                                    </td>
+                                                    <td>{{ report.sum_value_file }}</td>
+                                                    <td>{{ report.sum_count_daily }}</td>
+                                                    <td>{{ report.sum_value_file_daily }}</td>
+                                                    <td>{{ report.sum_count_file_recovery }}</td>
+                                                    <td>{{ report.sum_value_file_recovery }}</td>
                                                 </tr>
                                             {% endfor %}
 										</tbody>

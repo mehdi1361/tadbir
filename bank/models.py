@@ -23,9 +23,10 @@ class Bank(Base):
 
 @python_2_unicode_compatible
 class ManagementAreas(Base, Location):
-    name = models.CharField(_('area name'), max_length=100)
-    bank = models.ForeignKey(Bank, verbose_name=_('bank'), related_name='areas', on_delete=models.CASCADE)
-    state = models.ForeignKey(State, verbose_name=_('state'), related_name='areas_state', on_delete=models.CASCADE)
+    name = models.CharField(_('نام سرپرستی'), max_length=100)
+    bank = models.ForeignKey(Bank, verbose_name=_('بانک'), related_name='areas', on_delete=models.CASCADE)
+    state = models.ForeignKey(State, verbose_name=_('استان'), related_name='areas_state', on_delete=models.CASCADE)
+    status = models.BooleanField(_('وضعیت'), default=True)
 
     class Meta:
         ordering = ['name']
@@ -39,11 +40,11 @@ class ManagementAreas(Base, Location):
 
 @python_2_unicode_compatible
 class Branch(Base, Location):
-    name = models.CharField(_('branch name'), max_length=100)
+    name = models.CharField(_('نام شعبه'), max_length=100)
     code = models.CharField(_('کد شعبه'), max_length=100, null=True)
-    area = models.ForeignKey(ManagementAreas, verbose_name=_('area'), related_name='branches',
+    area = models.ForeignKey(ManagementAreas, verbose_name=_('سرپرستی'), related_name='branches',
                              on_delete=models.CASCADE)
-    city = models.ForeignKey(City, verbose_name=_('city'), related_name='areas', on_delete=models.CASCADE)
+    city = models.ForeignKey(City, verbose_name=_('شهر'), related_name='areas', on_delete=models.CASCADE)
     postal_code = models.CharField(_('کد شعبه'), max_length=20, default=None, null=True)
 
     class Meta:
@@ -81,7 +82,7 @@ class File(Base):
     nc_deposit = models.PositiveIntegerField(_(u'وجه التزام'), default=100)
     so_deposit = models.PositiveIntegerField(_(u'سود'), default=100)
     cost_proceeding = models.PositiveIntegerField(_(u'هزینه دادرسی'), default=100)
-    branch = models.ForeignKey(Branch, verbose_name=_(u'شعبه'))
+    branch = models.ForeignKey(Branch, verbose_name=_(u'شعبه'), related_name='files')
     persian_date_refrence = models.CharField(_(u'تاریخ ارجاع'), max_length=10, default=None, null=True)
     persian_normal_date_refrence = models.CharField(_(u'تاریخ ارجاع'), max_length=10, default=None, null=True)
     status = models.CharField(_(u'وضعیت'), max_length=20, choices=STATUS, default='مشکوک')

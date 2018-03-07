@@ -91,10 +91,9 @@ def edit_area(request, area_id):
         form = AreaForm(request.POST, instance=area)
         if form.is_valid():
             form.save()
-            return redirect(reverse('bank:bank_list'))
+            return redirect(reverse('bank:areas_list'))
 
-    else:
-        form = AreaForm(request.POST)
+    form = AreaForm(instance=area)
 
     return render(request, 'bank/bank/edit.html', {'form': form, 'area': area})
 
@@ -103,7 +102,7 @@ class BranchListView(LoginRequiredMixin, ListView):
     login_url = '/employee/login/'
     queryset = Branch.objects.all()
     context_object_name = 'branches'
-    paginate_by = 3
+    paginate_by = 10
     template_name = 'bank/branch/list.html'
 
 
@@ -117,6 +116,20 @@ def new_branch(request):
 
     else:
         form = BranchForm(request.POST)
+
+    return render(request, 'bank/branch/new.html', {'form': form})
+
+
+@login_required(login_url='/employee/login/')
+def edit_branch(request, branch_id):
+    branch = get_object_or_404(Branch, id=branch_id)
+    if request.method == 'POST':
+        form = BranchForm(request.POST, instance=branch)
+        if form.is_valid():
+            form.save()
+            return redirect(reverse('bank:branches_list'))
+
+    form = BranchForm(instance=branch)
 
     return render(request, 'bank/branch/new.html', {'form': form})
 
