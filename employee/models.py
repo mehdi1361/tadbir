@@ -48,7 +48,24 @@ class EmployeeFile(Base):
 
 @python_2_unicode_compatible
 class Profile(Base, Human):
+    CERTIFICATE = (
+        ('کارشناسی حقوق', 'کارشناسی حقوق'),
+        ('کارشناسی ارشد حقوق', 'کارشناسی ارشد حقوق'),
+        ('کارشناسی ارشد حقوق', 'کارشناسی ارشد حقوق'),
+        ('کارشناسی الکترونیک', 'کارشناسی الکترونیک'),
+        ('لیسانس مدیریت', 'لیسانس مدیریت'),
+        ('لیسانس صنایع', 'لیسانس صنایع'),
+        ('کارشناسی ارشدحقوق جزا', 'کارشناسی ارشدحقوق جزا'),
+        ('مدیریت دولتی- مدیریت نیروی انسانی', 'مدیریت دولتی- مدیریت نیروی انسانی'),
+    )
+
+    EMP_POST = (
+      ('کارشناسی حقوق', 'کارشناسی حقوق'),
+      ('کارشناسی ارشد حقوق', 'کارشناسی ارشد حقوق'),
+    )
     user = models.OneToOneField(User, verbose_name=_('پروفایل'), related_name='profile')
+    certificate = models.CharField(_('مدرک تحصیلی'), max_length=200, choices=CERTIFICATE, default='کارشناسی حقوق', null=True)
+    employee_post = models.CharField(_('سمت'), max_length=200, choices=EMP_POST, default='کارشناسی حقوق', null=True)
 
     class Meta:
         verbose_name = _('profile')

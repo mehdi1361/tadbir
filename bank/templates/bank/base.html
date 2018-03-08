@@ -325,9 +325,9 @@
                     <li class="dropdown iconify hide-phone"><a href="#" onclick="javascript:toggle_fullscreen()"><i class="icon-resize-full-2"></i></a></li>
                     <li class="dropdown topbar-profile">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <span class="rounded-image topbar-profile-image">
-                                <img src="{% static "assets/img/avatar/mohammad2.jpg" %}">
-                            </span>
+{#                            <span class="rounded-image topbar-profile-image">#}
+{#                                <img src="{% static "assets/img/avatar/mohammad2.jpg" %}">#}
+{#                            </span>#}
                             {% if user.profile %}
                                 {{ user.profile.first_name }} {{ user.profile.last_name }}
                             {%  else %}
@@ -367,10 +367,10 @@
                 <!--- Profile -->
                 <div class="profile-info">
                     <div class="col-xs-4">
-                      <a href="profile.html" class="rounded-image profile-image"><img src="{% static "assets/img/avatar/mohammad2.jpg" %}"></a>
+{#                      <a href="profile.html" class="rounded-image profile-image"><img src="{% static "assets/img/avatar/mohammad2.jpg" %}"></a>#}
                     </div>
                     <div class="col-xs-8">
-                        <div class="profile-text">خوش آمدید <b>محمد</b></div>
+                        <div class="profile-text">خوش آمدید <b>{{ user.profile.first_name }}</b></div>
                         <div class="profile-buttons">
                           <a href="javascript:;"><i class="fa fa-envelope-o pulse"></i></a>
                           <a href="#connect" class="open-right"><i class="fa fa-comments"></i></a>

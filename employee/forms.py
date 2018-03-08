@@ -59,6 +59,8 @@ class ProfileForm(forms.ModelForm):
             'last_name',
             'father_name',
             'national_code',
+            'certificate',
+            'employee_post',
             'gender'
         ]
         widgets = {
@@ -75,6 +77,8 @@ class ProfileForm(forms.ModelForm):
                 'class': 'form-control'
             }),
             'gender': forms.Select(attrs={'class': 'form-control'}),
+            'certificate': forms.Select(attrs={'class': 'form-control'}),
+            'employee_post': forms.Select(attrs={'class': 'form-control'}),
         }
 
 

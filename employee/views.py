@@ -89,10 +89,13 @@ def files(request):
 @login_required(login_url='/employee/login/')
 def register_profile(request):
     if request.method == 'POST':
-        form = ProfileForm(request.POST, instance=request.user.profile)
+        form = ProfileForm(request.POST, request.FILES or None, instance=request.user.profile)
 
         if form.is_valid():
             form.save()
+
+        else:
+            print(form.errors)
 
     else:
             form = ProfileForm(instance=request.user.profile)
