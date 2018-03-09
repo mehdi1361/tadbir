@@ -70,14 +70,21 @@ class File(Base):
         ('اعتباری خرید کالا', 'اعتباری خرید کالا'),
         ('خرید خودرو', 'خرید خودرو'),
     )
+
     ASSURANCE_TYPE = (
         ('خرد', 'خرد'),
         ('متوسط', 'متوسط'),
         ('کلان', 'کلان'),
     )
 
+    STATE_TYPE = (
+        ('در حال پیگیری', 'در حال پیگیری'),
+        ('عودت', 'عودت'),
+        ('تسویه حساب', 'تسویه حساب'),
+    )
+
     file_code = models.CharField(_(u'کد پرونده'), max_length=200, unique=True)
-    contract_code = models.CharField(_(u'شماره قرارداد'), max_length=200, unique=True)
+    contract_code = models.CharField(_(u'شماره قرارداد'), max_length=200, null=True)
     main_deposit = models.PositiveIntegerField(_(u'اصل مبلغ بدهی'), default=100)
     nc_deposit = models.PositiveIntegerField(_(u'وجه التزام'), default=100)
     so_deposit = models.PositiveIntegerField(_(u'سود'), default=100)
@@ -87,6 +94,7 @@ class File(Base):
     persian_normal_date_refrence = models.CharField(_(u'تاریخ ارجاع'), max_length=10, default=None, null=True)
     status = models.CharField(_(u'وضعیت'), max_length=20, choices=STATUS, default='مشکوک')
     file_type = models.CharField(_('نوع قرارداد'), max_length=50, choices=TYPE, default='جعاله')
+    states = models.CharField(_('وضعیت'), max_length=50, choices=STATE_TYPE, default='در حال پیگیری')
 
     class Meta:
         ordering = ['file_code']

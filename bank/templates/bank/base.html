@@ -328,7 +328,7 @@
 {#                            <span class="rounded-image topbar-profile-image">#}
 {#                                <img src="{% static "assets/img/avatar/mohammad2.jpg" %}">#}
 {#                            </span>#}
-                            {% if user.profile %}
+                            {%  if user.profile.first_name %}
                                 {{ user.profile.first_name }} {{ user.profile.last_name }}
                             {%  else %}
                                 {{ user.get_username }}

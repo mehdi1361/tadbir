@@ -4,12 +4,13 @@ from bank.models import Branch, ManagementAreas, City
 
 def csv_reader(file_obj):
     reader = csv.reader(file_obj)
-    city = City.objects.get(name='تهران')
-    area = ManagementAreas.objects.get(pk=1)
+    city = City.objects.get(pk=1)
 
     for row in reader:
-        Branch.objects.create(name=str(row[0]), code=str(row[0]), city=city, area=area)
-        print(row[0])
+        # Branch.objects.create(name=str(row[0]), code=str(row[0]), city=city, area=area)
+        area = ManagementAreas.objects.get(pk=row[0])
+        Branch.objects.create(name=row[2], code=row[1], area=area, city=city)
+        print(row, area)
 
 
 def csv_insert():
