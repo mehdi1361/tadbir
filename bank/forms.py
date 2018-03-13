@@ -95,15 +95,13 @@ class PersonForm(forms.ModelForm):
         model = Person
 
         fields = [
-            'first_name',
-            'last_name',
+            'name',
             'father_name',
             'national_code',
             'gender'
         ]
         widgets = {
-            'first_name': forms.TextInput(attrs={'class': 'form-control'}),
-            'last_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
             'father_name': forms.TextInput(attrs={'class': 'form-control'}),
             'national_code': forms.TextInput(attrs={'class': 'form-control'}),
             'gender': forms.Select(attrs={'class': 'form-control'}),

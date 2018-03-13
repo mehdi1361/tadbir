@@ -103,10 +103,10 @@ class File(Base):
 
     file_code = models.CharField(_(u'کد پرونده'), max_length=200, unique=True)
     contract_code = models.CharField(_(u'شماره قرارداد'), max_length=200, null=True)
-    main_deposit = models.PositiveIntegerField(_(u'اصل مبلغ بدهی'), default=100)
-    nc_deposit = models.PositiveIntegerField(_(u'وجه التزام'), default=100)
-    so_deposit = models.PositiveIntegerField(_(u'سود'), default=100)
-    cost_proceeding = models.PositiveIntegerField(_(u'هزینه دادرسی'), default=100)
+    main_deposit = models.BigIntegerField(_(u'اصل مبلغ بدهی'), default=100)
+    nc_deposit = models.BigIntegerField(_(u'وجه التزام'), default=100)
+    so_deposit = models.BigIntegerField(_(u'سود'), default=100)
+    cost_proceeding = models.BigIntegerField(_(u'هزینه دادرسی'), default=100)
     branch = models.ForeignKey(Branch, verbose_name=_(u'شعبه'), related_name='files')
     persian_date_refrence = models.CharField(_(u'تاریخ ارجاع'), max_length=10, default=None, null=True)
     persian_normal_date_refrence = models.CharField(_(u'تاریخ ارجاع'), max_length=10, default=None, null=True)
@@ -155,24 +155,25 @@ class File(Base):
 
 @python_2_unicode_compatible
 class Person(Base, Human):
+    name = models.CharField(_('نام و نام خانوادگی'), max_length=200, unique=True, default='')
     file = models.ManyToManyField(File, through='PersonFile', verbose_name=_('شخص'), related_name='persons')
     history = HistoricalRecords()
 
     class Meta:
-        ordering = ['first_name', 'last_name']
+        ordering = ['name']
         verbose_name = _('person')
         verbose_name_plural = _('persons')
         db_table = 'persons'
 
     def __str__(self):
-        return "{} {}".format(self.first_name, self.last_name)
+        return "{}".format(self.name)
 
 
 @python_2_unicode_compatible
 class Office(Base, Location):
-    name = models.CharField(_('نام شرکت'), max_length=200)
+    name = models.CharField(_('نام شرکت'), max_length=200, unique=True)
     city = models.ForeignKey(City, verbose_name=_('نام شهر'),null=True)
-    register_number = models.PositiveIntegerField(_('شماره ثبت'), unique=True)
+    register_number = models.PositiveIntegerField(_('شماره ثبت'), null=True)
     history = HistoricalRecords()
 
     class Meta:
@@ -227,7 +228,7 @@ class PersonFile(Base):
         db_table = 'person_files'
 
     def __str__(self):
-        return "{}-{} {}".format(self.file.file_code, self.person.first_name, self.person.last_name)
+        return "{}-{}".format(self.file.file_code, self.person.name)
 
 
 @python_2_unicode_compatible

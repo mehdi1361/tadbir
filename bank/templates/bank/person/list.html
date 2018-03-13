@@ -20,7 +20,7 @@
 								</div>
 							</div>
 							<div class="widget-content padding" style="display: block;">
-								<a href="{% url "bank:new_area" %}" class="btn btn-success">منطقه جدید</a>
+								<a href="{% url "bank:new_area" %}" class="btn btn-success">شخص جدید</a>
 							</div>
 						</div>
 					</div>
@@ -29,7 +29,7 @@
 					<div class="col-md-12">
 						<div class="widget">
 							<div class="widget-header transparent">
-								<h2><strong>فهرست مناطق</strong> </h2>
+								<h2><strong>فهرست افراد حقیقی</strong> </h2>
 								<div class="additional-btn">
 									<a href="#" class="hidden reload"><i class="icon-ccw-1"></i></a>
 									<a href="#" class="widget-toggle"><i class="icon-down-open-2"></i></a>
@@ -42,8 +42,7 @@
 										<thead>
 											<tr>
 												<th>شماره</th>
-												<th>نام</th>
-												<th>نام خانوادگی</th>
+												<th>نام و نام خانوادگی</th>
 												<th>نام پدر</th>
 												<th>کد ملی</th>
 												<th data-sortable="false">جنسیت</th>
@@ -53,9 +52,8 @@
 										<tbody>
                                             {% for person in persons %}
                                                 <tr>
-                                                    <td>1</td>
-                                                    <td><strong>{{ person.first_name }}</strong></td>
-                                                    <td>{{ person.last_name }}</td>
+                                                    <td>{{ forloop.counter }}</td>
+                                                    <td><strong>{{ person.name }}</strong></td>
                                                     <td>{{ person.father_name }}</td>
                                                     <td>{{ person.national_code }}</td>
                                                     <td>{{ person.gender }}</td>

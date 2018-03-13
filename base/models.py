@@ -17,8 +17,7 @@ class Human(models.Model):
         ('مرد', _('مرد')),
         ('زن', _('زن'))
     )
-    first_name = models.CharField(_('نام'), max_length=200, null=True)
-    last_name = models.CharField(_('نام خانوادگی'), max_length=200, null=True)
+    name = models.CharField(_('نام و نام خانوادگی'), max_length=200, null=True)
     father_name = models.CharField(_('نام پدر'), max_length=200, null=True)
     national_code = models.CharField(_('کد ملی'), max_length=20, unique=True, null=True)
     gender = models.CharField(_('جنسیت'), max_length=20, choices=GENDER, null=True)
@@ -28,7 +27,7 @@ class Human(models.Model):
 
     @property
     def full_name(self):
-        return '{} {}'.format(self.first_name, self.last_name)
+        return '{}'.format(self.name)
 
 
 class Location(models.Model):
