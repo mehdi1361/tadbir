@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import csv
 from bank.models import ManagementAreas, State, Bank
 
@@ -23,6 +24,6 @@ def csv_reader(file_obj):
 def csv_insert():
     csv_path = "data_entry/area.csv"
 
-    with open(csv_path, "rt") as f_obj:
+    with open(csv_path, "rt", encoding='utf8') as f_obj:
 
         csv_reader(f_obj)

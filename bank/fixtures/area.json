@@ -1,0 +1,114 @@
+[
+{
+  "model": "bank.managementareas",
+  "pk": 1,
+  "fields": {
+    "created_at": "2018-03-13T05:12:52.378Z",
+    "update_at": "2018-03-13T05:12:52.378Z",
+    "address": null,
+    "postal_code": null,
+    "name": "\u0634\u0645\u0627\u0644",
+    "bank": 1,
+    "state": 1,
+    "status": true
+  }
+},
+{
+  "model": "bank.managementareas",
+  "pk": 2,
+  "fields": {
+    "created_at": "2018-03-13T05:12:52.409Z",
+    "update_at": "2018-03-13T05:12:52.409Z",
+    "address": null,
+    "postal_code": null,
+    "name": "\u062c\u0646\u0648\u0628",
+    "bank": 1,
+    "state": 1,
+    "status": true
+  }
+},
+{
+  "model": "bank.managementareas",
+  "pk": 3,
+  "fields": {
+    "created_at": "2018-03-13T05:12:52.425Z",
+    "update_at": "2018-03-13T05:12:52.425Z",
+    "address": null,
+    "postal_code": null,
+    "name": "\u0634\u0631\u0642",
+    "bank": 1,
+    "state": 1,
+    "status": true
+  }
+},
+{
+  "model": "bank.managementareas",
+  "pk": 4,
+  "fields": {
+    "created_at": "2018-03-13T05:12:52.442Z",
+    "update_at": "2018-03-13T05:12:52.442Z",
+    "address": null,
+    "postal_code": null,
+    "name": "\u0645\u0633\u062a\u0642\u0644 \u0645\u0631\u06a9\u0632\u06cc 3046",
+    "bank": 1,
+    "state": 1,
+    "status": true
+  }
+},
+{
+  "model": "bank.managementareas",
+  "pk": 5,
+  "fields": {
+    "created_at": "2018-03-13T05:12:52.447Z",
+    "update_at": "2018-03-13T05:12:52.447Z",
+    "address": null,
+    "postal_code": null,
+    "name": "\u063a\u0631\u0628",
+    "bank": 1,
+    "state": 1,
+    "status": true
+  }
+},
+{
+  "model": "bank.managementareas",
+  "pk": 6,
+  "fields": {
+    "created_at": "2018-03-13T05:12:52.447Z",
+    "update_at": "2018-03-13T05:12:52.447Z",
+    "address": null,
+    "postal_code": null,
+    "name": "\u0645\u0631\u06a9\u0632",
+    "bank": 1,
+    "state": 1,
+    "status": true
+  }
+},
+{
+  "model": "bank.managementareas",
+  "pk": 7,
+  "fields": {
+    "created_at": "2018-03-13T05:12:52.463Z",
+    "update_at": "2018-03-13T05:12:52.463Z",
+    "address": null,
+    "postal_code": null,
+    "name": "\u0645\u0633\u062a\u0642\u0644 \u0645\u0631\u06a9\u0632\u06cc 3047",
+    "bank": 1,
+    "state": 1,
+    "status": true
+  }
+},
+{
+  "model": "bank.managementareas",
+  "pk": 8,
+  "fields": {
+    "created_at": "2018-03-13T05:12:52.478Z",
+    "update_at": "2018-03-13T05:12:52.478Z",
+    "address": null,
+    "postal_code": null,
+    "name": "\u0645\u0633\u062a\u0642\u0644 \u0645\u0631\u06a9\u0632\u06cc 3048",
+    "bank": 1,
+    "state": 1,
+    "status": true
+  }
+}
+]

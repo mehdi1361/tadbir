@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
+from simple_history.models import HistoricalRecords
 
 from base.models import Base
 from django.utils.translation import ugettext_lazy as _
@@ -19,6 +20,7 @@ class PersonDailyReport(Base):
     count_file_peygiri = models.PositiveIntegerField(_('تعداد پیگیری های روز'), default=0)
     persian_date = jmodels.jDateField(_('تاریخ'), null=True)
     user = models.ForeignKey(User, verbose_name=_('پرسنل'), related_name='reports')
+    history = HistoricalRecords()
 
     class Meta:
         unique_together = ('user', 'persian_date')

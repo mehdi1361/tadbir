@@ -37,6 +37,10 @@ class EmployeeFile(Base):
     files = FileManager()
 
     class Meta:
+        permissions = (
+            ('employee_file', 'employee file permissions'),
+            ('employee_file_assign', 'assifgn file to employee'),
+        )
         unique_together = ('file', 'employee')
         verbose_name = _('تخصیص پرونده')
         verbose_name_plural = _('تخصیص پرونده')
@@ -68,6 +72,9 @@ class Profile(Base, Human):
     employee_post = models.CharField(_('سمت'), max_length=200, choices=EMP_POST, default='کارشناسی حقوق', null=True)
 
     class Meta:
+        permissions = (
+            ('edit_profile', 'edit profile'),
+        )
         verbose_name = _('profile')
         verbose_name_plural = _('profiles')
         db_table = 'profiles'
@@ -88,6 +95,11 @@ class FollowUp(Base):
     description = models.TextField(_('توضیحات'), null=True, default=None)
 
     class Meta:
+        permissions = (
+            ('create_follow', 'create followup for file'),
+            ('update_follow', 'update followup for file'),
+            ('read_follow', 'read followup for file'),
+        )
         verbose_name = _('employee_file_folllow_up')
         verbose_name_plural = _('employee_file_folllow_ups')
         db_table = 'employee_file_folllow_ups'

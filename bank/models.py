@@ -4,12 +4,14 @@ from django.utils.translation import ugettext_lazy as _
 from base.models import Base, Location, Human, Document
 from states.models import City, State
 from django.utils.encoding import python_2_unicode_compatible
+from simple_history.models import HistoricalRecords
 
 
 
 @python_2_unicode_compatible
 class Bank(Base):
     name = models.CharField(_('bank name'), max_length=100, unique=True)
+    history = HistoricalRecords()
 
     class Meta:
         ordering = ['name']
@@ -27,6 +29,7 @@ class ManagementAreas(Base, Location):
     bank = models.ForeignKey(Bank, verbose_name=_('بانک'), related_name='areas', on_delete=models.CASCADE)
     state = models.ForeignKey(State, verbose_name=_('استان'), related_name='areas_state', on_delete=models.CASCADE)
     status = models.BooleanField(_('وضعیت'), default=True)
+    history = HistoricalRecords()
 
     class Meta:
         ordering = ['name']
@@ -46,6 +49,7 @@ class Branch(Base, Location):
                              on_delete=models.CASCADE)
     city = models.ForeignKey(City, verbose_name=_('شهر'), related_name='areas', on_delete=models.CASCADE)
     postal_code = models.CharField(_('کد شعبه'), max_length=20, default=None, null=True)
+    history = HistoricalRecords()
 
     class Meta:
         ordering = ['name']
@@ -58,6 +62,20 @@ class Branch(Base, Location):
 
 
 @python_2_unicode_compatible
+class FileType(Base):
+    name = models.CharField(_('نوع فایل'), max_length=100, null=True)
+    history = HistoricalRecords()
+
+    class Meta:
+        verbose_name = _('file_types')
+        verbose_name_plural = _('file_types')
+        db_table = 'file_types'
+
+    def __str__(self):
+        return "{}".format(self.name)
+
+
+@python_2_unicode_compatible
 class File(Base):
     STATUS = (
         (u"سررسید گذشته", u"سر رسید گذشته"),
@@ -66,7 +84,7 @@ class File(Base):
     )
 
     TYPE = (
-        ('جعاله', 'جعاله'),
+        (' جعاله', 'جعاله'),
         ('اعتباری خرید کالا', 'اعتباری خرید کالا'),
         ('خرید خودرو', 'خرید خودرو'),
     )
@@ -93,8 +111,10 @@ class File(Base):
     persian_date_refrence = models.CharField(_(u'تاریخ ارجاع'), max_length=10, default=None, null=True)
     persian_normal_date_refrence = models.CharField(_(u'تاریخ ارجاع'), max_length=10, default=None, null=True)
     status = models.CharField(_(u'وضعیت'), max_length=20, choices=STATUS, default='مشکوک')
-    file_type = models.CharField(_('نوع قرارداد'), max_length=50, choices=TYPE, default='جعاله')
+    # file_type = models.CharField(_('نوع قرارداد'), max_length=50, choices=TYPE, default='جعاله')
+    file_type = models.ForeignKey(FileType, verbose_name=_('نوع پرونده'), null=True)
     states = models.CharField(_('وضعیت'), max_length=50, choices=STATE_TYPE, default='در حال پیگیری')
+    history = HistoricalRecords()
 
     class Meta:
         ordering = ['file_code']
@@ -136,6 +156,7 @@ class File(Base):
 @python_2_unicode_compatible
 class Person(Base, Human):
     file = models.ManyToManyField(File, through='PersonFile', verbose_name=_('شخص'), related_name='persons')
+    history = HistoricalRecords()
 
     class Meta:
         ordering = ['first_name', 'last_name']
@@ -152,6 +173,7 @@ class Office(Base, Location):
     name = models.CharField(_('نام شرکت'), max_length=200)
     city = models.ForeignKey(City, verbose_name=_('نام شهر'),null=True)
     register_number = models.PositiveIntegerField(_('شماره ثبت'), unique=True)
+    history = HistoricalRecords()
 
     class Meta:
         ordering = ['register_number']
@@ -174,6 +196,7 @@ class FileOffice(Base):
     office = models.ForeignKey(Office, verbose_name=_('شرکت'), related_name='related_office')
     relation_type = models.CharField(_('ارتباط'), max_length=10, default='مدیون', choices=TYPE)
     description = models.TextField(_('توضیحات'), null=True)
+    history = HistoricalRecords()
 
     class Meta:
         unique_together = ['file', 'office']
@@ -195,6 +218,7 @@ class PersonFile(Base):
     file = models.ForeignKey(File, verbose_name=_('پرونده'), related_name='file_persons')
     person = models.ForeignKey(Person, verbose_name=_('شخص'), related_name='file_persons')
     relation_type = models.CharField(_('ارتباط'), max_length=10, default='مدیون', choices=TYPE)
+    history = HistoricalRecords()
 
     class Meta:
         unique_together = ['file', 'person']
@@ -219,6 +243,7 @@ class Assurance(Base, Document):
     assurance_number = models.CharField(_('شماره سند'), max_length=200, default=0)
     assurance_date = models.CharField(_('تاریخ'), max_length=200, default='')
     assurance_value = models.PositiveIntegerField(_('مبلغ'), default=0)
+    history = HistoricalRecords()
 
     class Meta:
         unique_together = ['file', 'assurance_type','assurance_number']
@@ -235,6 +260,7 @@ class SmsType(Base):
     subject = models.CharField(_('موضوع پیامک'), max_length=50, unique=True)
     detail = models.TextField(_('مشروح پیامک'))
     enable = models.BooleanField(_('فعال'), default=True)
+    history = HistoricalRecords()
 
     class Meta:
         verbose_name = _('sms_type')

@@ -21,7 +21,7 @@ def csv_reader(file_obj):
             File.objects.get_or_create(
                 states=state,
                 branch=branch,
-                defaults={'file_code': row[0]}
+                defaults={'file_code': row[1]}
             )
 
         except:

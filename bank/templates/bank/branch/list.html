@@ -44,9 +44,9 @@
 												<th>شماره</th>
 												<th>نام</th>
 												<th>استان</th>
-												<th>منطقه</th>
+												<th>سرپرستی</th>
 												<th>شهر</th>
-												<th data-sortable="false">تعداد پرونده ارسالی</th>
+												<th data-sortable="false">کد شعبه</th>
 												<th>وضعیت</th>
 												<th data-sortable="false">گزینه ها</th>
 											</tr>
@@ -55,12 +55,12 @@
 										<tbody>
                                             {% for branch in branches %}
                                                 <tr>
-                                                    <td>1</td>
+                                                    <td>{{ forloop.counter }}</td>
                                                     <td><strong>{{ branch }}</strong></td>
                                                     <td>{{ branch.area.state }}</td>
                                                     <td>{{ branch.area }}</td>
                                                     <td>{{ branch.city }}</td>
-                                                    <td>123</td>
+                                                    <td>{{ branch.code }}</td>
                                                     <td><span class="label label-success">فعال</span></td>
                                                     <td>
                                                         <div class="btn-group btn-group-xs">

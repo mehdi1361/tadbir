@@ -11,7 +11,7 @@ def csv_reader(file_obj):
     for row in reader:
         User.objects.create_user(username=row[1], password=123456)
         user = User.objects.get(username=row[1])
-        user.profile.
+        # user.profile.
         print(row[1])
 
 

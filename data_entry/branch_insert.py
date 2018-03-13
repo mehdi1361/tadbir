@@ -8,7 +8,7 @@ def csv_reader(file_obj):
 
     for row in reader:
         # Branch.objects.create(name=str(row[0]), code=str(row[0]), city=city, area=area)
-        area = ManagementAreas.objects.get(pk=row[0])
+        area = ManagementAreas.objects.get(name=row[0])
         Branch.objects.create(name=row[2], code=row[1], area=area, city=city)
         print(row, area)
 
@@ -16,6 +16,6 @@ def csv_reader(file_obj):
 def csv_insert():
     csv_path = "data_entry/branch.csv"
 
-    with open(csv_path, "rt") as f_obj:
+    with open(csv_path, "rt", encoding='utf8') as f_obj:
 
         csv_reader(f_obj)
