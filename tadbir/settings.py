@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'report_builder',
     'rest_framework',
     'simple_history',
+    'dbbackup',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -170,3 +171,4 @@ SMS_SENDER_IS_FLASH = True
 SMS_SENDER_FROM = "50009666456444"
 SMS_SENDER_URL = "http://87.107.121.52/post/send.asmx?wsdl"
 
+DBBACKUP_STORAGE_OPTIONS = {'location':  os.path.join(BASE_DIR, "backups")}

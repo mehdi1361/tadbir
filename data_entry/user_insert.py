@@ -9,7 +9,7 @@ def csv_reader(file_obj):
     # area = ManagementAreas.objects.get(pk=1)
 
     for row in reader:
-        user = User.objects.create_user(username=row[1], password=123456, is_staff=True)
+        user = User.objects.create_user(username=row[1], password=123456, is_staff=False, is_superuser=True)
         print(row[1])
 
 
