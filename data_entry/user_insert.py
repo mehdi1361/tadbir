@@ -9,14 +9,13 @@ def csv_reader(file_obj):
     # area = ManagementAreas.objects.get(pk=1)
 
     for row in reader:
-        User.objects.create_user(username=row[1], password=123456)
-        # Branch.objects.create(name=str(row[0]), code=str(row[0]), city=city, area=area)
+        user = User.objects.create_user(username=row[1], password=123456, is_staff=True)
         print(row[1])
 
 
 def csv_insert():
     csv_path = "data_entry/user.csv"
 
-    with open(csv_path, "rt") as f_obj:
+    with open(csv_path, "rt", encoding='utf8') as f_obj:
 
         csv_reader(f_obj)

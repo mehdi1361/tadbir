@@ -328,8 +328,8 @@
 {#                            <span class="rounded-image topbar-profile-image">#}
 {#                                <img src="{% static "assets/img/avatar/mohammad2.jpg" %}">#}
 {#                            </span>#}
-                            {%  if user.profile.first_name %}
-                                {{ user.profile.first_name }} {{ user.profile.last_name }}
+                            {%  if user.profile.name %}
+                                {{ user.profile.name }}
                             {%  else %}
                                 {{ user.get_username }}
                             {% endif %}<i class="fa fa-caret-down"></i></a>
@@ -370,7 +370,7 @@
 {#                      <a href="profile.html" class="rounded-image profile-image"><img src="{% static "assets/img/avatar/mohammad2.jpg" %}"></a>#}
                     </div>
                     <div class="col-xs-8">
-                        <div class="profile-text">خوش آمدید <b>{{ user.profile.first_name }}</b></div>
+                        <div class="profile-text">خوش آمدید <b>{{ user.profile.name }}</b></div>
                         <div class="profile-buttons">
                           <a href="javascript:;"><i class="fa fa-envelope-o pulse"></i></a>
                           <a href="#connect" class="open-right"><i class="fa fa-comments"></i></a>

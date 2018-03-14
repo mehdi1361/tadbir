@@ -63,10 +63,7 @@ class ProfileForm(forms.ModelForm):
             'gender'
         ]
         widgets = {
-            'first_name': forms.TextInput(attrs={
-                'class': 'form-control'
-            }),
-            'last_name': forms.TextInput(attrs={
+            'name': forms.TextInput(attrs={
                 'class': 'form-control'
             }),
             'father_name': forms.TextInput(attrs={
