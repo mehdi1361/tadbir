@@ -3,7 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from .forms import LoginForm, UserRegistrationForm, \
     ProfileForm, FollowUpForm, PhoneFileForm, AddressForm, \
-    DocumentForm, ReminderForm, RecoveryForm, SmsCautionForm, EmployeeFileForm
+    DocumentForm, ReminderForm, RecoveryForm, SmsCautionForm, EmployeeFileForm, ChangePasswordForm
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
@@ -25,8 +25,7 @@ def user_login(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
-                return HttpResponseRedirect(
-                    reverse('main'))
+                return HttpResponseRedirect(reverse('main'))
                 # return HttpResponse('login success')
             else:
                 return HttpResponse('disable user')
@@ -239,3 +238,29 @@ def edit_auth_employee_file(request, id):
         form = EmployeeFileForm(instance=emp_file)
 
     return render(request, 'bank/employee/employee_edit_auth.html', {'form': form})
+
+
+@login_required(login_url='/employee/login/')
+def change_password(request):
+    form = ChangePasswordForm(request.POST)
+    if request.method == 'POST':
+        if form.is_valid():
+            cd = form.cleaned_data
+
+            if cd['new_password'] != cd['new_password']:
+                messages.add_message(request, messages.ERROR, 'کلمه عبور جدید با تکرار کلمه عبور جدید یکسان نمی باشد.')
+                form = ChangePasswordForm()
+
+            else:
+                request.user.set_password(cd['new_password'])
+                request.user.save()
+                messages.add_message(request, messages.SUCCESS, 'کلمه عبور با موفقیت تغییر یافت.')
+                return HttpResponseRedirect(reverse('main'))
+        else:
+            messages.add_message(request, messages.ERROR, 'خطا در ثبت اطلاعات')
+            form = ChangePasswordForm()
+
+    else:
+        form = ChangePasswordForm()
+
+    return render(request, 'bank/employee/change_password.html', {'form': form})

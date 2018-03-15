@@ -229,3 +229,16 @@ class EmployeeFileForm(forms.ModelForm):
             'status': forms.Select(attrs={'class': 'form-control'}),
             'auth_status': forms.Select(attrs={'class': 'form-control'})
         }
+
+
+class ChangePasswordForm(forms.Form):
+    new_password = forms.CharField(widget=forms.PasswordInput(attrs={
+            'class': 'form-control text-input',
+            'placeholder': '********'
+        }
+    ))
+    repeat_new_password = forms.CharField(widget=forms.PasswordInput(attrs={
+        'class': 'form-control text-input',
+        'placeholder': '********'
+    }
+    ))

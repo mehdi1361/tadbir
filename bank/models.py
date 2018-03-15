@@ -7,7 +7,6 @@ from django.utils.encoding import python_2_unicode_compatible
 from simple_history.models import HistoricalRecords
 
 
-
 @python_2_unicode_compatible
 class Bank(Base):
     name = models.CharField(_('bank name'), max_length=100, unique=True)
@@ -58,7 +57,11 @@ class Branch(Base, Location):
         db_table = 'branches'
 
     def __str__(self):
-        return '{}-{}-{}'.format(self.area, self.city, self.name)
+        return '{}'.format(self.name)
+
+    @property
+    def full_name(self):
+        return 'نام شعبه:{},کد شعبه:{},سرپرستی:{}'.format(self.name, self.code, self.area)
 
 
 @python_2_unicode_compatible
@@ -133,7 +136,7 @@ class File(Base):
         if 10000000 < self.main_deposit < 1000000000:
             return 'متوسط'
 
-        if self.main_deposit < 1000000000:
+        if self.main_deposit > 1000000000:
             return 'کلان'
 
     @property

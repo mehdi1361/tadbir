@@ -374,8 +374,7 @@
 												<th>شماره</th>
 												<th>شماره پرونده</th>
 												<th>اصل مبلغ بدهی</th>
-												<th>مدیونین حقیقی</th>
-												<th>مدیونین حقوقی</th>
+												<th>مدیونین</th>
 												<th data-sortable="false">سرفصل</th>
 												<th>وضعیت</th>
 												<th data-sortable="false">گزینه ها</th>
@@ -388,8 +387,14 @@
                                                     <td>{{ forloop.counter }}</td>
                                                     <td><strong>{{ file.file.file_code }}</strong></td>
                                                     <td>{{ file.file.main_deposit }}</td>
-                                                    <td>{{ file.file.person_list }}</td>
-                                                    <td>{{ file.file.offices }}</td>
+{#                                                    <td>{{ file.file.person_list }}</td>#}
+                                                    <td>
+                                                        {% if file.file.offices %}
+                                                            {{ file.file.offices }}
+                                                        {% else %}
+                                                            {{ file.file.person_list }}
+                                                        {% endif %}
+                                                    </td>
                                                     {% if file.file.status == 'سر رسید گذشته' %}
                                                         <td><span class="label label-success">{{ file.file.status }}</span></td>
                                                     {% elif file.file.status == 'معوق' %}

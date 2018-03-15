@@ -335,7 +335,7 @@
                             {% endif %}<i class="fa fa-caret-down"></i></a>
                         <ul class="dropdown-menu">
                             <li><a href="{% url 'employee:profile' %}">پروفایل من</a></li>
-                            <li><a href="#">تغییر رمز عبور</a></li>
+                            <li><a href="{% url 'employee:change_password' %}">تغییر رمز عبور</a></li>
                             <li class="divider"></li>
                             <li><a class="md-trigger" data-modal="logout-modal"><i class="icon-logout-1"></i> خروج</a></li>
                         </ul>
@@ -838,29 +838,7 @@
 	<script src="{% static "assets/js/apps/notes.js" %}"></script>
 	<script src="{% static "assets/js/pages/index.js" %}"></script>
     <script>
-
-    $(document).ready(function () {
-
-        ConvertNumberToPersion();
-    });
-
-    function ConvertNumberToPersion() {
-        persian = { 0: '۰', 1: '۱', 2: '۲', 3: '۳', 4: '۴', 5: '۵', 6: '۶', 7: '۷', 8: '۸', 9: '۹' };
-        function traverse(el) {
-            if (el.nodeType == 3) {
-                var list = el.data.match(/[0-9]/g);
-                if (list != null && list.length != 0) {
-                    for (var i = 0; i < list.length; i++)
-                        el.data = el.data.replace(list[i], persian[list[i]]);
-                }
-            }
-            for (var i = 0; i < el.childNodes.length; i++) {
-                traverse(el.childNodes[i]);
-            }
-        }
-        traverse(document.body);
-    }
-
-</script>
+        function getParentLang(node) { var defaultLang = 'fa'; var currLang = null; while(currLang === null && node.parentNode) { if (node.getAttribute && node.getAttribute('lang')) { currLang = node.getAttribute('lang'); } node = node.parentNode; } return currLang || defaultLang; } function TraceNodes(e) { if (e.nodeType == 3 && getParentLang(e) === 'fa' /* Persian */) { e.nodeValue = e.nodeValue.toPersianDigit(); } else { for (var t = 0; t < e.childNodes.length; t++) { TraceNodes(e.childNodes[t]); } } } String.prototype.toPersianDigit = function(e) { return this.replace(/\d+/g, function(t) { var n = [], r = []; for (var i = 0; i < t.length; i++) { n.push(t.charCodeAt(i)) } for (var s = 0; s < n.length; s++) { r.push(String.fromCharCode(n[s] + (!!e && e == true ? 1584 : 1728))) } return r.join("") }) }; TraceNodes(document);
+    </script>
 	</body>
 </html>
