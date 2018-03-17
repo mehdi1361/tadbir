@@ -28,7 +28,7 @@
 								</div>
 							</div>
 							<div class="widget-content padding" style="display: block;">
-                                    <p>شماره قرارداد یا شماره پرونده را وارد نمایید.</p>
+                                    <p>شماره قرارداد یا شماره پرونده یا نام مدیون را وارد نمایید.</p>
                                     <form method="post" action="#" class="navbar-form pull-right">
                                         <div class="input-group">
                                           <input class="form-control" type="text" id="searchBox"  name="q" placeholder="شماره قرارداد یا شماره پرونده یا نام و نام خانوادگی مدیون">
@@ -47,7 +47,7 @@
 					<div class="col-md-12">
 						<div class="widget">
 							<div class="widget-header transparent">
-								<h2><strong>پرونده ها</strong> </h2>
+								<h2><strong>پرونده ها(برای دیدن جزییات پرونده روی شماره ردیف مربوطه کلیک نمایید.)</strong> </h2>
 								<div class="additional-btn">
 									<a href="#" class="hidden reload"><i class="icon-ccw-1"></i></a>
 									<a href="#" class="widget-toggle"><i class="icon-down-open-2"></i></a>
@@ -59,30 +59,37 @@
 									<table data-sortable="" class="table" data-sortable-initialized="true">
 										<thead>
 											<tr>
+												<th>ردیف</th>
 												<th>کد پرونده</th>
 												<th>شماره قرارداد</th>
 												<th>نوع قرارداد</th>
+                                                <th>مدیونین</th>
 												<th>شعبه</th>
 												<th>اصل مبلغ بدهی</th>
 												<th data-sortable="false">وجه التزام</th>
 												<th data-sortable="false">سود</th>
-												<th data-sortable="false">هزینه دادرسی</th>
 												<th>وضعیت</th>
-												<th data-sortable="false">جزییات</th>
 											</tr>
 										</thead>
 
 										<tbody>
                                             {% for file in files %}
                                                 <tr>
+                                                    <td><a href="{% url "bank:file_detail" file.id %}">{{ forloop.counter }}</a></td>
                                                     <td><strong>{{ file }}</strong></td>
                                                     <td>{{ file.contract_code }}</td>
                                                     <td>{{ file.file_type }}</td>
-                                                    <td>{{ file.branch }}</td>
+                                                    <td>
+                                                        {% if file.offices %}
+                                                            {{ file.offices }}
+                                                        {% else %}
+                                                            {{ file.person_list }}
+                                                        {% endif %}
+                                                    </td>
+                                                    <td title="{{ file.branch.full_name }}">{{ file.branch }}</td>
                                                     <td>{{ file.main_deposit }}</td>
                                                     <td>{{ file.nc_deposit }}</td>
                                                     <td>{{ file.so_deposit }}</td>
-                                                    <td>{{ file.cost_proceeding }}</td>
                                                     {% if file.status == 'سر رسید گذشته' %}
                                                         <td><span class="label label-success">{{ file.status }}</span></td>
                                                     {% elif file.status == 'معوق' %}
@@ -91,12 +98,6 @@
                                                         <td><span class="label label-danger">{{ file.status }}</span></td>
 
                                                     {% endif %}
-                                                    <td>
-                                                        <div class="btn-group btn-group-xs">
-{#                                                            <a data-toggle="tooltip" title="خاموش" class="btn btn-default"><i class="fa fa-power-off"></i></a>#}
-                                                            <a href="{% url "bank:file_detail" file.id %}" data-toggle="tooltip" title="جزییات پرونده" class="btn btn-default"><i class="fa fa-edit"></i></a>
-                                                        </div>
-                                                    </td>
                                                 </tr>
                                             {% endfor %}
 										</tbody>

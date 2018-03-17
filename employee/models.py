@@ -39,7 +39,7 @@ class EmployeeFile(Base):
     class Meta:
         permissions = (
             ('employee_file', 'employee file permissions'),
-            ('employee_file_assign', 'assifgn file to employee'),
+            ('employee_file_assign', 'assign file to employee'),
         )
         unique_together = ('file', 'employee')
         verbose_name = _('تخصیص پرونده')
@@ -238,6 +238,37 @@ class FileRecovery(Base):
     class Meta:
         unique_together = ('file', 'recovery_type', 'value_code')
         verbose_name = _('file_recovery')
+        verbose_name_plural = _('file_recoveries')
+        db_table = 'file_recoveries'
+
+    def __str__(self):
+        return self.value_code
+
+
+@python_2_unicode_compatible
+class EmployeePermission(Base):
+    PERMISSION_TYPE = (
+        ('dashboard', 'داشبورد'),
+        ('employee_file', 'پرونده های کارشناسان'),
+        ('bank_new', 'ایجاد بانک'),
+        ('bank_edit', 'ویرایش بانک'),
+        ('bank_list', 'لیست بانک'),
+        ('area_new', 'سرپرستی جدید'),
+        ('area_edit', 'ویرایش سرپرستی'),
+        ('area_list', 'لیست مناطق'),
+        ('branch_new', 'شعبه جدید'),
+        ('branch_edit', 'ویرایش شعبه'),
+        ('branch_list', 'لیست شعب'),
+        ('file_new', 'پرونده جدید'),
+        ('file_edit', 'ویرایش پرونده'),
+        ('file_list', 'لیست پرونده ها'),
+    )
+    employee = models.ForeignKey(User, verbose_name=_('کاربر'), related_name='permissions')
+    permission_type = models.CharField(_('دسترسی'), max_length=100, choices=PERMISSION_TYPE, default='dashboard')
+
+    class Meta:
+        unique_together = ('permission_type', 'employee')
+        verbose_name = _('employee_permission')
         verbose_name_plural = _('file_recoveries')
         db_table = 'file_recoveries'
 

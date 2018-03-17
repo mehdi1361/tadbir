@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 
 from employee.forms import PhoneFileForm, AddressForm, DocumentForm
-from .models import Bank, ManagementAreas, Branch, File, Person, Office, SmsType, PersonFile
+from .models import Bank, ManagementAreas, Branch, File, Person, Office, SmsType, PersonFile, FileOffice
 from django.views.generic import ListView
 from .forms import BankForm, AreaForm, BranchForm, FileForm, \
     PersonForm, AssuranceForm, PersonFileForm, FileOfficeForm, SmsTypeForm, EmployeeFileForm, PersonOfficeForm, \
@@ -138,8 +138,12 @@ def edit_branch(request, branch_id):
 def file_list(request):
     query = request.POST.get('q')
     if query:
+        person_file = PersonFile.objects.filter(person__name__contains=query).values_list('file__file_code', flat=True)
+        office_files = FileOffice.objects.filter(office__name__contains=query).values_list('file__file_code', flat=True)
+
         object_list = File.objects.filter(
             Q(file_code__contains=query) | Q(contract_code__contains=query)
+            | Q(file_code__in=person_file) | Q(file_code__in=office_files)
         ).order_by('-created_at')
     else:
         object_list = File.objects.all().order_by('-created_at')

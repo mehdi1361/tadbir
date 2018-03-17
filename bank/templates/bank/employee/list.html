@@ -28,7 +28,7 @@
 								</div>
 							</div>
 							<div class="widget-content padding" style="display: block;">
-                                    <p>شماره قرارداد یا شماره پرونده را وارد نمایید.</p>
+                                    <p>شماره قرارداد یا شماره پرونده یا نام مدیون را وارد نمایید.</p>
                                     <form method="post" action="#" class="navbar-form pull-right">
                                         <div class="input-group">
                                           <input class="form-control" type="text" id="searchBox"  name="q" placeholder="شماره قرارداد یا شماره پرونده یا نام و نام خانوادگی مدیون">
@@ -92,7 +92,7 @@
                                                             {{ employee_files.file.person_list }}
                                                         {% endif %}
                                                     </td>
-                                                    <td title="{{ employee_files.file.branch.full_name }}">{{ employee_files.file.branch }}</td>
+                                                    <td title="{{ employee_files.file.branch.full_name }}">{{ employee_files.file.branch }} </td>
                                                     <td>{{ employee_files.file.main_deposit }}</td>
                                                     <td>{{ employee_files.file.nc_deposit }}</td>
                                                     <td>{{ employee_files.file.so_deposit }}</td>

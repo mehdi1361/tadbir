@@ -8,7 +8,7 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from .models import EmployeeFile, DocumentFile, PhoneFile, FollowUp, FileReminder
-from bank.models import File
+from bank.models import File, FileOffice
 from django.shortcuts import get_object_or_404
 from django.db.models import Q, Sum
 from bank.models import PersonFile
@@ -77,8 +77,12 @@ def dashboard(request):
 def files(request):
     query = request.POST.get('q')
     if query:
+        person_File = PersonFile.objects.filter(person__name__contains=query).values_list('file__file_code', flat=True)
+        office_files = FileOffice.objects .filter(office__name__contains=query).values_list('file__file_code', flat=True)
         employee_files = EmployeeFile.files.filter(employee=request.user).filter(
-            Q(file__file_code__contains=query) | Q(file__contract_code__contains=query))
+            Q(file__file_code__contains=query) | Q(file__contract_code__contains=query)
+            | Q(file__file_code__in=person_File) | Q(file__file_code__in=office_files)
+        )
 
     else:
         employee_files = EmployeeFile.files.filter(employee=request.user)
