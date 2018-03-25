@@ -242,3 +242,11 @@ class ChangePasswordForm(forms.Form):
         'placeholder': '********'
     }
     ))
+
+
+class UserCreationForm(forms.Form):
+    user_name = forms.CharField(widget=forms.PasswordInput(attrs={
+        'class': 'form-control text-input',
+        'placeholder': '********'
+    }
+    ))

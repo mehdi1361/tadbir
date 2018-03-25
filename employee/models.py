@@ -259,6 +259,8 @@ class EmployeePermission(Base):
         ('branch_new', 'شعبه جدید'),
         ('branch_edit', 'ویرایش شعبه'),
         ('branch_list', 'لیست شعب'),
+        ('sms_list', 'متن پیامک'),
+        ('set_permission', 'تعیین سطح دسترسی'),
         ('file_new', 'پرونده جدید'),
         ('file_edit', 'ویرایش پرونده'),
         ('file_list', 'لیست پرونده ها'),
@@ -268,6 +270,7 @@ class EmployeePermission(Base):
         ('report_user', 'گزارش عملکرد کارشناسان'),
         ('report_bank', 'گزارش به تفکیک بانک'),
         ('role_access', 'تعیین سطح دسترسی'),
+        ('create_employee', 'ایجاد کاربر'),
     )
     employee = models.ForeignKey(User, verbose_name=_('کاربر'), related_name='permissions')
     permission_type = models.CharField(_('دسترسی'), max_length=100, choices=PERMISSION_TYPE, default='dashboard')

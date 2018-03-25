@@ -273,3 +273,30 @@ def change_password(request):
 
 def access_denied(request):
     return render(request, 'bank/employee/access_denied.html')
+
+
+@login_required(login_url='/employee/login/')
+# @employee_permission('create_employee')
+def create_employee(request):
+    form = UserRegistrationForm(request.POST)
+    if request.method == 'POST':
+        if form.is_valid():
+            cd = form.cleaned_data
+
+            if cd['new_password'] != cd['new_password']:
+                messages.add_message(request, messages.ERROR, 'کلمه عبور جدید با تکرار کلمه عبور جدید یکسان نمی باشد.')
+                form = UserRegistrationForm()
+
+            else:
+                request.user.set_password(cd['new_password'])
+                request.user.save()
+                messages.add_message(request, messages.SUCCESS, 'کلمه عبور با موفقیت تغییر یافت.')
+                return HttpResponseRedirect(reverse('main'))
+        else:
+            messages.add_message(request, messages.ERROR, 'خطا در ثبت اطلاعات')
+            form = ChangePasswordForm()
+
+    else:
+        form = UserRegistrationForm()
+
+    return render(request, 'bank/employee/create_user.html', {'form': form})

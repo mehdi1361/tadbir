@@ -106,7 +106,8 @@ def edit_area(request, area_id):
 
     return render(request, 'bank/bank/edit.html', {'form': form, 'area': area})
 
-@employee_permission('branch_list')
+
+# @employee_permission('branch_list')
 class BranchListView(LoginRequiredMixin, ListView):
     login_url = '/employee/login/'
     queryset = Branch.objects.all()
@@ -299,6 +300,7 @@ def file_document(request, file_id):
 
 
 @login_required(login_url='/employee/login/')
+@employee_permission('branch_list')
 def get_branch(request):
     if request.is_ajax():
         q = request.GET.get('term', '')
@@ -319,6 +321,7 @@ def get_branch(request):
 
 
 @login_required(login_url='/employee/login/')
+@employee_permission('employee_file')
 def new_person(request):
     if request.method == 'POST':
         form = PersonForm(request.POST)
@@ -401,6 +404,7 @@ def get_person_office(request):
 
 
 @login_required(login_url='/employee/login/')
+@employee_permission('sms_list')
 def sms_type_list(request):
     if request.method == 'POST':
         form = SmsTypeForm(request.POST)
@@ -434,6 +438,7 @@ def error_500(request):
 
 
 @login_required(login_url='/employee/login/')
+@employee_permission('set_permission')
 def set_permission(request):
     all_user = User.objects.all()
     query = request.POST.get('q')

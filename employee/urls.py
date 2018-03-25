@@ -11,5 +11,6 @@ urlpatterns = [
     url(r'^files/detail/(?P<file_id>\d+)$', views.file_document, name='employee_file_detail'),
     url(r'^employee/auth/(?P<id>\d+)$', views.edit_auth_employee_file, name='auth_edit'),
     url(r'^access_denied/$', views.access_denied, name='access_denied'),
+    url(r'^create_user/$', views.create_employee, name='create_employee'),
 
 ]
