@@ -21,3 +21,14 @@ class SmsSender(object):
         client = Client(settings.SMS_SENDER_URL)
         result = client.service.SendSms(**params)
         return result
+
+
+def type_check(correct_type):
+    def check(old_function):
+        def new_function(arg):
+            if isinstance(arg, correct_type):
+                return old_function(arg)
+            else:
+                print("Bad Type")
+        return new_function
+    return check

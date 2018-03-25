@@ -6,6 +6,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 
 from employee.forms import PhoneFileForm, AddressForm, DocumentForm
+from employee.models import EmployeePermission
 from .models import Bank, ManagementAreas, Branch, File, Person, Office, SmsType, PersonFile, FileOffice
 from django.views.generic import ListView
 from .forms import BankForm, AreaForm, BranchForm, FileForm, \
@@ -17,6 +18,10 @@ from dal import autocomplete
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import User, Permission
+from common.decorators import employee_permission
+
+
 # from django.contrib.auth import authenticate, login
 # from .forms import LoginForm
 
@@ -50,6 +55,7 @@ def new_bank(request):
 
 
 @login_required(login_url='/employee/login/')
+@employee_permission('bank_list')
 def edit_bank(request, bank_id):
     bank = get_object_or_404(Bank, id=bank_id)
     if request.method == 'POST':
@@ -65,12 +71,14 @@ def edit_bank(request, bank_id):
 
 
 @login_required(login_url='/employee/login/')
+@employee_permission('area_list')
 def management_area_list(request):
     areas = ManagementAreas.objects.all()
     return render(request, 'bank/management_area/list.html', {'areas': areas})
 
 
 @login_required(login_url='/employee/login/')
+@employee_permission('area_new')
 def new_area(request):
     if request.method == 'POST':
         form = AreaForm(request.POST)
@@ -85,6 +93,7 @@ def new_area(request):
 
 
 @login_required(login_url='/employee/login/')
+@employee_permission('area_edit')
 def edit_area(request, area_id):
     area = get_object_or_404(ManagementAreas, id=area_id)
     if request.method == 'POST':
@@ -97,7 +106,7 @@ def edit_area(request, area_id):
 
     return render(request, 'bank/bank/edit.html', {'form': form, 'area': area})
 
-
+@employee_permission('branch_list')
 class BranchListView(LoginRequiredMixin, ListView):
     login_url = '/employee/login/'
     queryset = Branch.objects.all()
@@ -107,6 +116,7 @@ class BranchListView(LoginRequiredMixin, ListView):
 
 
 @login_required(login_url='/employee/login/')
+@employee_permission('branch_new')
 def new_branch(request):
     if request.method == 'POST':
         form = BranchForm(request.POST)
@@ -121,6 +131,7 @@ def new_branch(request):
 
 
 @login_required(login_url='/employee/login/')
+@employee_permission('branch_edit')
 def edit_branch(request, branch_id):
     branch = get_object_or_404(Branch, id=branch_id)
     if request.method == 'POST':
@@ -135,6 +146,7 @@ def edit_branch(request, branch_id):
 
 
 @login_required(login_url='/employee/login/')
+@employee_permission('file_list')
 def file_list(request):
     query = request.POST.get('q')
     if query:
@@ -173,6 +185,7 @@ class BranchAutoComplete(autocomplete.Select2QuerySetView):
 
 
 @login_required(login_url='/employee/login/')
+@employee_permission('file_new')
 def new_file(request):
     if request.method == 'POST':
         form = FileForm(request.POST)
@@ -188,6 +201,7 @@ def new_file(request):
 
 
 @login_required(login_url='/employee/login/')
+@employee_permission('file_new')
 def file_document(request, file_id):
     file = get_object_or_404(File, pk=file_id)
     if request.method == 'POST':
@@ -417,3 +431,19 @@ def error_404(request):
 def error_500(request):
     data = {}
     return render(request, 'bank/bank/500.html', data)
+
+
+@login_required(login_url='/employee/login/')
+def set_permission(request):
+    all_user = User.objects.all()
+    query = request.POST.get('q')
+    if query:
+        selected_user = User.objects.get(username=query)
+        permissions = EmployeePermission.objects.filter(employee=selected_user)
+        return render(request, 'bank/permissions/list.html', {
+            'selected_user': selected_user,
+            'permissions': permissions,
+            'users': all_user
+        })
+
+    return render(request, 'bank/permissions/list.html', {'users': all_user})

@@ -262,24 +262,41 @@ class EmployeePermission(Base):
         ('file_new', 'پرونده جدید'),
         ('file_edit', 'ویرایش پرونده'),
         ('file_list', 'لیست پرونده ها'),
+        ('office_new', 'شخص حقوقی جدید'),
+        ('office_edit', 'ویرایش شخص حقوقی'),
+        ('office_list', 'لیست اشخاص حقوقی'),
+        ('report_user', 'گزارش عملکرد کارشناسان'),
+        ('report_bank', 'گزارش به تفکیک بانک'),
+        ('role_access', 'تعیین سطح دسترسی'),
     )
     employee = models.ForeignKey(User, verbose_name=_('کاربر'), related_name='permissions')
     permission_type = models.CharField(_('دسترسی'), max_length=100, choices=PERMISSION_TYPE, default='dashboard')
+    enable = models.BooleanField(_('فعال'), default=False)
 
     class Meta:
         unique_together = ('permission_type', 'employee')
         verbose_name = _('employee_permission')
-        verbose_name_plural = _('file_recoveries')
-        db_table = 'file_recoveries'
+        verbose_name_plural = _('employee_permission')
+        db_table = 'employee_permission'
 
     def __str__(self):
         return self.value_code
+
+    @classmethod
+    def has_perm(cls, emp, perm):
+        try:
+            cls.objects.get(employee=emp, permission_type=perm, enable=True)
+            return True
+        except cls.DoesNotExist:
+            return False
 
 
 @receiver(post_save, sender=User)
 def create_or_update_user_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
+        for role in EmployeePermission.PERMISSION_TYPE:
+            EmployeePermission.objects.create(employee=instance, permission_type=role[0])
     instance.profile.save()
 
 

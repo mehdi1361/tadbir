@@ -12,8 +12,7 @@ from bank.models import File, FileOffice
 from django.shortcuts import get_object_or_404
 from django.db.models import Q, Sum
 from bank.models import PersonFile
-from django.contrib.auth.decorators import permission_required
-# Create your views here.
+from common.decorators import employee_permission
 
 
 def user_login(request):
@@ -49,13 +48,12 @@ def register(request):
             return HttpResponseRedirect('/employee/login')
 
     else:
-            user_form = UserRegistrationForm()
+        user_form = UserRegistrationForm()
 
     return render(request, 'bank/employee/register.html', {'form': user_form})
 
 
 @login_required(login_url='/employee/login/')
-@permission_required('employee.profile.dashboard')
 def dashboard(request):
     files_emp = EmployeeFile.objects.filter(employee=request.user).values_list('file', flat=True)
     follows = FollowUp.objects.filter(file__in=files_emp)[:8]
@@ -74,11 +72,12 @@ def dashboard(request):
 
 
 @login_required(login_url='/employee/login/')
+@employee_permission('employee_file')
 def files(request):
     query = request.POST.get('q')
     if query:
         person_File = PersonFile.objects.filter(person__name__contains=query).values_list('file__file_code', flat=True)
-        office_files = FileOffice.objects .filter(office__name__contains=query).values_list('file__file_code', flat=True)
+        office_files = FileOffice.objects.filter(office__name__contains=query).values_list('file__file_code', flat=True)
         employee_files = EmployeeFile.files.filter(employee=request.user).filter(
             Q(file__file_code__contains=query) | Q(file__contract_code__contains=query)
             | Q(file__file_code__in=person_File) | Q(file__file_code__in=office_files)
@@ -101,12 +100,13 @@ def register_profile(request):
             print(form.errors)
 
     else:
-            form = ProfileForm(instance=request.user.profile)
+        form = ProfileForm(instance=request.user.profile)
 
     return render(request, 'bank/employee/profile.html', {'form': form})
 
 
 @login_required(login_url='/employee/login/')
+@employee_permission('employee_file')
 def file_document(request, file_id):
     file = get_object_or_404(File, pk=file_id)
     recovery_sum = file.recoveries.filter(assurance_confirm=True).aggregate(sum=Sum('value'))
@@ -229,6 +229,7 @@ def file_document(request, file_id):
 
 
 @login_required(login_url='/employee/login/')
+@employee_permission('employee_file')
 def edit_auth_employee_file(request, id):
     emp_file = EmployeeFile.objects.get(pk=id)
     if request.method == 'POST':
@@ -268,3 +269,7 @@ def change_password(request):
         form = ChangePasswordForm()
 
     return render(request, 'bank/employee/change_password.html', {'form': form})
+
+
+def access_denied(request):
+    return render(request, 'bank/employee/access_denied.html')

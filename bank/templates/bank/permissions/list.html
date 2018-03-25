@@ -1,0 +1,950 @@
+{% extends 'bank/base.html' %}
+{% block breadcrumb %}
+    <ul class="breadcrumb">
+        <li><a href="#">کارتابل</a> <span class="divider">/</span></li>
+        <li><a href="{% url "main" %}">داشبورد</a> <span class="divider">/</span></li>
+        <li><a href="{% url "employee:list" %}">پرونده</a> <span class="divider">/</span></li>
+        <li class="active">جزییات<span class="divider">/</span></li>
+    </ul>
+{% endblock %}
+{% block content %}
+    <div>
+{#    <button onclick="myFunction()">Show Snackbar</button>#}
+{#    <div id="snackbar">پیامک با موفقیت ارسال گردید</div>#}
+
+     {% if messages %}
+{#        <ul class="messages">#}
+            {% for message in messages %}
+{#            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>#}
+{#                <div class="alert alert-{{ message.tags }} alert-dismissable">{{ message }}</div>#}
+
+                {% if message.tags == 'error' %}
+                    <div class="alert alert-danger alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        {{ message }}
+                    </div>
+                {% else %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        {{ message }}
+                    </div>
+                {% endif %}
+
+            {% endfor %}
+{#        </ul>#}
+    {% endif %}
+        <div id="overlay"></div>
+    </div>
+
+    {%  if file %}
+        <div class="row top-summary">
+					<div class="col-lg-3 col-md-6">
+						<div class="widget green-1 animated fadeInDown">
+							<div class="widget-content padding">
+{#								<div class="widget-icon">#}
+{#									<i class="icon-globe-inv"></i>#}
+{#								</div>#}
+								<div class="text-box">
+									<p class="maindata"><b>اصل مبلغ بدهی</b></p>
+									<h2><span class="animate-number" data-value="{{ file.main_deposit }}" data-duration="3000">{{ file.main_deposit }}</span></h2>
+									<div class="clearfix"></div>
+								</div>
+							</div>
+							<div class="widget-footer">
+								<div class="row">
+									<div class="col-sm-12">
+{#										<i class="fa fa-caret-up rel-change"></i> <b>39%</b> حجم مصرفی ترافیک#}
+									</div>
+								</div>
+								<div class="clearfix"></div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-lg-3 col-md-6">
+						<div class="widget darkblue-2 animated fadeInDown">
+							<div class="widget-content padding">
+								<div class="text-box">
+									<p class="maindata"><b>مبلغ وصولی</b></p>
+									<h2><span class="animate-number" data-value="{{ recovery_sum }}" data-duration="3000">6,399</span></h2>
+
+									<div class="clearfix"></div>
+								</div>
+							</div>
+							<div class="widget-footer">
+								<div class="row">
+									<div class="col-sm-12">
+{#										<i class="fa fa-caret-down rel-change"></i> <b>11%</b> فروش در ماه جاری#}
+									</div>
+								</div>
+								<div class="clearfix"></div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-lg-3 col-md-6">
+						<div class="widget orange-4 animated fadeInDown">
+							<div class="widget-content padding">
+{#								<div class="widget-icon">#}
+{#									<i class="fa fa-dollar"></i>#}
+{#								</div>#}
+								<div class="text-box">
+									<p class="maindata"><b>سود</b></p>
+									<h2><span class="animate-number" data-value="{{ file.so_deposit }}" data-duration="3000">70,389</span></h2>
+									<div class="clearfix"></div>
+								</div>
+							</div>
+							<div class="widget-footer">
+								<div class="row">
+									<div class="col-sm-12">
+{#										<i class="fa fa-caret-down rel-change"></i> <b>7%</b> فروشند گان جدید در بازه تاریخ#}
+									</div>
+								</div>
+								<div class="clearfix"></div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-lg-3 col-md-6">
+						<div class="widget lightblue-1 animated fadeInDown">
+							<div class="widget-content padding">
+{#								<div class="widget-icon">#}
+{#									<i class="icon-users"></i>#}
+{#								</div>#}
+								<div class="text-box">
+									<p class="maindata"><b>هزینه دادرسی</b></p>
+									<h2><span class="animate-number" data-value="{{ file.cost_proceeding }}" data-duration="3000">18,648</span></h2>
+									<div class="clearfix"></div>
+								</div>
+							</div>
+							<div class="widget-footer">
+								<div class="row">
+									<div class="col-sm-12">
+{#										<i class="fa fa-caret-up rel-change"></i> <b>6%</b> کاربران اضافه شده جدید#}
+									</div>
+								</div>
+								<div class="clearfix"></div>
+							</div>
+						</div>
+					</div>
+                </div>
+        <div class="row">
+            <div class="col-md-12 portlets ui-sortable">
+                    <div class="widget">
+                        <div class="widget-header">
+                            <h2>مشخصات پرونده</h2>
+                            <div class="additional-btn">
+                                <a href="#" class="hidden reload"><i class="icon-ccw-1"></i></a>
+                                <a href="#" class="widget-toggle"><i class="icon-down-open-2"></i></a>
+                                <a href="#" class="widget-close"><i class="icon-cancel-3"></i></a>
+                            </div>
+                        </div>
+                        <div class="widget-content padding" style="display: block;">
+                            <div style="margin-bottom: 10px"><span>شماره پرونده:</span><span>{{ file.file_code }}</span></div>
+                            <div style="margin-bottom: 10px"><span>شماره قرارداد:</span><span>{{ file.contract_code }}</span></div>
+                            <div style="margin-bottom: 10px"><span>اصل مبلغ بدهی:</span><span>{{ file.main_deposit }}</span></div>
+                            <div style="margin-bottom: 10px"><span>وجه التزام:</span><span>{{ file.nc_deposit }}</span></div>
+                            <div style="margin-bottom: 10px"><span>شعبه:</span><span>{{ file.branch }}</span></div>
+                            <div style="margin-bottom: 10px"><span>شهر:</span><span>{{ file.branch.city }}</span></div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    {%  endif %}
+    <div class="widget">
+        <div class="widget-header">
+            <h2>اطلاعات پرونده</h2>
+            <div class="additional-btn">
+                <a href="#" class="hidden reload"><i class="icon-ccw-1"></i></a>
+                <a href="#" class="widget-toggle"><i class="icon-down-open-2"></i></a>
+                <a href="#" class="widget-close"><i class="icon-cancel-3"></i></a>
+            </div>
+        </div>
+        <div class="widget-content padding">
+            <ul id="demo5" class="nav nav-tabs nav-simple">
+                <li class="active">
+                    <a href="#demo5-home" data-toggle="tab"> اشخاص حقیقی</a>
+                </li>
+                <li class="">
+                    <a href="#demo5-profile" data-toggle="tab">اشخاص حقوقی</a>
+                </li>
+                <li class="">
+                    <a href="#demo5-dropdown1" data-toggle="tab">وثایق</a>
+                </li>
+                <li class="">
+                    <a href="#demo5-dropdown2" data-toggle="tab">ثبت پیگیری</a>
+                </li>
+                <li class="">
+                    <a href="#demo5-dropdown3" data-toggle="tab">شماره های تماس</a>
+                </li>
+                <li class="">
+                    <a href="#demo5-dropdown4" data-toggle="tab">آدرس</a>
+                </li>
+                <li class="">
+                    <a href="#demo5-dropdown5" data-toggle="tab">اسناد</a>
+                </li>
+                <li class="">
+                    <a href="#demo5-dropdown6" data-toggle="tab">یادآوری</a>
+                </li>
+                <li class="">
+                    <a href="#demo5-dropdown7" data-toggle="tab">وصولی</a>
+                </li>
+                <li class="">
+                    <a href="#demo5-dropdown8" data-toggle="tab">پیامک اخطار</a>
+                </li>
+            </ul>
+
+            <div class="tab-content">
+                <div class="tab-pane fade active in" id="demo5-home">
+                    <div class="row">
+					<div class="col-md-12">
+						<div class="widget">
+							<div class="widget-header transparent">
+								<div class="additional-btn">
+									<a href="#" class="hidden reload"><i class="icon-ccw-1"></i></a>
+									<a href="#" class="widget-toggle"><i class="icon-down-open-2"></i></a>
+									<a href="#" class="widget-close"><i class="icon-cancel-3"></i></a>
+								</div>
+							</div>
+							<div class="widget-content">
+								<div class="table-responsive">
+										<table data-sortable="" class="table" data-sortable-initialized="true">
+										<thead>
+											<tr>
+												<th>شماره</th>
+												<th>ارتباط</th>
+												<th>نام شخص</th>
+											</tr>
+										</thead>
+
+										<tbody>
+                                            {% for document in file.file_persons.all %}
+                                                <tr>
+                                                    <td>{{ forloop.counter }}</td>
+                                                    <td><strong>{{ document.relation_type }}</strong></td>
+                                                    <td>{{ document.person.name }}</td>
+                                                </tr>
+                                            {% endfor %}
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+                </div> <!-- / .tab-pane -->
+                <div class="tab-pane fade" id="demo5-profile">
+                    <div class="row">
+					<div class="col-md-12">
+						<div class="widget">
+							<div class="widget-header transparent">
+								<h2><strong>اشخاص</strong> </h2>
+								<div class="additional-btn">
+									<a href="#" class="hidden reload"><i class="icon-ccw-1"></i></a>
+									<a href="#" class="widget-toggle"><i class="icon-down-open-2"></i></a>
+									<a href="#" class="widget-close"><i class="icon-cancel-3"></i></a>
+								</div>
+							</div>
+							<div class="widget-content">
+								<div class="table-responsive">
+										<table data-sortable="" class="table" data-sortable-initialized="true">
+										<thead>
+											<tr>
+												<th>ردیف</th>
+												<th>ارتباط</th>
+												<th>نام شخص</th>
+											</tr>
+										</thead>
+
+										<tbody>
+                                            {% for document in file.related_office.all %}
+                                                <tr>
+                                                    <td>{{ forloop.counter }}</td>
+                                                    <td><strong>{{ document.relation_type }}</strong></td>
+                                                    <td>{{ document.office.name }}</td>
+                                                    <td>{{ document.office.description }}</td>
+                                                </tr>
+                                            {% endfor %}
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+                </div> <!-- / .tab-pane -->
+                <div class="tab-pane fade" id="demo5-dropdown1">
+                    <div class="row">
+					<div class="col-md-12">
+						<div class="widget">
+							<div class="widget-header transparent">
+								<h2><strong>وثایق ثبت شده</strong> </h2>
+								<div class="additional-btn">
+									<a href="#" class="hidden reload"><i class="icon-ccw-1"></i></a>
+									<a href="#" class="widget-toggle"><i class="icon-down-open-2"></i></a>
+									<a href="#" class="widget-close"><i class="icon-cancel-3"></i></a>
+								</div>
+							</div>
+							<div class="widget-content">
+								<div class="table-responsive">
+										<table data-sortable="" class="table" data-sortable-initialized="true">
+										<thead>
+											<tr>
+												<th>شماره</th>
+												<th>پرونده</th>
+												<th>نوع وثیقه</th>
+												<th>شماره سند</th>
+												<th>مبلغ</th>
+												<th>شرح</th>
+											</tr>
+										</thead>
+
+										<tbody>
+                                            {% for assurance in file.assurances.all %}
+                                                <tr>
+                                                    <td>{{ forloop.counter }}</td>
+                                                    <td><strong>{{ assurance.file }}</strong></td>
+                                                    <td>{{ assurance.assurance_type }}</td>
+                                                    <td>{{ assurance.assurance_number }}</td>
+                                                    <td>{{ assurance.assurance_value }}</td>
+                                                    <td>{{ assurance.description }}</td>
+                                                </tr>
+                                            {% endfor %}
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+                </div> <!-- / .tab-pane -->
+                <div class="tab-pane fade" id="demo5-dropdown2">
+                    <button data-modal="md-slide-stick-top"  onclick="on()" class="btn btn-default btn-sm md-trigger">پیگیری جدید</button>
+                <div class="md-modal md-newspaper" id="md-slide-stick-top">
+	    		<div class="md-content">
+				<h3>ثبت پیگیری</h3>
+				<div>
+                    <p style="text-align:justify">
+                        <form class="form-horizontal" role="form" action="" method="post">
+                          <div class="form-group">
+                            <label for="input-text" class="col-sm-3 control-label">
+                                {{ follow_form.follow_up_type.label }}
+                            </label>
+                            <div class="col-sm-10">
+                                {{ follow_form.follow_up_type }}
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <label for="input-text" class="col-sm-3 control-label">
+                                {{ follow_form.description.label }}
+                            </label>
+                            <div class="col-sm-10">
+                                {{ follow_form.description }}
+                            </div>
+                          </div>
+
+                            <div class="col-lg-12">
+                                {% csrf_token %}
+                                <input type="submit"  onclick="off()" value="ایجاد" class="btn btn-success">
+                                <a href="#"  onclick="off()" class="btn btn-danger md-close">بستن</a>
+                            </div>
+                            <hr>
+                        </form>
+                    </p>
+				</div>
+			</div><!-- End div .md-content -->
+		</div>
+
+
+                    <div class="widget-content">
+								<div class="table-responsive">
+										<table data-sortable="" class="table" data-sortable-initialized="true">
+										<thead>
+											<tr>
+												<th>شماره</th>
+												<th>پرونده</th>
+												<th>نوع پیگیری</th>
+												<th>شرح</th>
+											</tr>
+										</thead>
+
+										<tbody>
+                                            {% for follow in file.follows.all %}
+                                                <tr>
+                                                    <td>{{ forloop.counter }}</td>
+                                                    <td><strong>{{ follow.file }}</strong></td>
+                                                    <td>{{ follow.follow_up_type }}</td>
+                                                    <td>{{ follow.description }}</td>
+                                                </tr>
+                                            {% endfor %}
+										</tbody>
+									</table>
+								</div>
+							</div>
+                </div> <!-- / .tab-pane -->
+                <div class="tab-pane fade" id="demo5-dropdown3">
+                    <button data-modal="md-newspaper" onclick="on()"  class="btn btn-default btn-sm md-trigger">شماره تلفن جدید</button>
+                    <div class="md-modal md-newspaper" id="md-newspaper">
+                        <div class="md-content">
+                            <h3>ثبت شماره تماس</h3>
+                            <div>
+                                <p style="text-align:justify">
+                                    <form class="form-horizontal" role="form" action="" method="post">
+                                      <div class="form-group">
+                                        <label for="input-text" class="col-sm-3 control-label">
+                                            {{ phone_form.phone_number.label }}
+                                        </label>
+                                        <div class="col-sm-10">
+                                            {{ phone_form.phone_number }}
+                                        </div>
+                                      </div>
+                                      <div class="form-group">
+                                        <label for="input-text" class="col-sm-3 control-label">
+                                            {{ phone_form.phone_owner.label }}
+                                        </label>
+                                        <div class="col-sm-10">
+                                            {{ phone_form.phone_owner }}
+                                        </div>
+                                      </div>
+
+                                      <div class="form-group">
+                                        <label for="input-text" class="col-sm-3 control-label">
+                                            {{ phone_form.type.label }}
+                                        </label>
+                                        <div class="col-sm-10">
+                                            {{ phone_form.type }}
+                                        </div>
+                                      </div>
+
+                                      <div class="form-group">
+                                        <label for="input-text" class="col-sm-3 control-label">
+                                            {{ phone_form.description.label }}
+                                        </label>
+                                        <div class="col-sm-10">
+                                            {{ phone_form.description }}
+                                        </div>
+                                      </div>
+
+                                        <div class="col-lg-12">
+                                            {% csrf_token %}
+                                            <input type="submit" value="ایجاد" onclick="off()" class="btn btn-success">
+                                            <a href="#" onclick="off()" class="btn btn-danger md-close">بستن</a>
+                                        </div>
+                                        <hr>
+                                    </form>
+                                </p>
+                            </div>
+                        </div><!-- End div .md-content -->
+		            </div>
+
+                    <div class="widget-content">
+								<div class="table-responsive">
+										<table data-sortable="" class="table" data-sortable-initialized="true">
+										<thead>
+											<tr>
+												<th>شماره</th>
+												<th>پرونده</th>
+												<th>نوع پیگیری</th>
+												<th>نام صاحب خط</th>
+												<th>شرح</th>
+											</tr>
+										</thead>
+
+										<tbody>
+                                            {% for phone in file.phones.all %}
+                                                <tr>
+                                                    <td>{{ forloop.counter }}</td>
+                                                    <td><strong>{{ phone.phone_number }}</strong></td>
+                                                    <td>{{ phone.person_type }}</td>
+                                                    <td>{{ phone.phone_owner.person.full_name }}</td>
+                                                    <td>{{ phone.description }}</td>
+                                                </tr>
+                                            {% endfor %}
+										</tbody>
+									</table>
+								</div>
+							</div>
+                </div>
+                <div class="tab-pane fade" id="demo5-dropdown4">
+                    <p style="text-align:justify">
+                        <form class="form-horizontal" role="form" action="" method="post">
+                          <div class="form-group">
+                            <label for="input-text" class="col-sm-3 control-label">
+                                {{ address_form.person_type.label }}
+                            </label>
+                            <div class="col-sm-10">
+                                {{ address_form.person_type }}
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <label for="input-text" class="col-sm-3 control-label">
+                                {{ address_form.type.label }}
+                            </label>
+                            <div class="col-sm-10">
+                                {{ address_form.type }}
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <label for="input-text" class="col-sm-3 control-label">
+                                {{ address_form.address.label }}
+                            </label>
+                            <div class="col-sm-10">
+                                {{ address_form.address }}
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <label for="input-text" class="col-sm-3 control-label">
+                                {{ address_form.description.label }}
+                            </label>
+                            <div class="col-sm-10">
+                                {{ address_form.description }}
+                            </div>
+                          </div>
+
+                            <div class="col-lg-12">
+                                {% csrf_token %}
+                                <input type="submit" value="ایجاد" class="btn btn-success">
+                            </div>
+                            <hr>
+                        </form>
+                    </p>
+                    <div class="widget-content">
+								<div class="table-responsive">
+										<table data-sortable="" class="table" data-sortable-initialized="true">
+										<thead>
+											<tr>
+												<th>شماره</th>
+												<th>پرونده</th>
+												<th>نوع پیگیری</th>
+												<th>شرح</th>
+											</tr>
+										</thead>
+
+										<tbody>
+                                            {% for address in file.addresses.all %}
+                                                <tr>
+                                                    <td>{{ forloop.counter }}</td>
+                                                    <td>{{ address.person_type }}</td>
+                                                    <td>{{ address.type }}</td>
+                                                    <td><strong>{{ address.address }}</strong></td>
+                                                    <td>{{ address.description }}</td>
+                                                </tr>
+                                            {% endfor %}
+										</tbody>
+									</table>
+								</div>
+							</div>
+                </div>
+                <div class="tab-pane fade" id="demo5-dropdown5">
+                    <button data-modal="md-newspaper1" onclick="on()"  class="btn btn-default btn-sm md-trigger">تصویر جدید</button>
+                    <div class="md-modal md-newspaper" id="md-newspaper1">
+                        <div class="md-content">
+                            <h3>ثبت تصویر سند</h3>
+                            <div>
+                                <p style="text-align:justify">
+                                    <form class="form-horizontal" role="form" action="" enctype="multipart/form-data" method="post">
+                                      <div class="form-group">
+                                        <label for="input-text" class="col-sm-3 control-label">
+                                            {{ document_form.type.label }}
+                                        </label>
+                                        <div class="col-sm-10">
+                                            {{ document_form.type }}
+                                        </div>
+                                      </div>
+
+                                      <div class="form-group">
+                                        <label for="input-text" class="col-sm-3 control-label">
+                                            {{ document_form.description.label }}
+                                        </label>
+                                        <div class="col-sm-10">
+                                            {{ document_form.description }}
+                                        </div>
+                                      </div>
+
+                                        <div class="col-lg-12">
+                                            {% csrf_token %}
+                                            <input type="submit" value="ایجاد" onclick="off()" class="btn btn-success">
+                                            <a href="#" onclick="off()" class="btn btn-danger md-close">بستن</a>
+                                        </div>
+                                        <hr>
+                                    </form>
+                                </p>
+                            </div>
+                        </div><!-- End div .md-content -->
+		            </div>
+
+
+                    <div class="box-info animated fadeInDown">
+                            <div class="gallery-wrap">
+                                {% for document in file.documents.all %}
+                                     <div class="column">
+                                    <div class="inner">
+                                        <a class="zooming" href="{{ document.image_upload.url }}" title="{{ document.description }}">
+                                        <div class="img-wrap">
+                                            <img src="{{ document.image_upload.url }}" alt="Image gallery" title="{{ document.description }}" class="mfp-fade">
+                                        </div>
+                                        {% if document.type == 'وثیقه' %}
+                                            <div class="caption-static success">
+                                                {{ document.type }}
+                                            </div>
+                                        {% endif %}
+                                        {% if document.type == 'ضمانی' %}
+                                            <div class="caption-static danger">
+                                                {{ document.type }}
+                                            </div>
+                                        {% endif %}
+                                        {% if document.type == 'متفرقه' %}
+                                            <div class="caption-static warning">
+                                                {{ document.type }}
+                                            </div>
+                                        {% endif %}
+                                        </a>
+                                    </div>
+                                </div>
+                                {%  endfor %}
+{#                                <div class="column">#}
+{#                                    <div class="inner">#}
+{#                                        <a class="zooming" href="images/big/img007.jpg" title="عنوان تصویر در اینجا">#}
+{#                                        <div class="img-wrap">#}
+{#                                            <img src="images/small/img007_small.jpg" alt="Image gallery" title="عنوان تصویر در اینجا" class="mfp-fade">#}
+{#                                        </div>#}
+{#                                        <div class="caption-static success">#}
+{#                                        سلام ! من یک عنوان هستم#}
+{#                                        </div>#}
+{#                                        </a>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <div class="column">#}
+{#                                    <div class="inner">#}
+{#                                        <a class="zooming" href="images/big/img008.jpg" title="عنوان تصویر در اینجا">#}
+{#                                        <div class="img-wrap">#}
+{#                                            <img src="images/small/img008_small.jpg" alt="Image gallery" title="عنوان تصویر در اینجا" class="mfp-fade">#}
+{#                                        </div>#}
+{#                                        <div class="caption-static warning">#}
+{#                                        سلام ! من یک عنوان هستم#}
+{#                                        </div>#}
+{#                                        </a>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <div class="column">#}
+{#                                    <div class="inner">#}
+{#                                        <a class="zooming" href="images/big/img009.jpg" title="عنوان تصویر در اینجا">#}
+{#                                        <div class="img-wrap">#}
+{#                                            <img src="images/small/img009_small.jpg" alt="Image gallery" title="عنوان تصویر در اینجا" class="mfp-fade">#}
+{#                                        </div>#}
+{#                                        <div class="caption-static danger">#}
+{#                                        سلام ! من یک عنوان هستم#}
+{#                                        </div>#}
+{#                                        </a>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <div class="column">#}
+{#                                    <div class="inner">#}
+{#                                        <a class="zooming" href="images/big/img010.jpg" title="عنوان تصویر در اینجا">#}
+{#                                        <div class="img-wrap">#}
+{#                                            <img src="images/small/img010_small.jpg" alt="Image gallery" title="عنوان تصویر در اینجا" class="mfp-fade">#}
+{#                                        </div>#}
+{#                                        <div class="caption-static info">#}
+{#                                        سلام ! من یک عنوان هستم#}
+{#                                        </div>#}
+{#                                        </a>#}
+{#                                    </div>#}
+{#                                </div>#}
+                            </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="demo5-dropdown6">
+                    <p style="text-align:justify">
+                                    <form class="form-horizontal" role="form" action="" enctype="multipart/form-data" method="post">
+                                      <div class="form-group">
+                                        <label for="input-text" class="col-sm-3 control-label">
+                                            {{ reminder_form.subject.label }}
+                                        </label>
+                                        <div class="col-sm-10">
+                                            {{ reminder_form.subject }}
+                                        </div>
+                                      </div>
+
+                                      <div class="form-group">
+                                        <label for="input-text" class="col-sm-3 control-label">
+                                            {{ reminder_form.persian_date.label }}
+                                        </label>
+                                        <div class="col-sm-10">
+                                            {{ reminder_form.persian_date }}
+                                            <script>
+                                                Calendar.setup({
+                                                    inputField: 'persian_date',
+                                                    button: 'date_btn',
+                                                    ifFormat: '%Y-%m-%d',
+                                                    dateType: 'jalali'
+                                                });
+                                            </script>
+                                        </div>
+                                      </div>
+
+                                      <div class="form-group">
+                                        <label for="input-text" class="col-sm-3 control-label">
+                                            {{ reminder_form.detail.label }}
+                                        </label>
+                                        <div class="col-sm-10">
+                                            {{ reminder_form.detail }}
+                                        </div>
+                                      </div>
+
+                                        <div class="col-lg-12">
+                                            {% csrf_token %}
+                                            <input type="submit" value="ایجاد" onclick="off()" class="btn btn-success">
+                                            <a href="#" onclick="off()" class="btn btn-danger md-close">بستن</a>
+                                        </div>
+                                        <hr>
+                                    </form>
+                    </p>
+
+                    <div class="widget-content">
+								<div class="table-responsive">
+										<table data-sortable="" class="table" data-sortable-initialized="true">
+										<thead>
+											<tr>
+												<th>شماره</th>
+												<th>موضوع</th>
+												<th>شرح</th>
+											</tr>
+										</thead>
+
+										<tbody>
+                                            {% for reminder in file.reminders.all %}
+                                                <tr>
+                                                    <td>{{ forloop.counter }}</td>
+                                                    <td>{{ reminder.subject }}</td>
+                                                    <td>{{ reminder.detail }}</td>
+                                                    <td>
+                                                        {{ reminder.persian_date }}
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+										</tbody>
+									</table>
+								</div>
+							</div>
+
+                </div>
+
+                <div class="tab-pane fade" id="demo5-dropdown7">
+                    <p style="text-align:justify">
+                        <form class="form-horizontal" role="form" action="" enctype="multipart/form-data" method="post">
+                                      <div class="form-group">
+                                        <label for="input-text" class="col-sm-3 control-label">
+                                            {{ recovery_form.recovery_type.label }}
+                                        </label>
+                                        <div class="col-sm-10">
+                                            {{ recovery_form.recovery_type }}
+                                        </div>
+                                      </div>
+
+                                      <div class="form-group">
+                                        <label for="input-text" class="col-sm-3 control-label">
+                                            {{ recovery_form.recovery_date.label }}
+                                        </label>
+                                        <div class="col-sm-10">
+                                            {{ recovery_form.recovery_date }}
+                                            <script>
+                                                Calendar.setup({
+                                                    inputField: 'recovery_date',
+                                                    button: 'date_btn',
+                                                    ifFormat: '%Y-%m-%d',
+                                                    dateType: 'jalali'
+                                                });
+                                            </script>
+                                        </div>
+                                      </div>
+
+                                      <div class="form-group">
+                                        <label for="input-text" class="col-sm-3 control-label">
+                                            {{ recovery_form.value.label }}
+                                        </label>
+                                        <div class="col-sm-10">
+                                            {{ recovery_form.value }}
+                                        </div>
+                                      </div>
+
+                                      <div class="form-group">
+                                        <label for="input-text" class="col-sm-3 control-label">
+                                            {{ recovery_form.value_code.label }}
+                                        </label>
+                                        <div class="col-sm-10">
+                                            {{ recovery_form.value_code }}
+                                        </div>
+                                      </div>
+
+                                      <div class="form-group">
+                                        <label for="input-text" class="col-sm-3 control-label">
+                                            {{ recovery_form.detail.label }}
+                                        </label>
+                                        <div class="col-sm-10">
+                                            {{ recovery_form.detail }}
+                                        </div>
+                                      </div>
+                                        <div class="col-lg-12">
+                                            {% csrf_token %}
+                                            <input type="submit" value="ایجاد" onclick="off()" class="btn btn-success">
+                                            <a href="#" onclick="off()" class="btn btn-danger md-close">بستن</a>
+                                        </div>
+                                        <hr>
+                                    </form>
+                    </p>
+
+                    <div class="widget-content">
+								<div class="table-responsive">
+										<table data-sortable="" class="table" data-sortable-initialized="true">
+										<thead>
+											<tr>
+												<th>شماره</th>
+												<th>نوع وصولی</th>
+												<th>مبلغ</th>
+												<th>شماره سند</th>
+												<th>شرح</th>
+												<th> تاریخ وصول</th>
+												<th> تاریخ ثبت</th>
+												<th>تاییدیه مالی</th>
+											</tr>
+										</thead>
+
+										<tbody>
+                                            {% for recovery in file.recoveries.all %}
+                                                <tr>
+                                                    <td>{{ forloop.counter }}</td>
+                                                    <td>{{ recovery.recovery_type }}</td>
+                                                    <td>{{ recovery.value }}</td>
+                                                    <td>{{ recovery.value_code }}</td>
+                                                    <td>{{ recovery.detail }}</td>
+                                                    <td>{{ recovery.recovery_date }}</td>
+                                                    <td>{{ recovery.created_at }}</td>
+                                                    <td>
+                                                        {% if recovery.assurance_confirm == True %}
+                                                            <span style="font-family: wingdings; font-size: 100%;">
+                                                                &#10003;
+                                                            </span>
+                                                        {% endif %}
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+										</tbody>
+									</table>
+								</div>
+							</div>
+
+                </div>
+                <div class="tab-pane fade" id="demo5-dropdown8">
+                    <button data-modal="md-newspaper_sms" onclick="on()"  class="btn btn-default btn-sm md-trigger">شماره تلفن جدید</button>
+                    <div class="md-modal md-newspaper" id="md-newspaper_sms">
+                        <div class="md-content">
+                            <h3>ثبت شماره تماس</h3>
+                            <div>
+                                <p style="text-align:justify">
+                                    <form class="form-horizontal" role="form" action="" method="post">
+                                      <div class="form-group">
+                                        <label for="input-text" class="col-sm-3 control-label">
+                                            {{ sms_form.type.label }}
+                                        </label>
+                                        <div class="col-sm-10">
+                                            {{ sms_form.type }}
+                                        </div>
+                                      </div>
+                                      <div class="form-group">
+                                        <label for="input-text" class="col-sm-3 control-label">
+                                            {{ sms_form.mobile_number.label }}
+                                        </label>
+                                        <div class="col-sm-10">
+                                            {{ sms_form.mobile_number }}
+                                        </div>
+                                      </div>
+
+                                      <div class="form-group">
+                                        <label for="input-text" class="col-sm-3 control-label">
+                                            {{ sms_form.description.label }}
+                                        </label>
+                                        <div class="col-sm-10">
+                                            {{ sms_form.description }}
+                                        </div>
+                                      </div>
+
+                                        <div class="col-lg-12">
+                                            {% csrf_token %}
+                                            <input type="submit" value="ایجاد" onclick="off()" class="btn btn-success">
+                                            <a href="#" onclick="off()" class="btn btn-danger md-close">بستن</a>
+                                        </div>
+                                        <hr>
+                                    </form>
+                                </p>
+                            </div>
+                        </div><!-- End div .md-content -->
+		            </div>
+
+                    <div class="widget-content">
+								<div class="table-responsive">
+										<table data-sortable="" class="table" data-sortable-initialized="true">
+										<thead>
+											<tr>
+												<th>شماره</th>
+												<th>نوع پیامک</th>
+												<th>شماره موبایل</th>
+												<th>توضیحات</th>
+                                                <th>وضعیت</th>
+                                            </tr>
+										</thead>
+
+										<tbody>
+                                            {% for sms in file.sms_cautions.all %}
+                                                <tr>
+                                                    <td>{{ forloop.counter }}</td>
+                                                    <td><strong>{{ sms.type }}</strong></td>
+                                                    <td>{{ sms.mobile_number }}</td>
+                                                    <td>{{ sms.description }}</td>
+                                                    {% if sms.status == 'در صف ارسال' %}
+                                                        <td><span class="label label-primary">{{ sms.status }}</span></td>
+                                                    {% elif sms.status == 'ارسال شد' %}
+                                                        <td><span class="label label-info">{{ sms.status }}</span></td>
+                                                    {% elif sms.status == 'دریافت شد' %}
+                                                        <td><span class="label label-success">{{ sms.status }}</span></td>
+                                                    {% else %}
+                                                        <td><span class="label label-danger">{{ sms.status }}</span></td>
+
+                                                    {% endif %}
+                                                </tr>
+                                            {% endfor %}
+										</tbody>
+									</table>
+								</div>
+							</div>
+                </div>
+
+
+            </div> <!-- / .tab-content -->
+
+        </div>
+						</div>
+    <script>
+        function on() {
+            document.getElementById("overlay").style.display = "block";
+        }
+
+        function off() {
+            document.getElementById("overlay").style.display = "none";
+        }
+
+        function myFunction() {
+            document.getElementById("overlay").style.display = "none";
+            var x = document.getElementById("snackbar")
+            x.style.backgroundColor = "#8e0b0b";
+            x.className = "show";
+            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+        }
+    </script>
+
+{% endblock %}
