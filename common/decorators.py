@@ -9,11 +9,15 @@ class employee_permission(object):
         self.permission = permission
 
     def __call__(self, f):
-        def wrapped_f(*args):
+        def wrapped_f(*args, file_id=None):
             request = args[0]
 
             if EmployeePermission.has_perm(request.user, self.permission):
-                return f(*args)
+                if file_id:
+                    return f(*args, file_id)
+
+                else:
+                    return f(*args)
 
             else:
                 return HttpResponseRedirect(reverse('employee:access_denied'))

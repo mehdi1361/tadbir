@@ -80,7 +80,7 @@ class Profile(Base, Human):
         db_table = 'profiles'
 
     def __str__(self):
-        return "{} {}".format(self.first_name, self.last_name)
+        return "{}".format(self.name)
 
 
 @python_2_unicode_compatible

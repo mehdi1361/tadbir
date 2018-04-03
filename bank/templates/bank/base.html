@@ -464,7 +464,7 @@
 								</li>
                                 <li>
 									<a href={% url "bank:new_person" %}>
-										<span>اشخاص حقیقی جدید</span>
+										<spaan>اشخاص حقیقی جدید</spaan>
 									</a>
 								</li>
                                 </li>
@@ -481,14 +481,26 @@
 
 							</ul>
 						</li>
-                        <li>
-							<a href="/admin/" target="_blank">
+                        <li class='has_sub'>
+							<a href='javascript:void(0);'>
 								<i class='icon-megaphone'></i>
 								<span>پنل مدیریت</span>
 								<span class="pull-left">
 									<i class="fa fa-angle-down"></i>
 								</span>
 							</a>
+							<ul>
+								<li>
+									<a href={% url "employee:manage" %}>
+										<span>کاربران</span>
+									</a>
+								</li>
+								<li>
+									<a href="/admin/">
+										<span>مدیریت کلی</span>
+									</a>
+								</li>
+							</ul>
 						</li>
                         <li class='has_sub'>
 							<a href='javascript:void(0);'>

@@ -142,7 +142,7 @@ class File(Base):
     @property
     def person_list(self):
         person_str = ''
-        for person in self.file_persons.all():
+        for person in self.file_persons.filter(relation_type='مدیون'):
             person_str += '{}-'.format(person.person.full_name)
 
         return person_str
@@ -150,7 +150,7 @@ class File(Base):
     @property
     def offices(self):
         office_str = ''
-        for office in self.related_office.all():
+        for office in self.related_office.filter(relation_type='مدیون'):
             office_str += '{}-'.format(office.office.name)
 
         return office_str
@@ -212,6 +212,11 @@ class FileOffice(Base):
         return "{}-{}".format(self.file.file_code, self.office.name)
 
 
+class MainDebtor(models.Manager):
+    def get_queryset(self):
+        return super(MainDebtor, self).get_queryset().filter(relation_type='مدیون')
+
+
 @python_2_unicode_compatible
 class PersonFile(Base):
     TYPE = (
@@ -223,6 +228,9 @@ class PersonFile(Base):
     person = models.ForeignKey(Person, verbose_name=_('شخص'), related_name='file_persons')
     relation_type = models.CharField(_('ارتباط'), max_length=10, default='مدیون', choices=TYPE)
     history = HistoricalRecords()
+
+    objects = models.Manager()
+    main_debtor = MainDebtor()
 
     class Meta:
         unique_together = ['file', 'person']

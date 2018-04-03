@@ -1,0 +1,69 @@
+{% extends 'bank/base.html' %}
+
+{% block content %}
+    <div>
+
+    </div>
+     {% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+{#    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>#}
+         <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+</ul>
+{% endif %}
+    <div class="widget">
+					<div class="widget-header transparent">
+						<h2><strong>کاربر</strong></h2>
+						<div class="additional-btn">
+							<a href="#" class="hidden reload"><i class="icon-ccw-1"></i></a>
+							<a href="#" class="widget-toggle"><i class="icon-down-open-2"></i></a>
+							<a href="#" class="widget-close"><i class="icon-cancel-3"></i></a>
+						</div>
+					</div>
+					<div class="widget-content padding">
+                        <div>{{ user.username }}</div>
+                        <div>{{ user.email }}</div>
+					</div>
+
+				</div>
+    <div class="row">
+					<div class="col-md-12">
+						<div class="widget">
+							<div class="widget-header transparent">
+								<h2><strong>دسترسی ها</strong> </h2>
+								<div class="additional-btn">
+									<a href="#" class="hidden reload"><i class="icon-ccw-1"></i></a>
+									<a href="#" class="widget-toggle"><i class="icon-down-open-2"></i></a>
+									<a href="#" class="widget-close"><i class="icon-cancel-3"></i></a>
+								</div>
+							</div>
+							<div class="widget-content">
+								<div class="table-responsive">
+{#									<table data-sortable="" class="table" data-sortable-initialized="true">#}
+{#										<thead>#}
+{#											<tr>#}
+{#												<th>ردیف</th>#}
+{#												<th>نام کاربری</th>#}
+{#												<th>نام و نام خانوادگی</th>#}
+{#											</tr>#}
+{#										</thead>#}
+{##}
+{#										<tbody>#}
+{#                                            {% for user in users %}#}
+{#                                                <tr>#}
+{#                                                    <td>{{ forloop.counter }}</td>#}
+{#                                                    <td><strong>{{ user.username }}</strong></td>#}
+{#                                                    <td>{{ user.profile }}</td>#}
+{#                                                </tr>#}
+{#                                            {% endfor %}#}
+{#										</tbody>#}
+{#									</table>#}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+{% endblock %}

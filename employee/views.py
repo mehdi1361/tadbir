@@ -1,9 +1,12 @@
 from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
+
+from employee.forms import UserCreationForm
 from .forms import LoginForm, UserRegistrationForm, \
     ProfileForm, FollowUpForm, PhoneFileForm, AddressForm, \
-    DocumentForm, ReminderForm, RecoveryForm, SmsCautionForm, EmployeeFileForm, ChangePasswordForm
+    DocumentForm, ReminderForm, RecoveryForm, SmsCautionForm, EmployeeFileForm, ChangePasswordForm, \
+    UserCreationForm
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
@@ -13,6 +16,7 @@ from django.shortcuts import get_object_or_404
 from django.db.models import Q, Sum
 from bank.models import PersonFile
 from common.decorators import employee_permission
+from django.contrib.auth.models import User
 
 
 def user_login(request):
@@ -276,27 +280,34 @@ def access_denied(request):
 
 
 @login_required(login_url='/employee/login/')
-# @employee_permission('create_employee')
+@employee_permission('create_employee')
 def create_employee(request):
-    form = UserRegistrationForm(request.POST)
+    form = UserCreationForm(request.POST)
+    users = User.objects.all()
     if request.method == 'POST':
         if form.is_valid():
             cd = form.cleaned_data
+            try:
+                user = User.objects.get(username=cd['user_name'])
+                messages.add_message(request, messages.ERROR, 'کاربر با این نام موجود است.')
+                form = UserCreationForm()
 
-            if cd['new_password'] != cd['new_password']:
-                messages.add_message(request, messages.ERROR, 'کلمه عبور جدید با تکرار کلمه عبور جدید یکسان نمی باشد.')
-                form = UserRegistrationForm()
-
-            else:
-                request.user.set_password(cd['new_password'])
-                request.user.save()
-                messages.add_message(request, messages.SUCCESS, 'کلمه عبور با موفقیت تغییر یافت.')
-                return HttpResponseRedirect(reverse('main'))
+            except:
+                User.objects.create_user(username=cd['user_name'], password=1234, is_superuser=True)
+                messages.add_message(request, messages.SUCCESS, 'کاربر با موفقیت ثبت شد.')
+                form = UserCreationForm()
         else:
             messages.add_message(request, messages.ERROR, 'خطا در ثبت اطلاعات')
             form = ChangePasswordForm()
 
     else:
-        form = UserRegistrationForm()
+        form = UserCreationForm()
 
-    return render(request, 'bank/employee/create_user.html', {'form': form})
+    return render(request, 'bank/employee/manage.html', {'form': form, 'users': users})
+
+
+@login_required(login_url='/employee/login/')
+@employee_permission('create_employee')
+def employee_permission(request, emp_id):
+    user = get_object_or_404(User, id=emp_id)
+    return render(request, 'bank/employee/manage.html', {'user': user})
