@@ -311,6 +311,21 @@ class Mail(Base):
         return '{}'.format(self.subject)
 
 
+@python_2_unicode_compatible
+class MailBox(Base):
+    from_user = models.ForeignKey(User, verbose_name=_('از'), related_name='send_messages')
+    to_user = models.ForeignKey(User, verbose_name=_('به'), related_name='receive_messages')
+    mail = models.ForeignKey(Mail, verbose_name=_('نامه'), related_name='inbox')
+
+    class Meta:
+        verbose_name = _('mail_box')
+        verbose_name_plural = _('mail_boxes')
+        db_table = 'mail_boxes'
+
+    def __str__(self):
+        return '{}-{}-{}'.format(self.from_user, self.to_user, self.mail)
+
+
 @receiver(post_save, sender=User)
 def create_or_update_user_profile(sender, instance, created, **kwargs):
     if created:
