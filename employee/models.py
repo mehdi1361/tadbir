@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import jdatetime
+
 from django.db import models
 from bank.models import File, PersonFile
 from base.models import Base, Human, Document
@@ -32,6 +34,7 @@ class EmployeeFile(Base):
     employee = models.ForeignKey(User, verbose_name=_('کاربر'), related_name='files')
     status = models.CharField(_('وضعیت'), max_length=50, default='enable', choices=STATUS)
     auth_status = models.CharField(_('نوع تخصیص'), max_length=50, default='کارشناس', choices=AUTH_STATUS)
+    recovery_date = jmodels.jDateField(_('تاریخ ارجاع'), null=True)
 
     objects = models.Manager()
     files = FileManager()
@@ -292,6 +295,20 @@ class EmployeePermission(Base):
             return True
         except cls.DoesNotExist:
             return False
+
+
+@python_2_unicode_compatible
+class Mail(Base):
+    subject = models.CharField(_('موضوع'), max_length=250)
+    description = models.TextField(_('متن'))
+
+    class Meta:
+        verbose_name = _('mail')
+        verbose_name_plural = _('mails')
+        db_table = 'mails'
+
+    def __str__(self):
+        return '{}'.format(self.subject)
 
 
 @receiver(post_save, sender=User)
