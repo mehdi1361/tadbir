@@ -12,6 +12,7 @@ urlpatterns = [
     url(r'^employee/auth/(?P<id>\d+)$', views.edit_auth_employee_file, name='auth_edit'),
     url(r'^access_denied/$', views.access_denied, name='access_denied'),
     url(r'^manage/$', views.create_employee, name='manage'),
-    url(r'^employee_manage/(?P<id>\d+)$', views.employee_permission, name='permission'),
+    url(r'^employee_manage/(?P<emp_id>\d+)$', views.employee_permission_view, name='permission'),
+    url(r'^manage_edit/(?P<permission_id>\d+)$', views.edit_employee_permission, name='edit_permission'),
 
 ]

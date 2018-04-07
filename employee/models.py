@@ -283,7 +283,7 @@ class EmployeePermission(Base):
         db_table = 'employee_permission'
 
     def __str__(self):
-        return self.value_code
+        return '{}-{}-{}'.format(self.employee, self.permission_type, self.enable)
 
     @classmethod
     def has_perm(cls, emp, perm):

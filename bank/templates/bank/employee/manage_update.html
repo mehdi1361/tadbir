@@ -22,7 +22,7 @@
 						</div>
 					</div>
 					<div class="widget-content padding">
-                        <div>{{ user.username }}</div>
+                        <div>{{ usepermisr.username }}</div>
                         <div>{{ user.email }}</div>
 					</div>
 
@@ -41,38 +41,17 @@
 							<div class="widget-content">
 								<div class="table-responsive">
                                   <form class="form-horizontal" role="form" action="" method="post">
-                                    <table data-sortable="" class="table" data-sortable-initialized="true">
-										<thead>
-											<tr>
-												<th>ردیف</th>
-												<th>دسترسی</th>
-												<th>فعال</th>
-												<th>ویرایش</th>
-											</tr>
-										</thead>
-
-										<tbody>
-                                            {% for permission in permissions %}
-                                                <tr>
-                                                    <td>{{ forloop.counter }}</td>
-                                                    <td><strong>{{ permission.get_permission_type_display }}</strong></td>
-                                                    <td>
-                                                        {% if permission.enable %}
-                                                            &#10004
-                                                        {% endif %}
-                                                    </td>
-                                                    <td>
-                                                        <div class="btn-group btn-group-xs">
-                                                            <a href="{% url "employee:edit_permission" permission.id %}" data-toggle="tooltip" title="مشاهده پرونده" class="btn btn-default"><i class="fa fa-edit"></i></a>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            {% endfor %}
-										</tbody>
-									</table>
+                                    <div class="col-lg-12">
+                                        <p>{{ permission.employee }}</p>
+                                        <p>{{ permission.get_permission_type_display }}</p>
+                                        {{ form.as_p }}
+                                    </div>
                                     <div class="col-lg-12">
                                       {% csrf_token %}
                                         <input type="submit" value="بروز رسانی" class="btn btn-success">
+                                        <br>
+                                        <br>
+                                        <br>
                                     </div>
                                     <hr>
                                   </form>

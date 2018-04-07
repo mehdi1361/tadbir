@@ -41,6 +41,7 @@ class BankListView(LoginRequiredMixin, ListView):
 
 
 @login_required(login_url='/employee/login/')
+@employee_permission('bank_new')
 def new_bank(request):
     if request.method == 'POST':
         form = BankForm(request.POST)

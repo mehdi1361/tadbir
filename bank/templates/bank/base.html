@@ -328,10 +328,10 @@
 {#                            <span class="rounded-image topbar-profile-image">#}
 {#                                <img src="{% static "assets/img/avatar/mohammad2.jpg" %}">#}
 {#                            </span>#}
-                            {%  if user.profile.name %}
-                                {{ user.profile.name }}
+                            {%  if request.user.profile.name %}
+                                {{ request.user.profile.name }}
                             {%  else %}
-                                {{ user.get_username }}
+                                {{ request.user.get_username }}
                             {% endif %}<i class="fa fa-caret-down"></i></a>
                         <ul class="dropdown-menu">
                             <li><a href="{% url 'employee:profile' %}">پروفایل من</a></li>

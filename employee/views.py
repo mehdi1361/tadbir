@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 
-from employee.forms import UserCreationForm
+from employee.forms import UserCreationForm, PermissionForm
 from .forms import LoginForm, UserRegistrationForm, \
     ProfileForm, FollowUpForm, PhoneFileForm, AddressForm, \
     DocumentForm, ReminderForm, RecoveryForm, SmsCautionForm, EmployeeFileForm, ChangePasswordForm, \
@@ -10,14 +10,14 @@ from .forms import LoginForm, UserRegistrationForm, \
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
-from .models import EmployeeFile, DocumentFile, PhoneFile, FollowUp, FileReminder
+from .models import EmployeeFile, DocumentFile, PhoneFile, FollowUp, FileReminder, EmployeePermission
 from bank.models import File, FileOffice
 from django.shortcuts import get_object_or_404
 from django.db.models import Q, Sum
 from bank.models import PersonFile
 from common.decorators import employee_permission
 from django.contrib.auth.models import User
-
+from django.forms import inlineformset_factory
 
 def user_login(request):
     form = LoginForm(request.POST)
@@ -308,6 +308,28 @@ def create_employee(request):
 
 @login_required(login_url='/employee/login/')
 @employee_permission('create_employee')
-def employee_permission(request, emp_id):
+def employee_permission_view(request, emp_id):
     user = get_object_or_404(User, id=emp_id)
-    return render(request, 'bank/employee/manage.html', {'user': user})
+    employee_permission_lst = EmployeePermission.objects.filter(employee=user)
+    return render(request, 'bank/employee/manage_employee.html',
+                  {'user': user,
+                   'permissions': employee_permission_lst
+                   }
+                  )
+
+
+@login_required(login_url='/employee/login/')
+@employee_permission('create_employee')
+def edit_employee_permission(request, permission_id):
+    permission = EmployeePermission.objects.get(pk=permission_id)
+    if request.method == 'POST':
+        form = PermissionForm(request.POST, instance=permission)
+
+        if form.is_valid():
+            form.save()
+            return redirect('employee:permission', emp_id=permission.employee.id)
+
+    else:
+        form = PermissionForm(instance=permission)
+
+    return render(request, 'bank/employee/manage_update.html', {'form': form, 'permission': permission})

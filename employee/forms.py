@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 
 from .models import Profile, FollowUp, PhoneFile, AddressFile, \
-    DocumentFile, FileReminder, FileRecovery, SmsCaution, EmployeeFile
+    DocumentFile, FileReminder, FileRecovery, SmsCaution, EmployeeFile, EmployeePermission
 from django.core.exceptions import ValidationError
 
 
@@ -249,3 +249,14 @@ class UserCreationForm(forms.Form):
         'class': 'form-control text-input',
     }
     ))
+
+
+class PermissionForm(forms.ModelForm):
+    class Meta:
+        model = EmployeePermission
+        fields = [
+            'enable'
+        ]
+        widgets = {
+            'enable': forms.CheckboxInput()
+        }

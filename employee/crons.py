@@ -1,7 +1,8 @@
+from datetime import datetime
 from django_cron import CronJobBase, Schedule
 from common.utils import SmsSender
 from employee.models import SmsCaution
-
+from django.core import management
 
 class SmsSenderJob(CronJobBase):
     RUN_EVERY_MINS = 1
@@ -25,3 +26,17 @@ class SmsSenderJob(CronJobBase):
 
             sms_list.save()
 
+
+class Backup(CronJobBase):
+    RUN_AT_TIMES = ['23:50']
+    schedule = Schedule(run_at_times=RUN_AT_TIMES)
+    code = 'employee.Backup'
+
+    def do(self):
+        file_name = '{}{}{}.gz'.format(
+            datetime.now().year,
+            datetime.now().month
+            if datetime.now().month > 10 else '0{}'.format(datetime.now().month),
+            datetime.now().day
+        )
+        management.call_command('dbbackup', '-z', '-o {}'.format(file_name))
