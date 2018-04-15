@@ -349,7 +349,13 @@ def new_person(request):
 
 @login_required(login_url='/employee/login/')
 def get_persons(request):
-    object_list = Person.objects.all().order_by('-created_at')
+    query = request.POST.get('q')
+    if query:
+        normalize_data(query)
+        object_list = Person.objects.filter(name__contains=query).order_by('-created_at')
+    else:
+        object_list = Person.objects.all().order_by('-created_at')
+
     paginator = Paginator(object_list, 15)
     page = request.GET.get('page')
 
@@ -390,7 +396,14 @@ def new_person_office(request):
 
 @login_required(login_url='/login/')
 def get_person_office(request):
-    object_list = Office.objects.all().order_by('-created_at')
+    query = request.POST.get('q')
+    if query:
+        normalize_data(query)
+        object_list = Office.objects.filter(name__contains=query).order_by('-created_at')
+
+    else:
+        object_list = Office.objects.all().order_by('-created_at')
+
     paginator = Paginator(object_list, 15)
     page = request.GET.get('page')
 

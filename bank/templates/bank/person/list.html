@@ -12,7 +12,7 @@
                 <div class="col-md-12 portlets ui-sortable">
 						<div class="widget">
 							<div class="widget-header">
-								<h2>جدید</h2>
+								<h2>جستجو</h2>
 								<div class="additional-btn">
 									<a href="#" class="hidden reload"><i class="icon-ccw-1"></i></a>
 									<a href="#" class="widget-toggle"><i class="icon-down-open-2"></i></a>
@@ -20,6 +20,21 @@
 								</div>
 							</div>
 							<div class="widget-content padding" style="display: block;">
+                                <p> نام مدیون را وارد نمایید.</p>
+                                    <form method="post" action="#" class="navbar-form pull-right">
+                                        <div class="input-group">
+                                          <input class="form-control" type="text" id="searchBox"  name="q" placeholder=" نام و نام خانوادگی مدیون">
+                                          <span class="input-group-btn">
+{#                                            <button class="btn btn-default" type="button">جستجو</button>#}
+                                              {% csrf_token %}
+                                            <input type="submit" class="btn btn-default" value="جستجو" >
+                                          </span>
+                                        </div><!-- /input-group -->
+                                    </form>
+                                <br>
+                                <br>
+                                <br>
+                                <br>
 								<a href="{% url "bank:new_area" %}" class="btn btn-success">شخص جدید</a>
 							</div>
 						</div>
