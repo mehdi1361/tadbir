@@ -21,4 +21,5 @@ urlpatterns = [
     url(r'^files/new_person_office/$', views.new_person_office, name='new_person_office'),
     url(r'^persons_office/list/$', views.get_person_office, name='persons_office'),
     url(r'^sms_type/$', views.sms_type_list, name='sms_type'),
+    url(r'^files/detail/person_edit/(?P<person_id>\d+)$', views.edit_person_detail, name='file_detail_person_edit'),
 ]

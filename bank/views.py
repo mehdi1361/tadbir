@@ -20,6 +20,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User, Permission
 from common.decorators import employee_permission
+from common.utils import normalize_data
 
 
 # from django.contrib.auth import authenticate, login
@@ -152,6 +153,7 @@ def edit_branch(request, branch_id):
 def file_list(request):
     query = request.POST.get('q')
     if query:
+        query = normalize_data(query)
         person_file = PersonFile.objects.filter(person__name__contains=query).values_list('file__file_code', flat=True)
         office_files = FileOffice.objects.filter(office__name__contains=query).values_list('file__file_code', flat=True)
 
@@ -453,3 +455,23 @@ def set_permission(request):
         })
 
     return render(request, 'bank/permissions/list.html', {'users': all_user})
+
+
+@login_required(login_url='/employee/login/')
+@employee_permission('person_edit')
+def edit_person_detail(request, person_id):
+    person = get_object_or_404(Person, pk=person_id)
+    person_form = PersonFileForm(request.POST, instance=person)
+
+    if request.method == 'POST':
+        if person_form.is_valid():
+            person_form.save()
+
+        else:
+            messages.add_message(request, messages.ERROR, 'خطا در بروز رسانی')
+            person_form = PersonFileForm(instance=person)
+
+    else:
+        person_form = PersonFileForm(instance=person)
+
+    return render(request, 'bank/file/edit_person.html', {'form': person_form})

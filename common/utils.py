@@ -32,3 +32,27 @@ def type_check(correct_type):
                 print("Bad Type")
         return new_function
     return check
+
+def normalize_data(value):
+    dict_val = {
+        '۰': '0',
+        '۱': '1',
+        '۲': '2',
+        '۳': '3',
+        '۴': '4',
+        '۵': '5',
+        '۶': '6',
+        '۷': '7',
+        '۸': '8',
+        '۹': '9'
+    }
+    result_value = ""
+    for char in value:
+        if char in dict_val.keys():
+            result_value += dict_val[char]
+
+        else:
+            result_value += char
+
+    return result_value
+

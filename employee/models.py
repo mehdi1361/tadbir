@@ -187,13 +187,12 @@ class AddressFile(Base):
 class DocumentFile(Base, Document):
 
     TYPE = (
-        ('وثیقه', 'وثیقه'),
-        ('ضمانی', 'ضمانی'),
-        ('متفرقه', 'متفرقه'),
+        ('اسناد ضمه ای', 'اسناد ضمه ای'),
+        ('قرارداد', 'قرارداد'),
     )
 
     file = models.ForeignKey(File, verbose_name=_('پرونده'), related_name='documents')
-    type = models.CharField(_('نوع مالکیت'), max_length=10, choices=TYPE, default='وثیقه')
+    type = models.CharField(_('وثایق'), max_length=10, choices=TYPE, default='وثیقه')
     image_upload = models.ImageField(_('تصویر سند'), upload_to='document', null=True)
 
     class Meta:
@@ -267,6 +266,8 @@ class EmployeePermission(Base):
         ('file_new', 'پرونده جدید'),
         ('file_edit', 'ویرایش پرونده'),
         ('file_list', 'لیست پرونده ها'),
+        ('person_new', 'شخص حقیقی جدید'),
+        ('person_edit', 'ویرایش شخص حقیقی'),
         ('office_new', 'شخص حقوقی جدید'),
         ('office_edit', 'ویرایش شخص حقوقی'),
         ('office_list', 'لیست اشخاص حقوقی'),
@@ -316,6 +317,7 @@ class MailBox(Base):
     from_user = models.ForeignKey(User, verbose_name=_('از'), related_name='send_messages')
     to_user = models.ForeignKey(User, verbose_name=_('به'), related_name='receive_messages')
     mail = models.ForeignKey(Mail, verbose_name=_('نامه'), related_name='inbox')
+    star = models.BooleanField(_('نشان گزاری'), default=False)
 
     class Meta:
         verbose_name = _('mail_box')

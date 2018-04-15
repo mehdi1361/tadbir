@@ -143,7 +143,7 @@ class File(Base):
     def person_list(self):
         person_str = ''
         for person in self.file_persons.filter(relation_type='مدیون'):
-            person_str += '{}-'.format(person.person.full_name)
+            person_str += '{}'.format(person.person.full_name)
 
         return person_str
 
@@ -151,7 +151,7 @@ class File(Base):
     def offices(self):
         office_str = ''
         for office in self.related_office.filter(relation_type='مدیون'):
-            office_str += '{}-'.format(office.office.name)
+            office_str += '{}'.format(office.office.name)
 
         return office_str
 
@@ -245,10 +245,12 @@ class PersonFile(Base):
 @python_2_unicode_compatible
 class Assurance(Base, Document):
     TYPE = (
+        ('سند رهنی', 'سند رهنی'),
         ('سفته', 'سفته'),
         ('چک', 'چک'),
-        ('سند ملکی', 'سند ملکی'),
-        ('سند در رهن', 'سند در رهن'),
+        ('قرارداد لازم الاجرا', 'قرارداد لازم الاجرا'),
+        ('ضمانت نامه', 'ضمانت نامه'),
+        ('کسر از حقوق', 'کسر از حقوق'),
     )
     file = models.ForeignKey(File, verbose_name=_('پرونده'), related_name='assurances', default=None)
     assurance_type = models.CharField(_('نوع وثیقه'), max_length=50, choices=TYPE, default='سفته')

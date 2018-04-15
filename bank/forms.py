@@ -116,7 +116,7 @@ class PersonFileForm(forms.ModelForm):
             'relation_type'
         ]
         widgets = {
-            'office': forms.Select(attrs={'class': 'form-control'}),
+            'person': forms.Select(attrs={'class': 'form-control'}),
             # 'file': forms.Select(attrs={'class': 'form-control'}),
             # 'file': forms.TextInput(attrs={'class': 'form-control'}),
             'relation_type': forms.Select(attrs={'class': 'form-control'}),

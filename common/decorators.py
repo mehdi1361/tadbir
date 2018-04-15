@@ -9,7 +9,7 @@ class employee_permission(object):
         self.permission = permission
 
     def __call__(self, f):
-        def wrapped_f(*args, file_id=None, emp_id=None, permission_id=None):
+        def wrapped_f(*args, file_id=None, emp_id=None, permission_id=None, person_id=None):
             request = args[0]
 
             if EmployeePermission.has_perm(request.user, self.permission):
@@ -21,6 +21,10 @@ class employee_permission(object):
 
                 elif permission_id:
                     return f(*args, permission_id)
+
+                elif person_id:
+                    return f(*args, person_id)
+
                 else:
                     return f(*args)
 

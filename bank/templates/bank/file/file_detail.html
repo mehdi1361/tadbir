@@ -222,6 +222,11 @@
                                                     <td>{{ forloop.counter }}</td>
                                                     <td><strong>{{ document.relation_type }}</strong></td>
                                                     <td>{{ document.person.name }}</td>
+                                                    <td>
+                                                        <div class="btn-group btn-group-xs">
+                                                            <a href="{% url "bank:file_detail_person_edit" document.person.id    %}" data-toggle="tooltip" title="مشاهده پرونده" class="btn btn-default"><i class="fa fa-edit"></i></a>
+                                                        </div>
+                                                    </td>
                                                 </tr>
                                             {% endfor %}
 										</tbody>
