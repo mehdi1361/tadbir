@@ -330,7 +330,7 @@ def new_person(request):
         form = PersonForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.add_message(request, messages.SUCCESS, 'کاربر با موفقیت ذخیره شد.')
+            messages.add_message(request, messages.SUCCESS, 'شخص حقیقی با موفقیت ذخیره شد.')
             form = PersonForm()
 
         else:

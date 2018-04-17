@@ -18,8 +18,8 @@ class Human(models.Model):
         ('زن', _('زن'))
     )
     name = models.CharField(_('نام و نام خانوادگی'), max_length=200, null=True)
-    father_name = models.CharField(_('نام پدر'), max_length=200, null=True)
-    national_code = models.CharField(_('کد ملی'), max_length=20, unique=True, null=True)
+    father_name = models.CharField(_('نام پدر'), max_length=200, null=True, blank=True)
+    national_code = models.CharField(_('کد ملی'), max_length=20, null=True, blank=True)
     gender = models.CharField(_('جنسیت'), max_length=20, choices=GENDER, null=True)
 
     class Meta:
