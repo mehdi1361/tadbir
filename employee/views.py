@@ -62,7 +62,7 @@ def dashboard(request):
     files_emp = EmployeeFile.objects.filter(employee=request.user).values_list('file', flat=True)
     follows = FollowUp.objects.filter(file__in=files_emp)[:8]
     reminders = FileReminder.objects.filter(file__in=files_emp).order_by('-created_at')[:10]
-    last_files = EmployeeFile.files.filter(employee=request.user).order_by('-created_at')[:10]
+    last_files = EmployeeFile.files.filter(employee=request.user).order_by('-created_at')
 
     return render(
         request,

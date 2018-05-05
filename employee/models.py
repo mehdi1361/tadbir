@@ -78,8 +78,8 @@ class Profile(Base, Human):
         permissions = (
             ('edit_profile', 'edit profile'),
         )
-        verbose_name = _('profile')
-        verbose_name_plural = _('profiles')
+        verbose_name = _('پروفایل')
+        verbose_name_plural = _('پروفایل کاربران')
         db_table = 'profiles'
 
     def __str__(self):
@@ -103,8 +103,8 @@ class FollowUp(Base):
             ('update_follow', 'update followup for file'),
             ('read_follow', 'read followup for file'),
         )
-        verbose_name = _('employee_file_folllow_up')
-        verbose_name_plural = _('employee_file_folllow_ups')
+        verbose_name = _('پیگیری کارشناس')
+        verbose_name_plural = _('پیگیری کارشناسان')
         db_table = 'employee_file_folllow_ups'
 
     def __str__(self):
@@ -128,8 +128,8 @@ class SmsCaution(Base):
 
     class Meta:
         unique_together = ('mobile_number', 'file', 'type')
-        verbose_name = _('employee_file_sms_caution')
-        verbose_name_plural = _('employee_file_sms_caution')
+        verbose_name = _('پیامک کارشناس')
+        verbose_name_plural = _('پیامک کارشناسان')
         db_table = 'employee_file_sms_caution'
 
     def __str__(self):

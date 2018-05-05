@@ -157,12 +157,13 @@ def file_list(request):
         person_file = PersonFile.objects.filter(person__name__contains=query).values_list('file__file_code', flat=True)
         office_files = FileOffice.objects.filter(office__name__contains=query).values_list('file__file_code', flat=True)
 
-        object_list = File.objects.filter(
+        object_list = File.ordered.filter(
             Q(file_code__contains=query) | Q(contract_code__contains=query)
             | Q(file_code__in=person_file) | Q(file_code__in=office_files)
         ).order_by('-created_at')
     else:
         object_list = File.objects.all().order_by('-created_at')
+
     paginator = Paginator(object_list, 15)
     page = request.GET.get('page')
 

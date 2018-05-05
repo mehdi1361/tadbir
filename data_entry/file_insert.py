@@ -15,11 +15,15 @@ def csv_reader(file_obj):
             if row[14] == '**':
                 state = 'در حال پیگیری'
 
-            if row[14] == '***':
+            elif row[14] == '***':
                 state = 'تسویه حساب'
 
-            if row[14] == 'ع':
+            elif row[14] == 'ع':
                 state = 'عودت'
+
+            else:
+                state = 'در حال پیگیری'
+
 
             try:
 

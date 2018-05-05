@@ -1,5 +1,6 @@
 {% extends 'bank/base.html' %}
 {% block breadcrumb %}
+{% load custom_math %}
     <ul class="breadcrumb">
         <li><a href="#">کارتابل</a> <span class="divider">/</span></li>
         <li><a href="{% url "main" %}">داشبورد</a> <span class="divider">/</span></li>
@@ -80,6 +81,7 @@
                                                     <td>
                                                         <a href="{% url "employee:employee_file_detail" employee_files.file.id %}">
                                                             {{ forloop.counter }}
+{#                                                            {% add page_number forloop.counter %}#}
                                                         </a>
                                                     </td>
                                                     <td><strong>{{ employee_files.file }}</strong></td>

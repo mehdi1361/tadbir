@@ -14,8 +14,8 @@ class Bank(Base):
 
     class Meta:
         ordering = ['name']
-        verbose_name = _('bank')
-        verbose_name_plural = _('banks')
+        verbose_name = _('بانک')
+        verbose_name_plural = _('بانک ها')
         db_table = 'banks'
 
     def __str__(self):
@@ -32,8 +32,8 @@ class ManagementAreas(Base, Location):
 
     class Meta:
         ordering = ['name']
-        verbose_name = _('bank')
-        verbose_name_plural = _('banks')
+        verbose_name = _('منطقه')
+        verbose_name_plural = _('مناطق')
         db_table = 'areas'
 
     def __str__(self):
@@ -52,8 +52,8 @@ class Branch(Base, Location):
 
     class Meta:
         ordering = ['name']
-        verbose_name = _('branch')
-        verbose_name_plural = _('branch')
+        verbose_name = _('شعبه')
+        verbose_name_plural = _('شعبات')
         db_table = 'branches'
 
     def __str__(self):
@@ -70,12 +70,17 @@ class FileType(Base):
     history = HistoricalRecords()
 
     class Meta:
-        verbose_name = _('file_types')
-        verbose_name_plural = _('file_types')
+        verbose_name = _('نوع پرونده')
+        verbose_name_plural = _('انواع پرونده')
         db_table = 'file_types'
 
     def __str__(self):
         return "{}".format(self.name)
+
+
+class OrderManager(models.Manager):
+    def get_queryset(self):
+        return super(OrderManager, self).get_queryset().order_by('-file_code')
 
 
 @python_2_unicode_compatible
@@ -117,12 +122,15 @@ class File(Base):
     # file_type = models.CharField(_('نوع قرارداد'), max_length=50, choices=TYPE, default='جعاله')
     file_type = models.ForeignKey(FileType, verbose_name=_('نوع پرونده'), null=True)
     states = models.CharField(_('وضعیت'), max_length=50, choices=STATE_TYPE, default='در حال پیگیری')
+
+    objects = models.Manager()
+    ordered = OrderManager()
     history = HistoricalRecords()
 
     class Meta:
         ordering = ['file_code']
-        verbose_name = _('file')
-        verbose_name_plural = _('files')
+        verbose_name = _('پرونده')
+        verbose_name_plural = _('پرونده ها')
         db_table = 'files'
 
     def __str__(self):
@@ -164,8 +172,8 @@ class Person(Base, Human):
 
     class Meta:
         ordering = ['name']
-        verbose_name = _('person')
-        verbose_name_plural = _('persons')
+        verbose_name = _('شخص حقیقی')
+        verbose_name_plural = _('اشخاص حقیقی')
         db_table = 'persons'
 
     def __str__(self):
@@ -181,8 +189,8 @@ class Office(Base, Location):
 
     class Meta:
         ordering = ['register_number']
-        verbose_name = _('person_office')
-        verbose_name_plural = _('person_offices')
+        verbose_name = _('شخص حقوقی')
+        verbose_name_plural = _('اشخاص حقیقی')
         db_table = 'person_offices'
 
     def __str__(self):
@@ -204,8 +212,8 @@ class FileOffice(Base):
 
     class Meta:
         unique_together = ['file', 'office']
-        verbose_name = _('file_office')
-        verbose_name_plural = _('file_offices')
+        verbose_name = _('فرد حقیقی پرونده')
+        verbose_name_plural = _('افراد حقیقی پرونده')
         db_table = 'file_offices'
 
     def __str__(self):
@@ -234,8 +242,8 @@ class PersonFile(Base):
 
     class Meta:
         unique_together = ['file', 'person']
-        verbose_name = _('person_file')
-        verbose_name_plural = _('person_files')
+        verbose_name = _('شخص حقیقی پرونده')
+        verbose_name_plural = _('اشخاص حقیقی پرونده')
         db_table = 'person_files'
 
     def __str__(self):
@@ -254,15 +262,15 @@ class Assurance(Base, Document):
     )
     file = models.ForeignKey(File, verbose_name=_('پرونده'), related_name='assurances', default=None)
     assurance_type = models.CharField(_('نوع وثیقه'), max_length=50, choices=TYPE, default='سفته')
-    assurance_number = models.CharField(_('شماره سند'), max_length=200, default=0)
+    # assurance_number = models.CharField(_('شماره سند'), max_length=200, default=0)
     assurance_date = models.CharField(_('تاریخ'), max_length=200, default='')
-    assurance_value = models.PositiveIntegerField(_('مبلغ'), default=0)
+    # assurance_value = models.PositiveIntegerField(_('مبلغ'), default=0)
     history = HistoricalRecords()
 
     class Meta:
-        unique_together = ['file', 'assurance_type','assurance_number']
-        verbose_name = _('assurance')
-        verbose_name_plural = _('assurances')
+        unique_together = ['file', 'assurance_type']
+        verbose_name = _('وثیقه')
+        verbose_name_plural = _('وثایق')
         db_table = 'assurances'
 
     def __str__(self):
@@ -277,8 +285,8 @@ class SmsType(Base):
     history = HistoricalRecords()
 
     class Meta:
-        verbose_name = _('sms_type')
-        verbose_name_plural = _('sms_types')
+        verbose_name = _('نوع پیامک')
+        verbose_name_plural = _('انواع پیامک')
         db_table = 'sms_types'
 
     def __str__(self):
