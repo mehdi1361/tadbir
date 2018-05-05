@@ -9,7 +9,7 @@ from simple_history.models import HistoricalRecords
 
 @python_2_unicode_compatible
 class Bank(Base):
-    name = models.CharField(_('bank name'), max_length=100, unique=True)
+    name = models.CharField(_('نام بانک'), max_length=100, unique=True)
     history = HistoricalRecords()
 
     class Meta:
@@ -66,7 +66,7 @@ class Branch(Base, Location):
 
 @python_2_unicode_compatible
 class FileType(Base):
-    name = models.CharField(_('نوع فایل'), max_length=100, null=True)
+    name = models.CharField(_('نوع پرونده'), max_length=100, null=True)
     history = HistoricalRecords()
 
     class Meta:
@@ -167,7 +167,7 @@ class File(Base):
 @python_2_unicode_compatible
 class Person(Base, Human):
     name = models.CharField(_('نام و نام خانوادگی'), max_length=200, unique=True, default='')
-    file = models.ManyToManyField(File, through='PersonFile', verbose_name=_('شخص'), related_name='persons')
+    file = models.ManyToManyField(File, through='PersonFile', verbose_name=_('پرونده'), related_name='persons')
     history = HistoricalRecords()
 
     class Meta:
