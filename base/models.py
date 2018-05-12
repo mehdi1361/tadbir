@@ -5,8 +5,8 @@ from django.utils.translation import ugettext_lazy as _
 
 
 class Base(models.Model):
-    created_at = models.DateTimeField(_('created date'), auto_now_add=True)
-    update_at = models.DateTimeField(_('updated date'), auto_now=True)
+    created_at = models.DateTimeField(_('تاریخ ایجاد'), auto_now_add=True)
+    update_at = models.DateTimeField(_('تاریخ بروزرسانی'), auto_now=True)
 
     class Meta:
         abstract = True

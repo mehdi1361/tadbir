@@ -133,8 +133,8 @@ def file_document(request, file_id):
             result_follow_form.save()
             messages.add_message(request, messages.SUCCESS, 'پیگیری با موفقیت ثبت شد.')
 
-        else:
-            messages.add_message(request, messages.ERROR, 'خطا در ثبت پیگیری')
+        # else:
+        #     messages.add_message(request, messages.ERROR, 'خطا در ثبت پیگیری')
 
         if phone_form.is_valid():
             try:

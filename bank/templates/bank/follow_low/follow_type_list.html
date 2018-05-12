@@ -1,0 +1,89 @@
+{% extends 'bank/base.html' %}
+{% block breadcrumb %}
+    <ul class="breadcrumb">
+        <li><a href="{% url "main" %}">داشبورد</a> <span class="divider">/</span></li>
+        <li><a href="#">پنل مدیریت</a> <span class="divider">/</span></li>
+        <li class="active">لیست اقدامات قانونی</li>
+    </ul>
+{% endblock %}
+{% block content %}
+    <ul>
+            <div class="row">
+                <div class="col-md-12 portlets ui-sortable">
+						<div class="widget">
+							<div class="widget-header">
+								<h2>ایجاد پیگیری جدید</h2>
+								<div class="additional-btn">
+									<a href="#" class="hidden reload"><i class="icon-ccw-1"></i></a>
+									<a href="#" class="widget-toggle"><i class="icon-down-open-2"></i></a>
+									<a href="#" class="widget-close"><i class="icon-cancel-3"></i></a>
+								</div>
+							</div>
+							<div class="widget-content padding" style="display: block;">
+                                    <form method="post" action="#" class="navbar-form pull-right">
+                                        <div class="input-group">
+                                          {{ form.type }}
+                                          <span class="input-group-btn">
+{#                                            <button class="btn btn-default" type="button">جستجو</button>#}
+                                              {% csrf_token %}
+                                            <input type="submit" class="btn btn-default" value="ایجاد" >
+                                          </span>
+                                        </div><!-- /input-group -->
+                                    </form>
+							</div>
+						</div>
+					</div>
+            </div>
+            <div class="row">
+					<div class="col-md-12">
+						<div class="widget">
+							<div class="widget-header transparent">
+								<h2><strong>فهرست اقدامات قانونی</strong> </h2>
+								<div class="additional-btn">
+									<a href="#" class="hidden reload"><i class="icon-ccw-1"></i></a>
+									<a href="#" class="widget-toggle"><i class="icon-down-open-2"></i></a>
+									<a href="#" class="widget-close"><i class="icon-cancel-3"></i></a>
+								</div>
+							</div>
+							<div class="widget-content">
+								<div class="table-responsive">
+									<table data-sortable="" class="table" data-sortable-initialized="true">
+										<thead>
+											<tr>
+												<th>شماره</th>
+												<th>شرح پیگیری قانونی</th>
+											</tr>
+										</thead>
+
+										<tbody>
+                                            {% for follow in follow_laws %}
+                                                <tr>
+                                                    <td>{{ forloop.counter }}</td>
+                                                    <td><strong>{{ follow.type }}</strong></td>
+                                                </tr>
+                                            {% endfor %}
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+{#            <div class="row">#}
+{#					<div class="col-md-12 portlets ui-sortable">#}
+{#						<div class="widget">#}
+{#							<div class="widget-header transparent">#}
+{#								<h2><strong>نمودارهای تعاملی</strong></h2>#}
+{#								<div class="additional-btn">#}
+{#									<a href="#" class="hidden reload"><i class="icon-ccw-1"></i></a>#}
+{#									<a href="#" class="widget-toggle"><i class="icon-down-open-2"></i></a>#}
+{#									<a href="#" class="widget-close"><i class="icon-cancel-3"></i></a>#}
+{#								</div>#}
+{#							</div>#}
+{#                            <div class="widget-content">#}
+{#                            </div>#}
+{#						</div>#}
+{#					</div>#}
+{#				</div>#}
+    </ul>
+{% endblock %}

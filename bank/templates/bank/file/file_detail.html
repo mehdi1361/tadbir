@@ -164,6 +164,9 @@
                 <li class="">
                     <a href="#demo5-dropdown5" data-toggle="tab">تخصیص</a>
                 </li>
+                <li class="">
+                    <a href="#demo5-dropdown6" data-toggle="tab">تخصیص وکیل</a>
+                </li>
             </ul>
 
             <div class="tab-content">
@@ -752,6 +755,61 @@
 								</div>
                     </div>
                 </div>
+                <div class="tab-pane fade" id="demo5-dropdown6">
+                    <div class="widget-content">
+                        <button data-modal="md-newspaper6" onclick="on()"  class="btn btn-default btn-sm md-trigger">وکیل جدید</button>
+                         <div class="md-modal md-newspaper" id="md-newspaper6">
+                         <div class="md-content">
+                            <h3>ثبت وکیل</h3>
+                            <div>
+                                <p style="text-align:justify">
+                                    <form class="form-horizontal" role="form" action="" method="post">
+                                      <div class="form-group">
+                                        <label for="input-text" class="col-sm-3 control-label">
+                                            {{ lawyer_form.lawyer.label }}
+                                        </label>
+                                        <div class="col-sm-10">
+                                            {{ lawyer_form.lawyer }}
+                                        </div>
+                                      </div>
+                                      <div class="col-lg-12">
+                                            {% csrf_token %}
+                                            <input type="submit" value="ایجاد" onclick="off()" class="btn btn-success">
+                                            <a href="#" onclick="off()" class="btn btn-danger md-close">بستن</a>
+                                        </div>
+                                        <hr>
+                                    </form>
+                                </p>
+                            </div>
+                        </div><!-- End div .md-content -->
+		            </div>
+                        <div class="table-responsive">
+										<table data-sortable="" class="table" data-sortable-initialized="true">
+										<thead>
+											<tr>
+												<th>شماره</th>
+												<th>نام وکیل</th>
+												<th>فعال</th>
+											</tr>
+										</thead>
+
+										<tbody>
+                                            {% for lawyer in file.lawyers.all %}
+                                                <tr>
+                                                    <td>{{ forloop.counter }}</td>
+                                                    <td><strong>{{ lawyer.lawyer }}</strong></td>
+                                                    <td><strong>{{ lawyer.enable }}</strong></td>
+                                                </tr>
+                                            {% endfor %}
+										</tbody>
+									</table>
+								</div>
+                        {% for form in law_formset %}
+                            {{ form.as.table }}
+                        {% endfor %}
+                    </div>
+                </div>
+
 
             </div> <!-- / .tab-content -->
 

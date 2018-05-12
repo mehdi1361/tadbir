@@ -1,0 +1,109 @@
+{% extends 'bank/base.html' %}
+{% block breadcrumb %}
+    <ul class="breadcrumb">
+        <li><a href="{% url "main" %}">داشبورد</a> <span class="divider">/</span></li>
+        <li><a href="#">تنظیمات</a> <span class="divider">/</span></li>
+        <li class="active">لیست اشخاص حقیقی</li>
+    </ul>
+{% endblock %}
+{% block content %}
+    <ul>
+            <div class="row">
+                <div class="col-md-12 portlets ui-sortable">
+						<div class="widget">
+							<div class="widget-header">
+								<h2>جستجو</h2>
+								<div class="additional-btn">
+									<a href="#" class="hidden reload"><i class="icon-ccw-1"></i></a>
+									<a href="#" class="widget-toggle"><i class="icon-down-open-2"></i></a>
+									<a href="#" class="widget-close"><i class="icon-cancel-3"></i></a>
+								</div>
+							</div>
+							<div class="widget-content padding" style="display: block;">
+                                <p> نام وکیل را وارد نمایید.</p>
+                                    <form method="post" action="#" class="navbar-form pull-right">
+                                        <div class="input-group">
+                                          <input class="form-control" type="text" id="searchBox"  name="q" placeholder=" نام و نام خانوادگی وکیل">
+                                          <span class="input-group-btn">
+{#                                            <button class="btn btn-default" type="button">جستجو</button>#}
+                                              {% csrf_token %}
+                                            <input type="submit" class="btn btn-default" value="جستجو" >
+                                          </span>
+                                        </div><!-- /input-group -->
+                                    </form>
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+								<a href="{% url "bank:new_lawyer" %}" class="btn btn-success">وکیل جدید</a>
+							</div>
+						</div>
+					</div>
+            </div>
+            <div class="row">
+					<div class="col-md-12">
+						<div class="widget">
+							<div class="widget-header transparent">
+								<h2><strong>فهرست وکلا</strong> </h2>
+								<div class="additional-btn">
+									<a href="#" class="hidden reload"><i class="icon-ccw-1"></i></a>
+									<a href="#" class="widget-toggle"><i class="icon-down-open-2"></i></a>
+									<a href="#" class="widget-close"><i class="icon-cancel-3"></i></a>
+								</div>
+							</div>
+							<div class="widget-content">
+								<div class="table-responsive">
+									<table data-sortable="" class="table" data-sortable-initialized="true">
+										<thead>
+											<tr>
+												<th>شماره</th>
+												<th>نام و نام خانوادگی</th>
+												<th>نام پدر</th>
+												<th>کد ملی</th>
+												<th>شماره همراه</th>
+												<th data-sortable="false">جنسیت</th>
+											</tr>
+										</thead>
+
+										<tbody>
+                                            {% for lawyer in lawyers %}
+                                                <tr>
+                                                    <td>{{ forloop.counter }}</td>
+                                                    <td><strong>{{ lawyer.name }}</strong></td>
+                                                    <td>{{ lawyer.father_name }}</td>
+                                                    <td>{{ lawyer.national_code }}</td>
+                                                    <td>{{ lawyer.mobile_number }}</td>
+                                                    <td>{{ lawyer.gender }}</td>
+                                                    <td>
+                                                        <div class="btn-group btn-group-xs">
+                                                            <a data-toggle="tooltip" title="خاموش" class="btn btn-default"><i class="fa fa-power-off"></i></a>
+{#                                                            <a href="{% url "bank:edit_area" area.id %}" data-toggle="tooltip" title="ویرایش" class="btn btn-default"><i class="fa fa-edit"></i></a>#}
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+{#            <div class="row">#}
+{#					<div class="col-md-12 portlets ui-sortable">#}
+{#						<div class="widget">#}
+{#							<div class="widget-header transparent">#}
+{#								<h2><strong>نمودارهای تعاملی</strong></h2>#}
+{#								<div class="additional-btn">#}
+{#									<a href="#" class="hidden reload"><i class="icon-ccw-1"></i></a>#}
+{#									<a href="#" class="widget-toggle"><i class="icon-down-open-2"></i></a>#}
+{#									<a href="#" class="widget-close"><i class="icon-cancel-3"></i></a>#}
+{#								</div>#}
+{#							</div>#}
+{#                            <div class="widget-content">#}
+{#                            </div>#}
+{#						</div>#}
+{#					</div>#}
+{#				</div>#}
+    </ul>
+{% endblock %}

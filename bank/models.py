@@ -5,6 +5,7 @@ from base.models import Base, Location, Human, Document
 from states.models import City, State
 from django.utils.encoding import python_2_unicode_compatible
 from simple_history.models import HistoricalRecords
+from django.db.models import signals
 
 
 @python_2_unicode_compatible
@@ -291,3 +292,88 @@ class SmsType(Base):
 
     def __str__(self):
         return "{}".format(self.subject)
+
+
+@python_2_unicode_compatible
+class Lawyer(Base, Human):
+    mobile_number = models.CharField(_('شماره همراه'), max_length=15, null=True, blank=True)
+
+    class Meta:
+        verbose_name = _('وکیل')
+        verbose_name_plural = _('وکلا')
+        db_table = 'lawyers'
+
+    def __str__(self):
+        return "{}".format(self.name)
+
+
+@python_2_unicode_compatible
+class LawyerFile(Base):
+    file = models.ForeignKey(File, verbose_name=_('پرونده'), related_name='lawyers')
+    lawyer = models.ForeignKey(Lawyer, verbose_name=_('وکیل'), related_name='files')
+    enable = models.BooleanField(_('فعال'), default=True)
+    history = HistoricalRecords()
+
+    objects = models.Manager()
+    main_debtor = MainDebtor()
+
+    class Meta:
+        unique_together = ['file', 'lawyer']
+        verbose_name = _('تخصیص وکیل')
+        verbose_name_plural = _('اشخاص حقیقی پرونده')
+        db_table = 'lawyer_files'
+
+    @classmethod
+    def update_lawyer_file(cls, file, enable=False):
+        cls.objects.filter(file=file).update(enable=enable)
+
+    def __str__(self):
+        return "{}-{}".format(self.file.file_code, self.lawyer.name)
+
+    def save(self, *args, **kwargs):
+        LawyerFile.update_lawyer_file(self.file)
+        super(LawyerFile, self).save()
+
+
+@python_2_unicode_compatible
+class FollowLawType(Base):
+    type = models.CharField(_('نوع پیگیری'), max_length=100)
+
+    class Meta:
+        verbose_name = _('پیگیری حقوقی')
+        verbose_name_plural = _('پیگیری های حقوقی')
+        db_table = 'follow_low_type'
+
+    def __str__(self):
+        return "{}".format(self.type)
+
+
+@python_2_unicode_compatible
+class FollowInLowFile(Base):
+    file = models.ForeignKey(File, verbose_name=_('پرونده'))
+    follow = models.ForeignKey(FollowLawType, verbose_name=_('پیگیری'))
+    enable = models.BooleanField(_('فعال'), default=False)
+
+    class Meta:
+        verbose_name = _('پیگیری حقوقی پرونده')
+        verbose_name_plural = _('پیگیری های حقوقی پرونده')
+        db_table = 'follow_low_file'
+
+    def __str__(self):
+        return "{}".format(self.follow.type)
+
+
+def new_follow_law_type(sender, instance, created, **kwargs):
+    if created:
+        for file in File.objects.all():
+            FollowInLowFile.objects.create(file=file, follow=instance)
+
+
+def new_file_created(sender, instance, created, **kwargs):
+    if created:
+        for follow in FollowLawType.objects.all():
+            FollowInLowFile.objects.create(file=instance, follow=follow)
+
+
+# signals.post_save(new_follow_law_type, sender=FollowLawType)
+# signals.post_save(new_file_created, sender=File)

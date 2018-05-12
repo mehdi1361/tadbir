@@ -7,11 +7,11 @@ from django.urls import reverse
 
 from employee.forms import PhoneFileForm, AddressForm, DocumentForm
 from employee.models import EmployeePermission
-from .models import Bank, ManagementAreas, Branch, File, Person, Office, SmsType, PersonFile, FileOffice
+from .models import Bank, ManagementAreas, Branch, File, Person, Office, SmsType, PersonFile, FileOffice, Lawyer, \
+    FollowLawType, FollowInLowFile
 from django.views.generic import ListView
-from .forms import BankForm, AreaForm, BranchForm, FileForm, \
-    PersonForm, AssuranceForm, PersonFileForm, FileOfficeForm, SmsTypeForm, EmployeeFileForm, PersonOfficeForm, \
-    OfficeForm
+from .forms import BankForm, AreaForm, BranchForm, FileForm, PersonForm, AssuranceForm, PersonFileForm, FileOfficeForm, \
+    SmsTypeForm, EmployeeFileForm, PersonOfficeForm, OfficeForm, LawyerForm, LawyerFileForm, FollowLawTypeForm
 from django.shortcuts import get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from dal import autocomplete
@@ -21,6 +21,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User, Permission
 from common.decorators import employee_permission
 from common.utils import normalize_data
+from django.forms import inlineformset_factory
 
 
 # from django.contrib.auth import authenticate, login
@@ -114,7 +115,7 @@ class BranchListView(LoginRequiredMixin, ListView):
     login_url = '/employee/login/'
     queryset = Branch.objects.all()
     context_object_name = 'branches'
-    paginate_by = 10
+    # paginate_by = 10
     template_name = 'bank/branch/list.html'
 
 
@@ -209,6 +210,10 @@ def new_file(request):
 @employee_permission('file_new')
 def file_document(request, file_id):
     file = get_object_or_404(File, pk=file_id)
+    follow_law_formset = inlineformset_factory(File, FollowInLowFile, fields=('enable', 'follow'))
+
+    formset = follow_law_formset(instance=file)
+    print(formset)
     if request.method == 'POST':
         person_form = PersonFileForm(request.POST)
         person_office = FileOfficeForm(request.POST)
@@ -218,6 +223,7 @@ def file_document(request, file_id):
         address_form = AddressForm(request.POST)
         document_form = DocumentForm(request.POST, request.FILES or None)
         employee_file_form = EmployeeFileForm(request.POST)
+        lawyer_form = LawyerFileForm(request.POST)
 
         if person_form.is_valid():
             new_person_file = person_form.save(commit=False)
@@ -278,6 +284,11 @@ def file_document(request, file_id):
         else:
             print(employee_file_form.errors)
 
+        if lawyer_form.is_valid():
+            result_lawyer = lawyer_form.save(commit=False)
+            result_lawyer.file = file
+            result_lawyer.save()
+
     person_form = PersonFileForm()
     person_office = FileOfficeForm()
     assurance_form = AssuranceForm()
@@ -286,6 +297,7 @@ def file_document(request, file_id):
     address_form = AddressForm()
     document_form = DocumentForm()
     employee_file_form = EmployeeFileForm()
+    lawyer_form = LawyerFileForm()
 
     return render(
         request,
@@ -298,7 +310,9 @@ def file_document(request, file_id):
             'phone_form': phone_form,
             'address_form': address_form,
             'document_form': document_form,
-            'employee_file_form': employee_file_form
+            'lawyer_form': lawyer_form,
+            'employee_file_form': employee_file_form,
+            'law_formset': formset
         }
     )
 
@@ -489,3 +503,64 @@ def edit_person_detail(request, person_id):
         person_form = PersonFileForm(instance=person)
 
     return render(request, 'bank/file/edit_person.html', {'form': person_form})
+
+
+@login_required(login_url='/employee/login/')
+def get_lawyers(request):
+    query = request.POST.get('q')
+    if query:
+        normalize_data(query)
+        object_list = Lawyer.objects.filter(name__contains=query).order_by('-created_at')
+    else:
+        object_list = Lawyer.objects.all().order_by('-created_at')
+
+    paginator = Paginator(object_list, 15)
+    page = request.GET.get('page')
+
+    try:
+        lawyers = paginator.page(page)
+
+    except PageNotAnInteger:
+        lawyers = paginator.page(1)
+
+    except EmptyPage:
+        lawyers = paginator.page(paginator.num_pages)
+
+    return render(request, 'bank/lawyer/list.html', {'lawyers': lawyers, 'page': page})
+
+
+@login_required(login_url='/employee/login/')
+@employee_permission('file_new')
+def new_lawyer(request):
+    if request.method == 'POST':
+        form = LawyerForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect(reverse('bank:get_lawyers'))
+        else:
+            print(form.errors)
+
+    form = LawyerForm()
+
+    return render(request, 'bank/lawyer/new.html', {'form': form})
+
+
+@login_required(login_url='/employee/login/')
+@employee_permission('file_new')
+def follow_law(request):
+    if request.method == 'POST':
+        form = FollowLawTypeForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect(reverse('bank:follow_in_law'))
+        else:
+            print(form.errors)
+
+    form = FollowLawTypeForm()
+    follow_laws = FollowLawType.objects.all()
+
+    return render(request, 'bank/follow_low/follow_type_list.html',
+                  {
+                      'form': form,
+                      'follow_laws': follow_laws
+                   })

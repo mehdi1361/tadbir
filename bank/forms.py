@@ -2,7 +2,7 @@ from django import forms
 
 from employee.models import EmployeeFile
 from .models import Bank, ManagementAreas, Branch, \
-    File, Assurance, PersonFile, Person, Office, FileOffice, SmsType
+    File, Assurance, PersonFile, Person, Office, FileOffice, SmsType, Lawyer, LawyerFile, FollowLawType, FollowInLowFile
 
 from dal import autocomplete
 from django.forms.models import inlineformset_factory
@@ -222,5 +222,63 @@ class PersonOfficeForm(forms.ModelForm):
             'relation_type': forms.Select(attrs={'class': 'form-control'}),
             'description': forms.Select(attrs={'class': 'form-control'})
         }
+
+
+class LawyerForm(forms.ModelForm):
+    class Meta:
+        model = Lawyer
+
+        fields = [
+            'name',
+            'father_name',
+            'mobile_number',
+            'national_code',
+            'gender'
+        ]
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'father_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'mobile_number': forms.TextInput(attrs={'class': 'form-control'}),
+            'national_code': forms.TextInput(attrs={'class': 'form-control'}),
+            'gender': forms.Select(attrs={'class': 'form-control'}),
+        }
+
+
+class LawyerFileForm(forms.ModelForm):
+    class Meta:
+        model = LawyerFile
+        fields = [
+            'lawyer'
+        ]
+        widgets = {
+            # 'file': forms.Select(attrs={'class': 'form-control'}),
+            'lawyer': forms.Select(attrs={'class': 'form-control'}),
+        }
+
+
+class FollowLawTypeForm(forms.ModelForm):
+    class Meta:
+        model = FollowLawType
+        fields = [
+            'type'
+        ]
+        widgets = {
+            # 'file': forms.Select(attrs={'class': 'form-control'}),
+            'type': forms.TextInput(attrs={'class': 'form-control'})
+        }
+
+
+class FollowInLowFileForm(forms.ModelForm):
+    class Meta:
+        model = FollowInLowFile
+        fields = [
+            'follow',
+            'enable'
+        ]
+        widgets = {
+            # 'file': forms.Select(attrs={'class': 'form-control'}),
+            'follow': forms.TextInput(attrs={'class': 'form-control', 'readonly':'readonly'})
+        }
+
 
 inlineformset_factory(Person, PersonFile, form=PersonFileForm, extra=2)
