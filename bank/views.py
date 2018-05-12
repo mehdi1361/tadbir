@@ -213,7 +213,6 @@ def file_document(request, file_id):
     follow_law_formset = inlineformset_factory(File, FollowInLowFile, fields=('enable', 'follow'))
 
     formset = follow_law_formset(instance=file)
-    print(formset)
     if request.method == 'POST':
         person_form = PersonFileForm(request.POST)
         person_office = FileOfficeForm(request.POST)
