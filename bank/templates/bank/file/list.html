@@ -27,19 +27,25 @@
 									<a href="#" class="widget-close"><i class="icon-cancel-3"></i></a>
 								</div>
 							</div>
-							<div class="widget-content padding" style="display: block;">
-                                    <p>شماره قرارداد یا شماره پرونده یا نام مدیون را وارد نمایید.</p>
-                                    <form method="post" action="#" class="navbar-form pull-right">
-                                        <div class="input-group">
-                                          <input class="form-control" type="text" id="searchBox"  name="q" placeholder="شماره قرارداد یا شماره پرونده یا نام و نام خانوادگی مدیون">
-                                          <span class="input-group-btn">
-{#                                            <button class="btn btn-default" type="button">جستجو</button>#}
-                                              {% csrf_token %}
-                                            <input type="submit" class="btn btn-default" value="جستجو" >
-                                          </span>
-                                        </div><!-- /input-group -->
-                                    </form>
-							</div>
+
+                            <div class="widget-content padding" style="display: block;">
+
+                                <form method="post" action="#" >
+                                    <div class="input-group">
+                                      {{ form.text }}
+                                      <span class="input-group-btn">
+                                          {% csrf_token %}
+                                        <input type="submit" class="btn btn-default" value="جستجو" >
+                                      </span>
+                                    </div><!-- /input-group -->
+                                    <br>
+                                    <div style="padding: 5px"><span style="padding: 5px">{{ form.name }}</span><span>{{ form.name.label }}</span></div>
+                                    <div style="padding: 5px"><span style="padding: 5px">{{ form.file_code }}</span><span>{{ form.file_code.label }}</span></div>
+                                    <div style="padding: 5px"><span style="padding: 5px">{{ form.contract_code }}</span><span>{{ form.contract_code.label }}</span></div>
+                                </form>
+                            </div>
+
+
 						</div>
 					</div>
             </div>

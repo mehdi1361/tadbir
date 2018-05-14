@@ -11,7 +11,8 @@ from .models import Bank, ManagementAreas, Branch, File, Person, Office, SmsType
     FollowLawType, FollowInLowFile
 from django.views.generic import ListView
 from .forms import BankForm, AreaForm, BranchForm, FileForm, PersonForm, AssuranceForm, PersonFileForm, FileOfficeForm, \
-    SmsTypeForm, EmployeeFileForm, PersonOfficeForm, OfficeForm, LawyerForm, LawyerFileForm, FollowLawTypeForm
+    SmsTypeForm, EmployeeFileForm, PersonOfficeForm, OfficeForm, LawyerForm, LawyerFileForm, FollowLawTypeForm, \
+    SearchForm
 from django.shortcuts import get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from dal import autocomplete
@@ -152,18 +153,35 @@ def edit_branch(request, branch_id):
 @login_required(login_url='/employee/login/')
 @employee_permission('file_list')
 def file_list(request):
-    query = request.POST.get('q')
-    if query:
-        query = normalize_data(query)
-        person_file = PersonFile.objects.filter(person__name__contains=query).values_list('file__file_code', flat=True)
-        office_files = FileOffice.objects.filter(office__name__contains=query).values_list('file__file_code', flat=True)
+    object_list = File.ordered.all()
+    if request.method == 'POST':
+        form = SearchForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            query = cd['text']
+            query = normalize_data(query)
 
-        object_list = File.ordered.filter(
-            Q(file_code__contains=query) | Q(contract_code__contains=query)
-            | Q(file_code__in=person_file) | Q(file_code__in=office_files)
-        ).order_by('-created_at')
-    else:
-        object_list = File.objects.all().order_by('-created_at')
+            if cd['name']:
+                person_file = PersonFile.objects.filter(
+                    person__name__contains=query).values_list('file__file_code', flat=True)
+                office_files = FileOffice.objects.filter(
+                    office__name__contains=query).values_list('file__file_code', flat=True)
+
+                object_list |= object_list.filter(
+                    Q(file_code__in=person_file) | Q(file_code__in=office_files)
+                )
+
+            if cd['file_code']:
+                object_list |= object_list.filter(
+                    Q(file_code__contains=query)
+                )
+
+            if cd['contract_code']:
+                object_list |= object_list.filter(
+                    Q(contract_code__contains=query)
+                )
+
+    form = SearchForm()
 
     paginator = Paginator(object_list, 15)
     page = request.GET.get('page')
@@ -177,7 +195,7 @@ def file_list(request):
     except EmptyPage:
         files = paginator.page(paginator.num_pages)
 
-    return render(request, 'bank/file/list.html', {'files': files, 'page': page})
+    return render(request, 'bank/file/list.html', {'files': files, 'page': page, 'form': form})
 
 
 class BranchAutoComplete(autocomplete.Select2QuerySetView):
@@ -562,4 +580,4 @@ def follow_law(request):
                   {
                       'form': form,
                       'follow_laws': follow_laws
-                   })
+                  })

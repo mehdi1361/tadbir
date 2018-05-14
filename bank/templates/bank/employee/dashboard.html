@@ -1,5 +1,6 @@
 {% extends 'bank/base.html' %}
 {%  load staticfiles %}
+{% load custom_math %}
 
 {% block content %}
     <script>
@@ -235,14 +236,14 @@
 
                 <div class="text-box">
                     <p class="maindata"><b>تعداد پرونده ها</b></p>
-                    <h2>25,153</h2>
+                    <h2>{% count_files user %}</h2>
                     <div class="clearfix"></div>
                 </div>
             </div>
             <div class="widget-footer">
                 <div class="row">
                     <div class="col-sm-12">
-                        <i class="fa fa-caret-up rel-change"></i> <b>39%</b>
+                        <i class="fa fa-caret-up rel-change"></i> <b></b>
                         کل پرونده ها
                     </div>
                 </div>
@@ -256,7 +257,7 @@
             <div class="widget-content padding">
                 <div class="text-box">
                     <p class="maindata"><b>مبلغ پرونده ها</b></p>
-                    <h2>6,399</h2>
+                    <h2>{% sum_main_deposit user %}</h2>
 
                     <div class="clearfix"></div>
                 </div>
@@ -264,7 +265,7 @@
             <div class="widget-footer">
                 <div class="row">
                     <div class="col-sm-12">
-                        <i class="fa fa-caret-down rel-change"></i> <b>11%</b> وصول در ماه جاری
+                        <i class="fa fa-caret-down rel-change"></i> مبلغ
                     </div>
                 </div>
                 <div class="clearfix"></div>
@@ -277,14 +278,14 @@
             <div class="widget-content padding">
                 <div class="text-box">
                     <p class="maindata"><b>تعداد پرونده های وصولی</b></p>
-                    <h2>70,389</h2>
+                    <h2>0</h2>
                     <div class="clearfix"></div>
                 </div>
             </div>
             <div class="widget-footer">
                 <div class="row">
                     <div class="col-sm-12">
-                        <i class="fa fa-caret-down rel-change"></i> <b>7%</b>
+                        <i class="fa fa-caret-down rel-change"></i> <b>0%</b>
                     </div>
                 </div>
                 <div class="clearfix"></div>
@@ -297,14 +298,14 @@
             <div class="widget-content padding">
                 <div class="text-box">
                     <p class="maindata"><b>جمع مبلغ وصولی</b></p>
-                    <h2>18,648</h2>
+                    <h2>0</h2>
                     <div class="clearfix"></div>
                 </div>
             </div>
             <div class="widget-footer">
                 <div class="row">
                     <div class="col-sm-12">
-                        <i class="fa fa-caret-up rel-change"></i> <b>6%</b> در ماه جاری
+                        <i class="fa fa-caret-up rel-change"></i> <b>0%</b> در ماه جاری
                     </div>
                 </div>
                 <div class="clearfix"></div>

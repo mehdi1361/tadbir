@@ -70,7 +70,8 @@ def dashboard(request):
         {
             'follows': follows,
             'reminders': reminders,
-            'files': last_files
+            'files': last_files,
+            'user': request.user
         }
     )
 

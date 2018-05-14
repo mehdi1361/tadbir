@@ -4,7 +4,6 @@ from employee.models import EmployeeFile
 from .models import Bank, ManagementAreas, Branch, \
     File, Assurance, PersonFile, Person, Office, FileOffice, SmsType, Lawyer, LawyerFile, FollowLawType, FollowInLowFile
 
-from dal import autocomplete
 from django.forms.models import inlineformset_factory
 
 
@@ -279,6 +278,13 @@ class FollowInLowFileForm(forms.ModelForm):
             # 'file': forms.Select(attrs={'class': 'form-control'}),
             'follow': forms.TextInput(attrs={'class': 'form-control', 'readonly':'readonly'})
         }
+
+
+class SearchForm(forms.Form):
+    text = forms.CharField(required=False, max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    file_code = forms.BooleanField(label='شماره پرونده', initial=False, required=False)
+    contract_code = forms.BooleanField(label='شماره قرارداد', initial=False, required=False)
+    name = forms.BooleanField(label='نام مدیون', initial=False, required=False)
 
 
 inlineformset_factory(Person, PersonFile, form=PersonFileForm, extra=2)

@@ -81,7 +81,7 @@ class FileType(Base):
 
 class OrderManager(models.Manager):
     def get_queryset(self):
-        return super(OrderManager, self).get_queryset().order_by('-file_code')
+        return super(OrderManager, self).get_queryset().order_by('-created_at')
 
 
 @python_2_unicode_compatible
