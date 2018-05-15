@@ -161,27 +161,55 @@ def file_list(request):
             query = cd['text']
             query = normalize_data(query)
 
-            if cd['name']:
-                person_file = PersonFile.objects.filter(
-                    person__name__contains=query).values_list('file__file_code', flat=True)
-                office_files = FileOffice.objects.filter(
-                    office__name__contains=query).values_list('file__file_code', flat=True)
+            person_file = PersonFile.objects.filter(
+                person__name__contains=query).values_list('file__file_code', flat=True)
 
-                object_list |= object_list.filter(
-                    Q(file_code__in=person_file) | Q(file_code__in=office_files)
-                )
+            office_files = FileOffice.objects.filter(
+                office__name__contains=query).values_list('file__file_code', flat=True)
 
-            if cd['file_code']:
-                object_list |= object_list.filter(
-                    Q(file_code__contains=query)
-                )
+            if cd['name'] and cd['file_code'] and cd['contract_code']:
+                object_list = File.ordered.filter(
+                    Q(file_code__contains=query) | Q(contract_code__contains=query)
+                    | Q(file_code__in=person_file) | Q(file_code__in=office_files)
+                ).order_by('-created_at')
 
-            if cd['contract_code']:
-                object_list |= object_list.filter(
-                    Q(contract_code__contains=query)
-                )
+            elif cd['name'] and cd['file_code'] and not cd['contract_code']:
+                object_list = File.ordered.filter(
+                    Q(file_code__contains=query) | Q(file_code__in=person_file) |
+                    Q(file_code__in=office_files)
+                ).order_by('-created_at')
 
-    form = SearchForm()
+            elif cd['name'] and not cd['file_code'] and cd['contract_code']:
+                object_list = File.ordered.filter(
+                    Q(contract_code__contains=query) | Q(file_code__in=person_file) |
+                    Q(file_code__in=office_files)
+                ).order_by('-created_at')
+
+            elif cd['name'] and not cd['file_code'] and not cd['contract_code']:
+                object_list = File.ordered.filter(Q(file_code__in=person_file) | Q(file_code__in=office_files)
+                                                  ).order_by('-created_at')
+
+            elif not cd['name'] and cd['file_code'] and cd['contract_code']:
+                object_list = File.ordered.filter(Q(contract_code__contains=query)
+                                                  | Q(file_code__in=person_file)).order_by('-created_at')
+
+            elif not cd['name'] and cd['file_code'] and not cd['contract_code']:
+                object_list = File.ordered.filter(file_code__contains=query).order_by('-created_at')
+
+            elif not cd['name'] and not cd['file_code'] and cd['contract_code']:
+                object_list = File.ordered.filter(contract_code__contains=query).order_by('-created_at')
+
+            else:
+                object_list = File.ordered.all()
+                form = SearchForm()
+
+        else:
+            object_list = File.ordered.all()
+            form = SearchForm()
+
+    else:
+        object_list = File.ordered.all()
+        form = SearchForm()
 
     paginator = Paginator(object_list, 15)
     page = request.GET.get('page')
