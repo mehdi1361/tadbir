@@ -27,7 +27,97 @@
 					</div>
 
 				</div>
-    <div class="row">
+    <div class="widget">
+        <div class="widget-header">
+            <h2>جزییات</h2>
+            <div class="additional-btn">
+                <a href="#" class="hidden reload"><i class="icon-ccw-1"></i></a>
+                <a href="#" class="widget-toggle"><i class="icon-down-open-2"></i></a>
+                <a href="#" class="widget-close"><i class="icon-cancel-3"></i></a>
+            </div>
+        </div>
+        <div class="widget-content padding">
+            <ul id="demo5" class="nav nav-tabs nav-simple">
+                <li class="active">
+                    <a href="#demo5-home" data-toggle="tab">پروفایل کاربر</a>
+                </li>
+                <li class="">
+                    <a href="#demo5-profile" data-toggle="tab">دسترسی نرم افزار</a>
+                </li>
+                <li class="">
+                    <a href="#demo5-dropdown1" data-toggle="tab">دسترسی سرپرستی</a>
+                </li>
+            </ul>
+
+            <div class="tab-content">
+                <div class="tab-pane fade active in" id="demo5-home">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form class="form-horizontal" role="form" action="" method="post">
+						  <div class="form-group">
+							<label for="input-text" class="col-sm-2 control-label">
+                                {{ profile_form.name.label }}
+                            </label>
+							<div class="col-sm-10">
+                                {{ profile_form.name }}
+							</div>
+						  </div>
+
+                          <div class="form-group">
+							<label for="input-text" class="col-sm-2 control-label">{{ profile_form.father_name.label }}</label>
+							<div class="col-sm-10">
+                                {{ profile_form.father_name }}
+							</div>
+						  </div>
+                          <div class="form-group">
+							<label for="input-text" class="col-sm-2 control-label">{{ profile_form.national_code.label }}</label>
+							<div class="col-sm-10">
+                                {{ profile_form.national_code }}
+							</div>
+						  </div>
+                          <div class="form-group">
+							<label for="input-text" class="col-sm-2 control-label">
+                                {{ profile_form.gender.label }}
+                            </label>
+							<div class="col-sm-10">
+                                {{ profile_form.gender }}
+							</div>
+						  </div>
+                          <div class="form-group">
+							<label for="input-text" class="col-sm-2 control-label">
+                                {{ profile_form.certificate.label }}
+                            </label>
+							<div class="col-sm-10">
+                                {{ profile_form.certificate }}
+							</div>
+						  </div>
+                          <div class="form-group">
+							<label for="input-text" class="col-sm-2 control-label">
+                                {{ profile_form.employee_post.label }}
+                            </label>
+							<div class="col-sm-10">
+                                {{ profile_form.employee_post }}
+							</div>
+						  </div>
+                          <div class="form-group">
+							<label for="input-text" class="col-sm-2 control-label">
+                                {{ profile_form.profile_image.label }}
+                            </label>
+							<div class="col-sm-10">
+                                {{ profile_form.profile_image }}
+							</div>
+						  </div>
+                            <div class="col-lg-12">
+                                {% csrf_token %}
+                                <input type="submit" value="ایجاد" class="btn btn-success">
+                            </div>
+                            <hr>
+						</form>
+                        </div>
+                    </div>
+                </div> <!-- / .tab-pane -->
+                <div class="tab-pane fade" id="demo5-profile">
+                   <div class="row">
 					<div class="col-md-12">
 						<div class="widget">
 							<div class="widget-header transparent">
@@ -81,6 +171,63 @@
 						</div>
 					</div>
 				</div>
+                </div> <!-- / .tab-pane -->
+                <div class="tab-pane fade" id="demo5-dropdown1">
+                    <div class="row">
+        <div class="col-md-12">
+            <div class="widget">
+                <div class="widget-header transparent">
+                    <div class="additional-btn">
+                        <a href="#" class="hidden reload"><i class="icon-ccw-1"></i></a>
+                        <a href="#" class="widget-toggle"><i class="icon-down-open-2"></i></a>
+                        <a href="#" class="widget-close"><i class="icon-cancel-3"></i></a>
+                    </div>
+                </div>
+                <div class="widget-content padding">
+                    <form class="form-horizontal" role="form"  method="post">
+							<label for="input-group">نام سرپرستی</label>
+							<div class="input-group">
+                                {{ form.area }}
+                                {% csrf_token %}
+                                <span class="input-group-btn">
+                                  <input name="csrfmiddlewaretoken" value="yqlf8zzk44Hc7pfw6RLCXVDqfX1ltGjcwzm9mfqBWNEtXLiVTm5AWUcMV40T9p4f" type="hidden">
+                                  <input class="btn btn-default" value="ایجاد" type="submit">
+                              </span>
+							</div>
+                    </form>
+                    <br>
+
+                    <div class="table-responsive">
+                        <table data-sortable="" class="table" data-sortable-initialized="true">
+                            <thead>
+                                <tr>
+                                    <th>سرپرستی</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                {% for area in areas %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td><strong>{{ area.area.name }}</strong></td>
+
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+								</div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+                </div> <!-- / .tab-pane -->
+
+            </div> <!-- / .tab-content -->
+
+        </div>
+						</div>
 
 
 {% endblock %}

@@ -117,7 +117,7 @@ class File(Base):
     so_deposit = models.BigIntegerField(_(u'سود'), default=100)
     cost_proceeding = models.BigIntegerField(_(u'هزینه دادرسی'), default=100)
     branch = models.ForeignKey(Branch, verbose_name=_(u'شعبه'), related_name='files')
-    persian_date_refrence = models.CharField(_(u'تاریخ ارجاع'), max_length=10, default=None, null=True)
+    persian_date_refrence = models.CharField(_(u'تاریخ ارجاع'), max_length=10, default=None, blank=True, null=True)
     persian_normal_date_refrence = models.CharField(_(u'تاریخ ارجاع'), max_length=10, default=None, null=True)
     status = models.CharField(_(u'وضعیت'), max_length=20, choices=STATUS, default='مشکوک')
     # file_type = models.CharField(_('نوع قرارداد'), max_length=50, choices=TYPE, default='جعاله')

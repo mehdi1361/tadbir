@@ -2,15 +2,15 @@ from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 
-from employee.forms import UserCreationForm, PermissionForm
+from employee.forms import UserCreationForm, PermissionForm, EmpForm
 from .forms import LoginForm, UserRegistrationForm, \
     ProfileForm, FollowUpForm, PhoneFileForm, AddressForm, \
     DocumentForm, ReminderForm, RecoveryForm, SmsCautionForm, EmployeeFileForm, ChangePasswordForm, \
-    UserCreationForm
+    UserCreationForm, AccessAreaForm
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
-from .models import EmployeeFile, DocumentFile, PhoneFile, FollowUp, FileReminder, EmployeePermission
+from .models import EmployeeFile, DocumentFile, PhoneFile, FollowUp, FileReminder, EmployeePermission, AccessEmployee
 from bank.models import File, FileOffice
 from django.shortcuts import get_object_or_404
 from django.db.models import Q, Sum
@@ -18,6 +18,7 @@ from bank.models import PersonFile
 from common.decorators import employee_permission
 from django.contrib.auth.models import User
 from django.forms import inlineformset_factory
+
 
 def user_login(request):
     form = LoginForm(request.POST)
@@ -294,7 +295,7 @@ def create_employee(request):
                 form = UserCreationForm()
 
             except:
-                User.objects.create_user(username=cd['user_name'], password=1234, is_superuser=True)
+                User.objects.create_user(username=cd['user_name'], password=123456, is_superuser=True)
                 messages.add_message(request, messages.SUCCESS, 'کاربر با موفقیت ثبت شد.')
                 form = UserCreationForm()
         else:
@@ -311,12 +312,34 @@ def create_employee(request):
 @employee_permission('create_employee')
 def employee_permission_view(request, emp_id):
     user = get_object_or_404(User, id=emp_id)
+    if request.method == 'POST':
+        profile_form = ProfileForm(request.POST, request.FILES or None, instance=user.profile)
+        form = AccessAreaForm(request.POST)
+        if form.is_valid():
+            access_form = form.save(commit=False)
+            access_form.employee = user
+            access_form.save()
+
+        if profile_form.is_valid():
+            profile_form.save()
+
+    else:
+        form = AccessAreaForm(instance=user)
+        profile_form = ProfileForm(instance=user.profile)
+
+    area_permission = AccessEmployee.objects.filter(employee=user)
     employee_permission_lst = EmployeePermission.objects.filter(employee=user)
-    return render(request, 'bank/employee/manage_employee.html',
-                  {'user': user,
-                   'permissions': employee_permission_lst
-                   }
-                  )
+    return render(
+        request,
+        'bank/employee/manage_employee.html',
+        {
+            'user': user,
+            'permissions': employee_permission_lst,
+            'areas': area_permission,
+            'form': form,
+            'profile_form': profile_form
+        }
+    )
 
 
 @login_required(login_url='/employee/login/')

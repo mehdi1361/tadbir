@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 
 from .models import Profile, FollowUp, PhoneFile, AddressFile, \
-    DocumentFile, FileReminder, FileRecovery, SmsCaution, EmployeeFile, EmployeePermission
+    DocumentFile, FileReminder, FileRecovery, SmsCaution, EmployeeFile, EmployeePermission, AccessEmployee
 from django.core.exceptions import ValidationError
 
 
@@ -259,4 +259,29 @@ class PermissionForm(forms.ModelForm):
         ]
         widgets = {
             'enable': forms.CheckboxInput()
+        }
+
+
+class EmpForm(forms.Form):
+    choices = forms.ModelMultipleChoiceField(
+        queryset=EmployeePermission.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+    )
+
+# class SearchForm(forms.Form):
+#     text = forms.CharField(required=False, max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}))
+#     file_code = forms.BooleanField(label='شماره پرونده', initial=False, required=False)
+#     contract_code = forms.BooleanField(label='شماره قرارداد', initial=False, required=False)
+#     name = forms.BooleanField(label='نام مدیون', initial=False, required=False)
+
+
+class AccessAreaForm(forms.ModelForm):
+    class Meta:
+        model = AccessEmployee
+
+        fields = [
+            'area'
+        ]
+        widgets = {
+            'area': forms.Select(attrs={'class': 'form-control'})
         }

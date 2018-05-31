@@ -144,6 +144,9 @@
         <div class="widget-content padding">
             <ul id="demo5" class="nav nav-tabs nav-simple">
                 <li class="active">
+                    <a href="#demo5-home1" data-toggle="tab">مشخصات پرونده</a>
+                </li>
+                <li class="">
                     <a href="#demo5-home" data-toggle="tab"> اشخاص حقیقی</a>
                 </li>
                 <li class="">
@@ -170,6 +173,106 @@
             </ul>
 
             <div class="tab-content">
+                <div class="tab-pane fade active in" id="demo5-home1">
+                    <p style="text-align:justify">
+                        <form class="form-horizontal" role="form" action="" method="post">
+                          <div class="form-group">
+							<label for="input-text" class="col-sm-2 control-label">
+                                {{ file_detail.file_code.label }}
+                            </label>
+							<div class="col-sm-10">
+                                {{ file_detail.file_code  }}
+							</div>
+						  </div>
+                          <div class="form-group">
+							<label for="input-text" class="col-sm-2 control-label">
+                                {{ file_detail.contract_code.label }}
+                            </label>
+							<div class="col-sm-10">
+                                {{ file_detail.contract_code }}
+							</div>
+						  </div>
+                          <div class="form-group">
+							<label for="input-text" class="col-sm-2 control-label">
+                                {{ form.main_deposit.label }}
+                            </label>
+							<div class="col-sm-10">
+                                {{ file_detail.main_deposit }}
+							</div>
+						  </div>
+                          <div class="form-group">
+							<label for="input-text" class="col-sm-2 control-label">{{ form.nc_deposit.label }}</label>
+							<div class="col-sm-10">
+                                {{ file_detail.nc_deposit }}
+							</div>
+						  </div>
+                          <div class="form-group">
+							<label for="input-text" class="col-sm-2 control-label">
+                                {{ file_detail.so_deposit.label }}
+                            </label>
+							<div class="col-sm-10">
+                                {{ file_detail.so_deposit }}
+							</div>
+						  </div>
+                          <div class="form-group">
+							<label for="input-text" class="col-sm-2 control-label">
+                                {{ file_detail.cost_proceeding.label }}
+                            </label>
+							<div class="col-sm-10">
+                                {{ file_detail.cost_proceeding }}
+							</div>
+						  </div>
+                          <div class="form-group">
+							<label for="input-text" class="col-sm-2 control-label">
+                                {{ file_detail.branch.label }}
+                            </label>
+							<div class="col-sm-10">
+                                {{ file_detail.branch }}
+							</div>
+						  </div>
+                          <div class="form-group">
+							<label for="input-text" class="col-sm-2 control-label">
+                                {{ file_detail.persian_date_refrence.label }}
+                            </label>
+							<div class="col-sm-10">
+                                {{ file_detail.persian_date_refrence }}
+                                <script>
+                                    Calendar.setup({
+                                        inputField: 'date_input',
+                                        button: 'date_btn',
+                                        ifFormat: '%Y-%m-%d',
+                                        dateType: 'jalali'
+                                    });
+                                </script>
+							</div>
+						  </div>
+
+                          <div class="form-group">
+							<label for="input-text" class="col-sm-2 control-label">
+                                {{ file_detail.status.label }}
+                            </label>
+							<div class="col-sm-10">
+                                {{ file_detail.status }}
+							</div>
+						  </div>
+                          <div class="form-group">
+							<label for="input-text" class="col-sm-2 control-label">
+                                {{ file_detail.file_type.label }}
+                            </label>
+							<div class="col-sm-10">
+                                {{ file_detail.file_type }}
+							</div>
+						  </div>
+                            <div class="col-lg-12">
+                                {% csrf_token %}
+                                <input type="submit" value="بروز رسانی" class="btn btn-success">
+                            </div>
+                            <hr>
+                        </form>
+
+                    </p>
+
+                </div> <!-- / .tab-pane -->
                 <div class="tab-pane fade active in" id="demo5-home">
                     <p style="text-align:justify">
                         <form class="form-horizontal" role="form" action="" method="post">

@@ -11,7 +11,7 @@ from django.dispatch import receiver
 from django.utils.encoding import python_2_unicode_compatible
 from django_jalali.db import models as jmodels
 from bank.models import SmsType
-
+from bank.models import ManagementAreas
 
 @python_2_unicode_compatible
 class FileManager(models.Manager):
@@ -328,12 +328,30 @@ class MailBox(Base):
         return '{}-{}-{}'.format(self.from_user, self.to_user, self.mail)
 
 
+@python_2_unicode_compatible
+class AccessEmployee(Base):
+    area = models.ForeignKey(ManagementAreas, verbose_name=_('منطقه'), related_name='access_areas')
+    employee = models.ForeignKey(User, verbose_name=_('کاربر'), related_name='users')
+    enable = models.BooleanField(_('فعال'), default=False)
+
+    class Meta:
+        verbose_name = _('access')
+        verbose_name_plural = _('access')
+        db_table = 'access'
+
+    def __str__(self):
+        return '{}-{}'.format(self.area.name, self.user.profile.name)
+
+
 @receiver(post_save, sender=User)
 def create_or_update_user_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
         for role in EmployeePermission.PERMISSION_TYPE:
             EmployeePermission.objects.create(employee=instance, permission_type=role[0])
+
+        for area in ManagementAreas.objects.all():
+            AccessEmployee.objects.create(employee=instance, area=area)
     instance.profile.save()
 
 

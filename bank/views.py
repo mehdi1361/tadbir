@@ -269,6 +269,7 @@ def file_document(request, file_id):
         document_form = DocumentForm(request.POST, request.FILES or None)
         employee_file_form = EmployeeFileForm(request.POST)
         lawyer_form = LawyerFileForm(request.POST)
+        file_detail = FileForm(request.POST, instance=file)
 
         if person_form.is_valid():
             new_person_file = person_form.save(commit=False)
@@ -334,6 +335,11 @@ def file_document(request, file_id):
             result_lawyer.file = file
             result_lawyer.save()
 
+        if file_detail.is_valid():
+            result_file_detail = file_detail.save(commit=False)
+            result_file_detail.file = file
+            result_file_detail.save()
+
     person_form = PersonFileForm()
     person_office = FileOfficeForm()
     assurance_form = AssuranceForm()
@@ -343,6 +349,7 @@ def file_document(request, file_id):
     document_form = DocumentForm()
     employee_file_form = EmployeeFileForm()
     lawyer_form = LawyerFileForm()
+    file_detail = FileForm(instance=file)
 
     return render(
         request,
@@ -357,7 +364,8 @@ def file_document(request, file_id):
             'document_form': document_form,
             'lawyer_form': lawyer_form,
             'employee_file_form': employee_file_form,
-            'law_formset': formset
+            'law_formset': formset,
+            'file_detail': file_detail
         }
     )
 
