@@ -15,6 +15,7 @@ urlpatterns = [
     url(r'^files/$', views.file_list, name='files_list'),
     url(r'^files/new/$', views.new_file, name='new_file'),
     url(r'^files/detail/(?P<file_id>\d+)$', views.file_document, name='file_detail'),
+    url(r'^files/detail/delete_person/(?P<file_person_id>\d+)$', views.delete_person_file, name='delete_person_file'),
     url(r'^api/get_branches/', views.get_branch, name='get_branches'),
     url(r'^files/new_person/$', views.new_person, name='new_person'),
     url(r'^persons/list/$', views.get_persons, name='get_persons'),

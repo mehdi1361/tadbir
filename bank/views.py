@@ -617,3 +617,13 @@ def follow_law(request):
                       'form': form,
                       'follow_laws': follow_laws
                   })
+
+
+@login_required(login_url='/employee/login/')
+# @employee_permission('file_new')
+def delete_person_file(request, file_person_id):
+    # person_file = PersonFile.objects.get(person_id=person_id, file_id=file_id)
+    person_file = get_object_or_404(PersonFile, id=file_person_id)
+    file_id = person_file.file.id
+    person_file.delete()
+    return redirect('bank:file_detail', file_id=file_id)

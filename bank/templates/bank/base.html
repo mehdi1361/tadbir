@@ -60,6 +60,9 @@
         <link href="{% static "assets/css/style.css" %}" rel="stylesheet" type="text/css" />
         <link href="{% static "assets/css/rtl.css" %}" rel="stylesheet" type="text/css" />
 
+        <link href="{% static "assets/libs/jquery-datatables/css/dataTables.bootstrap.css" %}" rel="stylesheet" type="text/css">
+        <link href="{% static "assets/libs/jquery-datatables/extensions/TableTools/css/dataTables.tableTools.css" %}" rel="stylesheet" type="text/css">
+
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -873,8 +876,13 @@
 	<script src="{% static "assets/js/apps/todo.js" %}"></script>
 	<script src="{% static "assets/js/apps/notes.js" %}"></script>
 	<script src="{% static "assets/js/pages/index.js" %}"></script>
+
     <script>
         function getParentLang(node) { var defaultLang = 'fa'; var currLang = null; while(currLang === null && node.parentNode) { if (node.getAttribute && node.getAttribute('lang')) { currLang = node.getAttribute('lang'); } node = node.parentNode; } return currLang || defaultLang; } function TraceNodes(e) { if (e.nodeType == 3 && getParentLang(e) === 'fa' /* Persian */) { e.nodeValue = e.nodeValue.toPersianDigit(); } else { for (var t = 0; t < e.childNodes.length; t++) { TraceNodes(e.childNodes[t]); } } } String.prototype.toPersianDigit = function(e) { return this.replace(/\d+/g, function(t) { var n = [], r = []; for (var i = 0; i < t.length; i++) { n.push(t.charCodeAt(i)) } for (var s = 0; s < n.length; s++) { r.push(String.fromCharCode(n[s] + (!!e && e == true ? 1584 : 1728))) } return r.join("") }) }; TraceNodes(document);
     </script>
+    <script src={% static "assets/libs/jquery-datatables/js/jquery.dataTables.min.js" %}></script>
+	<script src={% static "assets/libs/jquery-datatables/js/dataTables.bootstrap.js" %}></script>
+	<script src={% static "assets/libs/jquery-datatables/extensions/TableTools/js/dataTables.tableTools.min.js" %}></script>
+	<script src={% static "assets/js/pages/datatables.js" %}></script>
 	</body>
 </html>
