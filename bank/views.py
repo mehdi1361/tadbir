@@ -6,9 +6,9 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 
 from employee.forms import PhoneFileForm, AddressForm, DocumentForm
-from employee.models import EmployeePermission
+from employee.models import EmployeePermission, PhoneFile, AddressFile
 from .models import Bank, ManagementAreas, Branch, File, Person, Office, SmsType, PersonFile, FileOffice, Lawyer, \
-    FollowLawType, FollowInLowFile
+    FollowLawType, FollowInLowFile, Assurance
 from django.views.generic import ListView
 from .forms import BankForm, AreaForm, BranchForm, FileForm, PersonForm, AssuranceForm, PersonFileForm, FileOfficeForm, \
     SmsTypeForm, EmployeeFileForm, PersonOfficeForm, OfficeForm, LawyerForm, LawyerFileForm, FollowLawTypeForm, \
@@ -626,4 +626,41 @@ def delete_person_file(request, file_person_id):
     person_file = get_object_or_404(PersonFile, id=file_person_id)
     file_id = person_file.file.id
     person_file.delete()
+    return redirect('bank:file_detail', file_id=file_id)
+
+
+@login_required(login_url='/employee/login/')
+# @employee_permission('file_new')
+def delete_office_file(request, file_office_id):
+    # person_file = PersonFile.objects.get(person_id=person_id, file_id=file_id)
+    office_file = get_object_or_404(FileOffice, id=file_office_id)
+    file_id = office_file.file.id
+    office_file.delete()
+    return redirect('bank:file_detail', file_id=file_id)
+
+
+@login_required(login_url='/employee/login/')
+# @employee_permission('file_new')
+def delete_assurance(request, assurance_id):
+    assurance_file = get_object_or_404(Assurance, id=assurance_id)
+    file_id = assurance_file.file.id
+    assurance_file.delete()
+    return redirect('bank:file_detail', file_id=file_id)
+
+
+@login_required(login_url='/employee/login/')
+# @employee_permission('file_new')
+def delete_phone(request, phone_id):
+    phone_file = get_object_or_404(PhoneFile, id=phone_id)
+    file_id = phone_file.file.id
+    phone_file.delete()
+    return redirect('bank:file_detail', file_id=file_id)
+
+
+@login_required(login_url='/employee/login/')
+# @employee_permission('file_new')
+def delete_address(request, address_id):
+    address_file = get_object_or_404(AddressFile, id=address_id)
+    file_id = address_file.file.id
+    address_file.delete()
     return redirect('bank:file_detail', file_id=file_id)

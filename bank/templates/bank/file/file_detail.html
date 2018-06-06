@@ -144,7 +144,7 @@
         <div class="widget-content padding">
             <ul id="demo5" class="nav nav-tabs nav-simple">
                 <li class="active">
-                    <a href="#demo5-home1" data-toggle="tab">مشخصات پرونده</a>
+                    <a href="#file_detail" data-toggle="tab">مشخصات پرونده</a>
                 </li>
                 <li class="">
                     <a href="#demo5-home" data-toggle="tab"> اشخاص حقیقی</a>
@@ -173,7 +173,7 @@
             </ul>
 
             <div class="tab-content">
-                <div class="tab-pane fade active in" id="demo5-home1">
+                <div class="tab-pane fade active in" id="file_detail">
                     <p style="text-align:justify">
                         <form class="form-horizontal" role="form" action="" method="post">
                           <div class="form-group">
@@ -194,14 +194,14 @@
 						  </div>
                           <div class="form-group">
 							<label for="input-text" class="col-sm-2 control-label">
-                                {{ form.main_deposit.label }}
+                                {{ file_detail.main_deposit.label }}
                             </label>
 							<div class="col-sm-10">
                                 {{ file_detail.main_deposit }}
 							</div>
 						  </div>
                           <div class="form-group">
-							<label for="input-text" class="col-sm-2 control-label">{{ form.nc_deposit.label }}</label>
+							<label for="input-text" class="col-sm-2 control-label">{{ file_detail.nc_deposit.label }}</label>
 							<div class="col-sm-10">
                                 {{ file_detail.nc_deposit }}
 							</div>
@@ -273,7 +273,7 @@
                     </p>
 
                 </div> <!-- / .tab-pane -->
-                <div class="tab-pane fade active in" id="demo5-home">
+                <div class="tab-pane fade" id="demo5-home">
                     <p style="text-align:justify">
                         <form class="form-horizontal" role="form" action="" method="post">
                           <div class="form-group">
@@ -330,7 +330,10 @@
                                                     <td>{{ document.person.name }}</td>
                                                     <td>
                                                         <div class="btn-group btn-group-xs">
-                                                            <a href="{% url "bank:file_detail_person_edit" document.person.id    %}" data-toggle="tooltip" title="مشاهده پرونده" class="btn btn-default"><i class="fa fa-edit"></i></a>
+                                                            <a href="{% url "bank:delete_person_file" document.id %}" data-toggle="tooltip" title="حذف" class="btn btn-default">
+                                                                <i class="fa fa-power-off"></i>
+                                                            </a>
+{#                                                            <a data-toggle="tooltip" title="" class="btn btn-default" data-original-title="حذف"><i class="fa fa-power-off"></i></a>#}
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -399,6 +402,14 @@
                                                     <td>{{ forloop.counter }}</td>
                                                     <td><strong>{{ document.relation_type }}</strong></td>
                                                     <td>{{ document.office.name }}</td>
+                                                    <td>
+                                                        <div class="btn-group btn-group-xs">
+                                                            <a href="{% url "bank:delete_office_file" document.id %}" data-toggle="tooltip" title="حذف" class="btn btn-default">
+                                                                <i class="fa fa-power-off"></i>
+                                                            </a>
+{#                                                            <a data-toggle="tooltip" title="" class="btn btn-default" data-original-title="حذف"><i class="fa fa-power-off"></i></a>#}
+                                                        </div>
+                                                    </td>
                                                 </tr>
                                             {% endfor %}
 										</tbody>
@@ -486,6 +497,14 @@
                                                     <td>{{ assurance.assurance_number }}</td>
                                                     <td>{{ assurance.assurance_value }}</td>
                                                     <td>{{ assurance.description }}</td>
+                                                    <td>
+                                                        <div class="btn-group btn-group-xs">
+                                                            <a href="{% url "bank:delete_assurance" assurance.id %}" data-toggle="tooltip" title="حذف" class="btn btn-default">
+                                                                <i class="fa fa-power-off"></i>
+                                                            </a>
+{#                                                            <a data-toggle="tooltip" title="" class="btn btn-default" data-original-title="حذف"><i class="fa fa-power-off"></i></a>#}
+                                                        </div>
+                                                    </td>
                                                 </tr>
                                             {% endfor %}
 										</tbody>
@@ -558,8 +577,8 @@
 										<thead>
 											<tr>
 												<th>شماره</th>
-												<th>پرونده</th>
-												<th>نوع پیگیری</th>
+												<th>شماره تلفن</th>
+
 												<th>نام صاحب خط</th>
 												<th>شرح</th>
 											</tr>
@@ -570,9 +589,16 @@
                                                 <tr>
                                                     <td>{{ forloop.counter }}</td>
                                                     <td><strong>{{ phone.phone_number }}</strong></td>
-                                                    <td>{{ phone.person_type }}</td>
                                                     <td>{{ phone.phone_owner.person.full_name }}</td>
                                                     <td>{{ phone.description }}</td>
+                                                    <td>
+                                                        <div class="btn-group btn-group-xs">
+                                                            <a href="{% url "bank:delete_phone" phone.id %}" data-toggle="tooltip" title="حذف" class="btn btn-default">
+                                                                <i class="fa fa-power-off"></i>
+                                                            </a>
+{#                                                            <a data-toggle="tooltip" title="" class="btn btn-default" data-original-title="حذف"><i class="fa fa-power-off"></i></a>#}
+                                                        </div>
+                                                    </td>
                                                 </tr>
                                             {% endfor %}
 										</tbody>
@@ -646,6 +672,14 @@
                                                     <td>{{ address.type }}</td>
                                                     <td><strong>{{ address.address }}</strong></td>
                                                     <td>{{ address.description }}</td>
+                                                    <td>
+                                                        <div class="btn-group btn-group-xs">
+                                                            <a href="{% url "bank:delete_address" address.id %}" data-toggle="tooltip" title="حذف" class="btn btn-default">
+                                                                <i class="fa fa-power-off"></i>
+                                                            </a>
+{#                                                            <a data-toggle="tooltip" title="" class="btn btn-default" data-original-title="حذف"><i class="fa fa-power-off"></i></a>#}
+                                                        </div>
+                                                    </td>
                                                 </tr>
                                             {% endfor %}
 										</tbody>

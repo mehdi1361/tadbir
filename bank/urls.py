@@ -16,6 +16,11 @@ urlpatterns = [
     url(r'^files/new/$', views.new_file, name='new_file'),
     url(r'^files/detail/(?P<file_id>\d+)$', views.file_document, name='file_detail'),
     url(r'^files/detail/delete_person/(?P<file_person_id>\d+)$', views.delete_person_file, name='delete_person_file'),
+    url(r'^files/detail/delete_office/(?P<file_office_id>\d+)$', views.delete_office_file, name='delete_office_file'),
+    url(r'^files/detail/delete_assurance/(?P<assurance_id>\d+)$', views.delete_assurance, name='delete_assurance'),
+    url(r'^files/detail/delete_phone/(?P<phone_id>\d+)$', views.delete_phone, name='delete_phone'),
+    url(r'^files/detail/delete_address/(?P<address_id>\d+)$', views.delete_address, name='delete_address'),
+
     url(r'^api/get_branches/', views.get_branch, name='get_branches'),
     url(r'^files/new_person/$', views.new_person, name='new_person'),
     url(r'^persons/list/$', views.get_persons, name='get_persons'),

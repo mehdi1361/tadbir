@@ -263,13 +263,13 @@ class Assurance(Base, Document):
     )
     file = models.ForeignKey(File, verbose_name=_('پرونده'), related_name='assurances', default=None)
     assurance_type = models.CharField(_('نوع وثیقه'), max_length=50, choices=TYPE, default='سفته')
-    # assurance_number = models.CharField(_('شماره سند'), max_length=200, default=0)
+    assurance_number = models.CharField(_('شماره سند'), max_length=200, null=True, blank=True)
     assurance_date = models.CharField(_('تاریخ'), max_length=200, default='')
-    # assurance_value = models.PositiveIntegerField(_('مبلغ'), default=0)
+    assurance_value = models.PositiveIntegerField(_('مبلغ'), null=True, blank=True)
     history = HistoricalRecords()
 
     class Meta:
-        unique_together = ['file', 'assurance_type']
+        # unique_together = ['file', 'assurance_type']
         verbose_name = _('وثیقه')
         verbose_name_plural = _('وثایق')
         db_table = 'assurances'
