@@ -6,9 +6,9 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 
 from employee.forms import PhoneFileForm, AddressForm, DocumentForm
-from employee.models import EmployeePermission, PhoneFile, AddressFile
+from employee.models import EmployeePermission, PhoneFile, AddressFile, EmployeeFile
 from .models import Bank, ManagementAreas, Branch, File, Person, Office, SmsType, PersonFile, FileOffice, Lawyer, \
-    FollowLawType, FollowInLowFile, Assurance
+    FollowLawType, FollowInLowFile, Assurance, LawyerFile
 from django.views.generic import ListView
 from .forms import BankForm, AreaForm, BranchForm, FileForm, PersonForm, AssuranceForm, PersonFileForm, FileOfficeForm, \
     SmsTypeForm, EmployeeFileForm, PersonOfficeForm, OfficeForm, LawyerForm, LawyerFileForm, FollowLawTypeForm, \
@@ -663,4 +663,22 @@ def delete_address(request, address_id):
     address_file = get_object_or_404(AddressFile, id=address_id)
     file_id = address_file.file.id
     address_file.delete()
+    return redirect('bank:file_detail', file_id=file_id)
+
+
+@login_required(login_url='/employee/login/')
+# @employee_permission('file_new')
+def delete_employee_file(request, employee_file_id):
+    employee_file = get_object_or_404(EmployeeFile, id=employee_file_id)
+    file_id = employee_file.file.id
+    employee_file.delete()
+    return redirect('bank:file_detail', file_id=file_id)
+
+
+@login_required(login_url='/employee/login/')
+# @employee_permission('file_new')
+def delete_lawyer_file(request, lawyer_file_id):
+    lawyer_file = get_object_or_404(LawyerFile, id=lawyer_file_id)
+    file_id = lawyer_file.file.id
+    lawyer_file.delete()
     return redirect('bank:file_detail', file_id=file_id)

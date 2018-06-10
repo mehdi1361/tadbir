@@ -20,6 +20,10 @@ urlpatterns = [
     url(r'^files/detail/delete_assurance/(?P<assurance_id>\d+)$', views.delete_assurance, name='delete_assurance'),
     url(r'^files/detail/delete_phone/(?P<phone_id>\d+)$', views.delete_phone, name='delete_phone'),
     url(r'^files/detail/delete_address/(?P<address_id>\d+)$', views.delete_address, name='delete_address'),
+    url(r'^files/detail/delete_employee_file/(?P<employee_file_id>\d+)$', views.delete_employee_file,
+        name='delete_employee_file'),
+    url(r'^files/detail/delete_lawyer_file/(?P<lawyer_file_id>\d+)$', views.delete_lawyer_file,
+        name='delete_lawyer_file'),
 
     url(r'^api/get_branches/', views.get_branch, name='get_branches'),
     url(r'^files/new_person/$', views.new_person, name='new_person'),

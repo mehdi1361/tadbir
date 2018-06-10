@@ -13,6 +13,7 @@ from django_jalali.db import models as jmodels
 from bank.models import SmsType
 from bank.models import ManagementAreas
 
+
 @python_2_unicode_compatible
 class FileManager(models.Manager):
     def get_queryset(self):
@@ -192,7 +193,7 @@ class DocumentFile(Base, Document):
     )
 
     file = models.ForeignKey(File, verbose_name=_('پرونده'), related_name='documents')
-    type = models.CharField(_('وثایق'), max_length=10, choices=TYPE, default='وثیقه')
+    type = models.CharField(_('وثایق'), max_length=20, choices=TYPE, default='وثیقه')
     image_upload = models.ImageField(_('تصویر سند'), upload_to='document', null=True)
 
     class Meta:
