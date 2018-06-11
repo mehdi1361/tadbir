@@ -245,7 +245,7 @@ def new_file(request):
             form.save()
             return redirect(reverse('bank:files_list'))
         else:
-            print(form.errors)
+           pass 
 
     form = FileForm()
 

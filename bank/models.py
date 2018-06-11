@@ -134,7 +134,7 @@ class File(Base):
         verbose_name_plural = _('پرونده ها')
         db_table = 'files'
 
-    def __str__(self):
+    def __unicode__(self):
         return "{}".format(self.file_code)
 
     @property
