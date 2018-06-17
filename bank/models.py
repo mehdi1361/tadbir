@@ -109,8 +109,10 @@ class File(Base):
         ('عودت', 'عودت'),
         ('تسویه حساب', 'تسویه حساب'),
     )
-
-    file_code = models.CharField(_(u'کد پرونده'), max_length=200, unique=True)
+    FILE_CODE_ERROR_MESSAGE = {
+        'unique': 'شماره پرونده وارد شده تکراری می باشد لطفا شماره دیگری وارد نمایید.'
+    }
+    file_code = models.CharField(_(u'کد پرونده'), max_length=200, unique=True, error_messages=FILE_CODE_ERROR_MESSAGE)
     contract_code = models.CharField(_(u'شماره قرارداد'), max_length=200, null=True)
     main_deposit = models.BigIntegerField(_(u'اصل مبلغ بدهی'), default=100)
     nc_deposit = models.BigIntegerField(_(u'وجه التزام'), default=100)
@@ -134,7 +136,7 @@ class File(Base):
         verbose_name_plural = _('پرونده ها')
         db_table = 'files'
 
-    def __str__(self):
+    def __unicode__(self):
         return "{}".format(self.file_code)
 
     @property

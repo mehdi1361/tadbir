@@ -245,7 +245,9 @@ def new_file(request):
             form.save()
             return redirect(reverse('bank:files_list'))
         else:
-            print(form.errors)
+            for error in form.errors:
+                for item in form.errors[error]:
+                    messages.add_message(request, messages.ERROR, item)
 
     form = FileForm()
 
@@ -666,6 +668,7 @@ def delete_address(request, address_id):
     return redirect('bank:file_detail', file_id=file_id)
 
 
+
 @login_required(login_url='/employee/login/')
 # @employee_permission('file_new')
 def delete_employee_file(request, employee_file_id):
@@ -682,3 +685,4 @@ def delete_lawyer_file(request, lawyer_file_id):
     file_id = lawyer_file.file.id
     lawyer_file.delete()
     return redirect('bank:file_detail', file_id=file_id)
+

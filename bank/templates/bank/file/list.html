@@ -82,7 +82,7 @@
                                             {% for file in files %}
                                                 <tr>
                                                     <td><a href="{% url "bank:file_detail" file.id %}">{{ forloop.counter }}</a></td>
-                                                    <td><strong>{{ file }}</strong></td>
+                                                    <td><strong>{{ file.file_code }}</strong></td>
                                                     <td>{{ file.contract_code }}</td>
                                                     <td>{{ file.file_type }}</td>
                                                     <td>

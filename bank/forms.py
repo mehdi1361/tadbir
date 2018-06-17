@@ -1,5 +1,5 @@
 from django import forms
-
+from unidecode import unidecode
 from employee.models import EmployeeFile
 from .models import Bank, ManagementAreas, Branch, \
     File, Assurance, PersonFile, Person, Office, FileOffice, SmsType, Lawyer, LawyerFile, FollowLawType, FollowInLowFile
@@ -36,23 +36,6 @@ class BranchForm(forms.ModelForm):
         }
 
 
-# class FileForm(forms.ModelForm):
-#     class Meta:
-#         model = File
-#         fields = [
-#             'file_code',
-#             'contract_code',
-#             'main_deposit',
-#             'end_deposit',
-#             'cost_proceeding',
-#             'branch',
-#             'persian_date_refrence'
-#         ]
-#         widgets = {
-#             'branch': autocomplete.ModelSelect2(url='bank:branch-autocomplete')
-#         }
-
-
 class FileForm(forms.ModelForm):
     def save(self, commit=True):
         instance = super(FileForm, self).save(commit=False)
@@ -60,6 +43,16 @@ class FileForm(forms.ModelForm):
         if commit:
             instance.save()
         return instance
+
+    def clean(self):
+        data = self.cleaned_data
+        data['file_code'] = unidecode(data.get('file_code'))
+        data['contract_code'] = unidecode(data.get('contract_code'))
+        data['main_deposit'] = int(unidecode(str(data.get('main_deposit'))))
+        data['nc_deposit'] = int(unidecode(str(data.get('nc_deposit'))))
+        data['so_deposit'] = int(unidecode(str(data.get('so_deposit'))))
+        data['cost_proceeding'] = int(unidecode(str(data.get('cost_proceeding'))))
+        data['persian_date_refrence'] = unidecode(data.get('persian_date_refrence'))
 
     class Meta:
         model = File
