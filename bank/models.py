@@ -5,7 +5,8 @@ from base.models import Base, Location, Human, Document
 from states.models import City, State
 from django.utils.encoding import python_2_unicode_compatible
 from simple_history.models import HistoricalRecords
-from django.db.models import signals
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
 @python_2_unicode_compatible
@@ -365,17 +366,18 @@ class FollowInLowFile(Base):
         return "{}".format(self.follow.type)
 
 
+@receiver(post_save, sender=FollowLawType)
 def new_follow_law_type(sender, instance, created, **kwargs):
     if created:
         for file in File.objects.all():
             FollowInLowFile.objects.create(file=file, follow=instance)
 
 
-def new_file_created(sender, instance, created, **kwargs):
-    if created:
-        for follow in FollowLawType.objects.all():
-            FollowInLowFile.objects.create(file=instance, follow=follow)
+# def new_file_created(sender, instance, created, **kwargs):
+#     if created:
+#         for follow in FollowLawType.objects.all():
+#             FollowInLowFile.objects.create(file=instance, follow=follow)
 
 
-# signals.post_save(new_follow_law_type, sender=FollowLawType)
+# signals.post_save(new_file_created, sender=FollowLawType)
 # signals.post_save(new_file_created, sender=File)

@@ -66,6 +66,7 @@
 												<th>شماره قرارداد</th>
 												<th>قرارداد</th>
 												<th>مدیونین</th>
+												<th>سرپرستی</th>
 												<th>شعبه</th>
 												<th>اصل مبلغ بدهی<br>(ریال)</th>
 												<th data-sortable="false">وجه التزام<br>(ریال)</th>
@@ -94,6 +95,7 @@
                                                             {{ employee_files.file.person_list }}
                                                         {% endif %}
                                                     </td>
+                                                    <td>{{ employee_files.file.branch.area }} </td>
                                                     <td title="{{ employee_files.file.branch.full_name }}">{{ employee_files.file.branch }} </td>
                                                     <td>{{ employee_files.file.main_deposit }}</td>
                                                     <td>{{ employee_files.file.nc_deposit }}</td>

@@ -70,6 +70,7 @@
 												<th>شماره قرارداد</th>
 												<th>نوع قرارداد</th>
                                                 <th>مدیونین</th>
+												<th>سرپرستی</th>
 												<th>شعبه</th>
 												<th>اصل مبلغ بدهی</th>
 												<th data-sortable="false">وجه التزام</th>
@@ -92,6 +93,7 @@
                                                             {{ file.person_list }}
                                                         {% endif %}
                                                     </td>
+                                                    <td>{{ file.branch.area }}</td>
                                                     <td title="{{ file.branch.full_name }}">{{ file.branch }}</td>
                                                     <td>{{ file.main_deposit }}</td>
                                                     <td>{{ file.nc_deposit }}</td>
