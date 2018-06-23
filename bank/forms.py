@@ -42,6 +42,12 @@ class CustomModelChoiceField(forms.ModelChoiceField):
 
 
 class FileForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super(FileForm, self).__init__(*args, **kwargs)
+        if self.instance:
+            self.fields['branch'].queryset = Branch.objects.all().order_by('area')
+
     def save(self, commit=True):
         instance = super(FileForm, self).save(commit=False)
         instance.persian_normal_date_refrence = '1394'
@@ -275,7 +281,7 @@ class FollowInLowFileForm(forms.ModelForm):
         ]
         widgets = {
             # 'file': forms.Select(attrs={'class': 'form-control'}),
-            'follow': forms.TextInput(attrs={'class': 'form-control', 'readonly':'readonly'})
+            'follow': forms.TextInput(attrs={'class': 'form-control', 'readonly': 'readonly'})
         }
 
 
