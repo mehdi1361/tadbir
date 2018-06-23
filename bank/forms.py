@@ -36,6 +36,11 @@ class BranchForm(forms.ModelForm):
         }
 
 
+class CustomModelChoiceField(forms.ModelChoiceField):
+    def label_from_instance(self, obj):
+        return obj.fullname
+
+
 class FileForm(forms.ModelForm):
     def save(self, commit=True):
         instance = super(FileForm, self).save(commit=False)
@@ -77,6 +82,7 @@ class FileForm(forms.ModelForm):
             'cost_proceeding': forms.TextInput(attrs={'class': 'form-control'}),
             'persian_date_refrence': forms.TextInput(attrs={'id': 'date_input'}),
             'branch': forms.Select(attrs={'class': 'form-control'}),
+            # 'branch': CustomModelChoiceField(queryset=Branch.objects.all()),
             'status': forms.Select(attrs={'class': 'form-control'}),
             'file_type': forms.Select(attrs={'class': 'form-control'}),
         }

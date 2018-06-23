@@ -59,7 +59,7 @@ class Branch(Base, Location):
         db_table = 'branches'
 
     def __str__(self):
-        return '{}'.format(self.name)
+        return '{}-{}'.format(self.area, self.name)
 
     @property
     def full_name(self):
