@@ -357,3 +357,12 @@ def edit_employee_permission(request, permission_id):
         form = PermissionForm(instance=permission)
 
     return render(request, 'bank/employee/manage_update.html', {'form': form, 'permission': permission})
+
+
+@login_required(login_url='/employee/login/')
+# @employee_permission('file_new')
+def delete_employee_permission(request, permission_id):
+    emp_access = get_object_or_404(AccessEmployee, id=int(permission_id))
+    employee_id = emp_access.employee.id
+    emp_access.delete()
+    return redirect('employee:permission', emp_id=employee_id)

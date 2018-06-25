@@ -111,7 +111,8 @@ class File(Base):
         ('تسویه حساب', 'تسویه حساب'),
     )
     FILE_CODE_ERROR_MESSAGE = {
-        'unique': 'شماره پرونده وارد شده تکراری می باشد لطفا شماره دیگری وارد نمایید.'
+        'unique': 'شماره پرونده وارد شده تکراری می باشد لطفا شماره دیگری وارد نمایید.',
+        'duplicate': 'شماره پرونده وارد شده تکراری می باشد لطفا شماره دیگری وارد نمایید.'
     }
     file_code = models.CharField(_(u'کد پرونده'), max_length=200, unique=True, error_messages=FILE_CODE_ERROR_MESSAGE)
     contract_code = models.CharField(_(u'شماره قرارداد'), max_length=200, null=True)

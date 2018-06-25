@@ -14,5 +14,7 @@ urlpatterns = [
     url(r'^manage/$', views.create_employee, name='manage'),
     url(r'^employee_manage/(?P<emp_id>\d+)$', views.employee_permission_view, name='permission'),
     url(r'^manage_edit/(?P<permission_id>\d+)$', views.edit_employee_permission, name='edit_permission'),
+    url(r'^employee_manage/delete_permission/(?P<permission_id>\d+)$', views.delete_employee_permission,
+        name='delete_employee_permission'),
 
 ]

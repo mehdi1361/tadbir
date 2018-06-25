@@ -93,6 +93,7 @@ class FollowUp(Base):
         ('call', 'تماس تلفنی'),
         ('meeting', 'مذاکره حضوری'),
         ('law', 'اقدامات قانونی'),
+        ('other', 'سایر'),
     )
 
     follow_up_type = models.CharField(_('نوع پیگیری'), max_length=20, choices=TYPE, default='call')

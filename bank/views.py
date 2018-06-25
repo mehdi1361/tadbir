@@ -1,6 +1,7 @@
 import json
 
 from django.db.models import Q
+from django.db.transaction import commit
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
@@ -23,6 +24,8 @@ from django.contrib.auth.models import User, Permission
 from common.decorators import employee_permission
 from common.utils import normalize_data
 from django.forms import inlineformset_factory
+from django.db import IntegrityError
+from employee.models import AccessEmployee
 
 
 # from django.contrib.auth import authenticate, login
@@ -153,7 +156,8 @@ def edit_branch(request, branch_id):
 @login_required(login_url='/employee/login/')
 @employee_permission('file_list')
 def file_list(request):
-    object_list = File.ordered.all()
+    employee_access = AccessEmployee.objects.filter(employee=request.user).values_list('area', flat=True)
+    # object_list = File.ordered.filter(branch__area__in=employee_access)
     if request.method == 'POST':
         form = SearchForm(request.POST)
         if form.is_valid():
@@ -168,39 +172,39 @@ def file_list(request):
                 office__name__contains=query).values_list('file__file_code', flat=True)
 
             if cd['name'] and cd['file_code'] and cd['contract_code']:
-                object_list = File.ordered.filter(
+                object_list = File.ordered.filter(branch__area__in=employee_access).filter(
                     Q(file_code__contains=query) | Q(contract_code__contains=query)
                     | Q(file_code__in=person_file) | Q(file_code__in=office_files)
                 ).order_by('-created_at')
 
             elif cd['name'] and cd['file_code'] and not cd['contract_code']:
-                object_list = File.ordered.filter(
+                object_list = File.ordered.filter(branch__area__in=employee_access).filter(
                     Q(file_code__contains=query) | Q(file_code__in=person_file) |
                     Q(file_code__in=office_files)
                 ).order_by('-created_at')
 
             elif cd['name'] and not cd['file_code'] and cd['contract_code']:
-                object_list = File.ordered.filter(
+                object_list = File.ordered.filter(branch__area__in=employee_access).filter(
                     Q(contract_code__contains=query) | Q(file_code__in=person_file) |
                     Q(file_code__in=office_files)
                 ).order_by('-created_at')
 
             elif cd['name'] and not cd['file_code'] and not cd['contract_code']:
-                object_list = File.ordered.filter(Q(file_code__in=person_file) | Q(file_code__in=office_files)
+                object_list = File.ordered.filter(branch__area__in=employee_access).filter(Q(file_code__in=person_file) | Q(file_code__in=office_files)
                                                   ).order_by('-created_at')
 
             elif not cd['name'] and cd['file_code'] and cd['contract_code']:
-                object_list = File.ordered.filter(Q(contract_code__contains=query)
+                object_list = File.ordered.filter(branch__area__in=employee_access).filter(Q(contract_code__contains=query)
                                                   | Q(file_code__in=person_file)).order_by('-created_at')
 
             elif not cd['name'] and cd['file_code'] and not cd['contract_code']:
-                object_list = File.ordered.filter(file_code__contains=query).order_by('-created_at')
+                object_list = File.ordered.filter(branch__area__in=employee_access).filter(file_code__contains=query).order_by('-created_at')
 
             elif not cd['name'] and not cd['file_code'] and cd['contract_code']:
-                object_list = File.ordered.filter(contract_code__contains=query).order_by('-created_at')
+                object_list = File.ordered.filter(branch__area__in=employee_access).filter(contract_code__contains=query).order_by('-created_at')
 
             else:
-                object_list = File.ordered.all()
+                object_list = File.ordered.filter(branch__area__in=employee_access)
                 form = SearchForm()
 
         else:
@@ -208,7 +212,7 @@ def file_list(request):
             form = SearchForm()
 
     else:
-        object_list = File.ordered.all()
+        object_list = File.ordered.filter(branch__area__in=employee_access)
         form = SearchForm()
 
     paginator = Paginator(object_list, 15)
@@ -239,19 +243,26 @@ class BranchAutoComplete(autocomplete.Select2QuerySetView):
 @login_required(login_url='/employee/login/')
 @employee_permission('file_new')
 def new_file(request):
-    if request.method == 'POST':
-        form = FileForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect(reverse('bank:files_list'))
-        else:
-            for error in form.errors:
-                for item in form.errors[error]:
-                    messages.add_message(request, messages.ERROR, item)
+    try:
+        if request.method == 'POST':
+            form = FileForm(request.POST)
+            if form.is_valid():
+                cd = form.cleaned_data
+                form.save()
+                file = File.objects.get(file_code=cd['file_code'])
+                return redirect(reverse('bank:files/detail'), file_id=file.id)
+            else:
+                for error in form.errors:
+                    for item in form.errors[error]:
+                        messages.add_message(request, messages.ERROR, item)
 
-    form = FileForm()
+    except IntegrityError:
+        messages.add_message(request, messages.ERROR, 'شماره پرونده تکراری است')
 
-    return render(request, 'bank/file/new.html', {'form': form})
+    finally:
+        form = FileForm()
+
+        return render(request, 'bank/file/new.html', {'form': form})
 
 
 @login_required(login_url='/employee/login/')

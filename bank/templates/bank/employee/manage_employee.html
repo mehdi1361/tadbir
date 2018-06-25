@@ -188,9 +188,8 @@
 							<label for="input-group">نام سرپرستی</label>
 							<div class="input-group">
                                 {{ form.area }}
-                                {% csrf_token %}
                                 <span class="input-group-btn">
-                                  <input name="csrfmiddlewaretoken" value="yqlf8zzk44Hc7pfw6RLCXVDqfX1ltGjcwzm9mfqBWNEtXLiVTm5AWUcMV40T9p4f" type="hidden">
+                                  {% csrf_token %}
                                   <input class="btn btn-default" value="ایجاد" type="submit">
                               </span>
 							</div>
@@ -210,6 +209,15 @@
                                     <tr>
                                         <td>{{ forloop.counter }}</td>
                                         <td><strong>{{ area.area.name }}</strong></td>
+                                        <td>
+                                            <div class="btn-group btn-group-xs">
+        {#                                                            <a data-toggle="tooltip" title="خاموش" class="btn btn-default"><i class="fa fa-power-off"></i></a>#}
+                                                <a href="{% url "employee:delete_employee_permission" area.id %}" data-toggle="tooltip" title="حذف" class="btn btn-default">
+                                                    <i class="fa fa-power-off"></i>
+                                                </a>
+        {#                                                            <a data-toggle="tooltip" title="" class="btn btn-default" data-original-title="حذف"><i class="fa fa-power-off"></i></a>#}
+                                            </div>
+                                        </td>
 
                                     </tr>
                                 {% endfor %}
