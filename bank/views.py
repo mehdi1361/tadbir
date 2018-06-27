@@ -290,9 +290,13 @@ def file_document(request, file_id):
             new_person_file.save()
 
         if person_office.is_valid():
-            new_office_file = person_office.save(commit=False)
-            new_office_file.file = file
-            new_office_file.save()
+            try:
+                new_office_file = person_office.save(commit=False)
+                new_office_file.file = file
+                new_office_file.save()
+
+            except IntegrityError as e:
+                messages.add_message(request, messages.ERROR, 'شخص حقوقی تکراری است')
 
         if assurance_form.is_valid():
             new_assurance_file = assurance_form.save(commit=False)

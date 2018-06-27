@@ -57,13 +57,26 @@ class FileForm(forms.ModelForm):
 
     def clean(self):
         data = self.cleaned_data
-        data['file_code'] = unidecode(data.get('file_code'))
-        data['contract_code'] = unidecode(data.get('contract_code'))
-        data['main_deposit'] = int(unidecode(str(data.get('main_deposit'))))
-        data['nc_deposit'] = int(unidecode(str(data.get('nc_deposit'))))
-        data['so_deposit'] = int(unidecode(str(data.get('so_deposit'))))
-        data['cost_proceeding'] = int(unidecode(str(data.get('cost_proceeding'))))
-        data['persian_date_refrence'] = unidecode(data.get('persian_date_refrence'))
+        if 'file_code' in data.keys() and data['file_code'] is not None:
+            data['file_code'] = unidecode(data.get('file_code'))
+
+        if 'contract_code' in data.keys() and data['contract_code'] is not None:
+            data['contract_code'] = unidecode(data.get('contract_code'))
+
+        if 'main_deposit' in data.keys() and data['main_deposit'] is not None:
+            data['main_deposit'] = int(unidecode(str(data.get('main_deposit'))))
+
+        if 'nc_deposit' in data.keys() and data['nc_deposit'] is not None:
+            data['nc_deposit'] = int(unidecode(str(data.get('nc_deposit'))))
+
+        if 'so_deposit' in data.keys() and data['so_deposit'] is not None:
+            data['so_deposit'] = int(unidecode(str(data.get('so_deposit'))))
+
+        if 'cost_proceeding' in data.keys() and data['cost_proceeding'] is not None:
+            data['cost_proceeding'] = int(unidecode(str(data.get('cost_proceeding'))))
+
+        if 'persian_date_refrence' in data.keys() and data['persian_date_refrence'] is not None:
+            data['persian_date_refrence'] = unidecode(data.get('persian_date_refrence'))
 
     class Meta:
         model = File
