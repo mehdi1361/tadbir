@@ -344,8 +344,6 @@ def file_document(request, file_id):
             except:
                 messages.add_message(request, messages.ERROR, 'خطا در ثبت')
 
-        else:
-            print(employee_file_form.errors)
 
         if lawyer_form.is_valid():
             result_lawyer = lawyer_form.save(commit=False)
