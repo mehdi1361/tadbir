@@ -315,6 +315,8 @@ def employee_permission_view(request, emp_id):
     if request.method == 'POST':
         profile_form = ProfileForm(request.POST, request.FILES or None, instance=user.profile)
         form = AccessAreaForm(request.POST)
+        change_password_form = ChangePasswordForm(request.POST)
+
         if form.is_valid():
             access_form = form.save(commit=False)
             access_form.employee = user
@@ -323,9 +325,22 @@ def employee_permission_view(request, emp_id):
         if profile_form.is_valid():
             profile_form.save()
 
+        if change_password_form.is_valid():
+            cd = change_password_form.cleaned_data
+
+            if cd['new_password'] != cd['new_password']:
+                messages.add_message(request, messages.ERROR, 'کلمه عبور جدید با تکرار کلمه عبور جدید یکسان نمی باشد.')
+                change_password_form = ChangePasswordForm()
+
+            else:
+                user.set_password(cd['new_password'])
+                user.save()
+                messages.add_message(request, messages.SUCCESS, 'کلمه عبور با موفقیت تغییر یافت.')
+
     else:
         form = AccessAreaForm(instance=user)
         profile_form = ProfileForm(instance=user.profile)
+        change_password_form = ChangePasswordForm()
 
     area_permission = AccessEmployee.objects.filter(employee=user)
     employee_permission_lst = EmployeePermission.objects.filter(employee=user)
@@ -337,7 +352,8 @@ def employee_permission_view(request, emp_id):
             'permissions': employee_permission_lst,
             'areas': area_permission,
             'form': form,
-            'profile_form': profile_form
+            'profile_form': profile_form,
+            'change_password_form': change_password_form
         }
     )
 

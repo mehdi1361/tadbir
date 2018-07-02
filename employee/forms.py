@@ -232,6 +232,11 @@ class EmployeeFileForm(forms.ModelForm):
 
 
 class ChangePasswordForm(forms.Form):
+    def __init__(self, *args, **kwargs):
+        super(ChangePasswordForm, self).__init__(*args, **kwargs)
+        self.fields['new_password'].label = 'رمز جدید'
+        self.fields['repeat_new_password'].label ='تکرار رمز جدید'
+
     new_password = forms.CharField(widget=forms.PasswordInput(attrs={
             'class': 'form-control text-input',
             'placeholder': '********'

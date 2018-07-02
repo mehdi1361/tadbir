@@ -47,6 +47,9 @@
                 <li class="">
                     <a href="#demo5-dropdown1" data-toggle="tab">دسترسی سرپرستی</a>
                 </li>
+                <li class="">
+                    <a href="#demo5-dropdown2" data-toggle="tab">تغییر رمز کاربر</a>
+                </li>
             </ul>
 
             <div class="tab-content">
@@ -174,7 +177,7 @@
                 </div> <!-- / .tab-pane -->
                 <div class="tab-pane fade" id="demo5-dropdown1">
                     <div class="row">
-        <div class="col-md-12">
+                        <div class="col-md-12">
             <div class="widget">
                 <div class="widget-header transparent">
                     <div class="additional-btn">
@@ -229,8 +232,37 @@
             </div>
 
         </div>
-    </div>
+                    </div>
                 </div> <!-- / .tab-pane -->
+                <div class="tab-pane fade" id="demo5-dropdown2">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form class="form-horizontal" role="form" action="" method="post">
+                                  <div class="form-group">
+                                    <label for="input-text" class="col-sm-2 control-label">
+                                        {{ change_password_form.new_password.label }}
+                                    </label>
+                                    <div class="col-sm-10">
+                                        {{ change_password_form.new_password }}
+                                    </div>
+                                  </div>
+
+                                  <div class="form-group">
+                                    <label for="input-text" class="col-sm-2 control-label">{{ change_password_form.repeat_new_password.label }}</label>
+                                    <div class="col-sm-10">
+                                        {{ change_password_form.repeat_new_password }}
+                                    </div>
+                                  </div>
+
+                                    <div class="col-lg-12">
+                                        {% csrf_token %}
+                                        <input type="submit" value="تغییر رمز" class="btn btn-success">
+                                    </div>
+                                    <hr>
+                                </form>
+                        </div>
+                    </div>
+                </div>
 
             </div> <!-- / .tab-content -->
 
