@@ -285,9 +285,13 @@ def file_document(request, file_id):
         file_detail = FileForm(request.POST, instance=file)
 
         if person_form.is_valid():
-            new_person_file = person_form.save(commit=False)
-            new_person_file.file = file
-            new_person_file.save()
+            try:
+                new_person_file = person_form.save(commit=False)
+                new_person_file.file = file
+                new_person_file.save()
+                messages.add_message(request, messages.SUCCESS, 'اشخاص حقیقی با موفقیت ثبت شد')
+            except IntegrityError:
+                messages.add_message(request, messages.ERROR, 'شخص حقیقی تکراری است')
 
         if person_office.is_valid():
             try:
@@ -302,6 +306,7 @@ def file_document(request, file_id):
             new_assurance_file = assurance_form.save(commit=False)
             new_assurance_file.file = file
             new_assurance_file.save()
+            messages.add_message(request, messages.SUCCESS, 'وثیقه با موفقیت ثبت شد')
 
         if phone_form.is_valid():
             try:
@@ -310,7 +315,7 @@ def file_document(request, file_id):
                 result_phone_form.save()
                 messages.add_message(request, messages.SUCCESS, 'شماره تماس با موفقیت ثبت شد')
 
-            except:
+            except IntegrityError as e:
                 messages.add_message(request, messages.ERROR, 'هشدار شماره تلفن تکراری است.')
 
         if address_form.is_valid():
@@ -325,13 +330,12 @@ def file_document(request, file_id):
 
         if document_form.is_valid():
             try:
-
                 result_document_form = document_form.save(commit=False)
                 result_document_form.file = file
                 result_document_form.save()
                 messages.add_message(request, messages.SUCCESS, 'تصویر با موفقیت ثبت شد.')
 
-            except:
+            except IntegrityError:
                 messages.add_message(request, messages.ERROR, 'مشکل در ثبت تضویر')
 
         if employee_file_form.is_valid():
@@ -343,7 +347,6 @@ def file_document(request, file_id):
 
             except:
                 messages.add_message(request, messages.ERROR, 'خطا در ثبت')
-
 
         if lawyer_form.is_valid():
             result_lawyer = lawyer_form.save(commit=False)

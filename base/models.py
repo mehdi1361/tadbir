@@ -41,7 +41,7 @@ class Location(models.Model):
 
 class Document(models.Model):
     image_upload = models.FileField(_('تصویر'), upload_to='document', null=True)
-    description = models.TextField(_('توضیحات'), null=True, default=None)
+    description = models.TextField(_('توضیحات'), null=True, default=None, blank=True)
 
     class Meta:
         abstract = True
