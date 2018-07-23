@@ -325,7 +325,7 @@ def file_document(request, file_id):
                 result_address_form.save()
                 messages.add_message(request, messages.SUCCESS, 'آدرس با موفقیت ثبت شد.')
 
-            except:
+            except IntegrityError as e:
                 messages.add_message(request, messages.ERROR, 'هشدار آدرس تکراری است.')
 
         if document_form.is_valid():
@@ -336,7 +336,7 @@ def file_document(request, file_id):
                 messages.add_message(request, messages.SUCCESS, 'تصویر با موفقیت ثبت شد.')
 
             except IntegrityError:
-                messages.add_message(request, messages.ERROR, 'مشکل در ثبت تضویر')
+                messages.add_message(request, messages.ERROR, 'مشکل در ثبت تصویر')
 
         if employee_file_form.is_valid():
             try:
@@ -349,14 +349,24 @@ def file_document(request, file_id):
                 messages.add_message(request, messages.ERROR, 'خطا در ثبت')
 
         if lawyer_form.is_valid():
-            result_lawyer = lawyer_form.save(commit=False)
-            result_lawyer.file = file
-            result_lawyer.save()
+            try:
+                result_lawyer = lawyer_form.save(commit=False)
+                result_lawyer.file = file
+                result_lawyer.save()
+                messages.add_message(request, messages.SUCCESS, 'تخصیص وکیل با موفقیت انجام شد')
+
+            except IntegrityError:
+                messages.add_message(request, messages.ERROR, 'خطا ذر ثبت وکیل')
 
         if file_detail.is_valid():
-            result_file_detail = file_detail.save(commit=False)
-            result_file_detail.file = file
-            result_file_detail.save()
+            try:
+                result_file_detail = file_detail.save(commit=False)
+                result_file_detail.file = file
+                result_file_detail.save()
+                messages.add_message(request, messages.SUCCESS, 'ویرایش پرونده با موفقیت انجام شد')
+
+            except Exception:
+                messages.add_message(request, messages.ERROR, 'خطا ذر ویرایش پرونده')
 
     person_form = PersonFileForm()
     person_office = FileOfficeForm()

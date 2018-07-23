@@ -10,7 +10,8 @@ from .forms import LoginForm, UserRegistrationForm, \
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
-from .models import EmployeeFile, DocumentFile, PhoneFile, FollowUp, FileReminder, EmployeePermission, AccessEmployee
+from .models import EmployeeFile, DocumentFile, PhoneFile, FollowUp, FileReminder, \
+    EmployeePermission, AccessEmployee, SmsCaution
 from bank.models import File, FileOffice
 from django.shortcuts import get_object_or_404
 from django.db.models import Q, Sum
@@ -18,6 +19,7 @@ from bank.models import PersonFile
 from common.decorators import employee_permission
 from django.contrib.auth.models import User
 from django.forms import inlineformset_factory
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 def user_login(request):
@@ -382,3 +384,27 @@ def delete_employee_permission(request, permission_id):
     employee_id = emp_access.employee.id
     emp_access.delete()
     return redirect('employee:permission', emp_id=employee_id)
+
+
+@login_required(login_url='/employee/login/')
+def show_sms_sender(request):
+    sms_lst = SmsCaution.objects.all().order_by('-id')
+    paginator = Paginator(sms_lst, 15)
+    page = request.GET.get('page')
+
+    try:
+        sms_page = paginator.page(page)
+
+    except PageNotAnInteger:
+        sms_page = paginator.page(1)
+
+    except EmptyPage:
+        sms_page = paginator.page(paginator.num_pages)
+
+    return render(
+        request,
+        'bank/employee/show_sms_sender.html',
+        {
+            'sms_page': sms_page
+        }
+    )

@@ -1,0 +1,64 @@
+{% extends 'bank/base.html' %}
+
+{% block content %}
+    <div>
+
+    </div>
+     {% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+{#    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>#}
+         <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+</ul>
+{% endif %}
+    <div class="row">
+					<div class="col-md-12">
+						<div class="widget">
+							<div class="widget-header transparent">
+								<h2><strong>ارسال پیامک</strong> </h2>
+								<div class="additional-btn">
+									<a href="#" class="hidden reload"><i class="icon-ccw-1"></i></a>
+									<a href="#" class="widget-toggle"><i class="icon-down-open-2"></i></a>
+									<a href="#" class="widget-close"><i class="icon-cancel-3"></i></a>
+								</div>
+							</div>
+							<div class="widget-content">
+								<div class="table-responsive">
+									<table data-sortable="" class="table" data-sortable-initialized="true">
+										<thead>
+											<tr>
+												<th>ردیف</th>
+												<th>نوع پیامک</th>
+												<th>شماره پرونده</th>
+												<th>شماره تلفن</th>
+												<th>وضعیت</th>
+											</tr>
+										</thead>
+
+										<tbody>
+                                            {% for sms in sms_page %}
+                                                <tr>
+                                                    <td>{{ forloop.counter }}</td>
+                                                    <td><strong>{{ sms.type }}</strong></td>
+                                                    <td>{{ sms.file.file_code }}</td>
+                                                    <td>{{ sms.mobile_number }}</td>
+                                                    <td>{{ sms.status }}</td>
+{#                                                    <td>#}
+{#                                                        <div class="btn-group btn-group-xs">#}
+{#                                                            <a href="{% url "employee:permission" user.id %}" data-toggle="tooltip" title="مشاهده کاربر" class="btn btn-default"><i class="fa fa-edit"></i></a>#}
+{#                                                        </div>#}
+{#                                                    </td>#}
+
+                                                </tr>
+                                            {% endfor %}
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+{% endblock %}

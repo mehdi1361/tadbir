@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'simple_history',
     'dbbackup',
+    'django_mailbox',
 ]
 
 MIDDLEWARE_CLASSES = [

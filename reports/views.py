@@ -40,7 +40,7 @@ def weather_chart_view(request):
 
 def get_daily_user(request, *args, **kwargs):
     today = jdatetime.datetime.now()
-    day = today + jdatetime.timedelta(-30)
+    day = today + jdatetime.timedelta(-365)
     reports = PersonDailyReport.objects.filter(
         Q(persian_date__lte=today), Q(persian_date__gte=day),
         user=request.user
@@ -145,3 +145,4 @@ def get_branch_files(request, *args, **kwargs):
         "default": default_items,
     }
     return JsonResponse(data)  # http response
+

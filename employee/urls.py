@@ -16,5 +16,6 @@ urlpatterns = [
     url(r'^manage_edit/(?P<permission_id>\d+)$', views.edit_employee_permission, name='edit_permission'),
     url(r'^employee_manage/delete_permission/(?P<permission_id>\d+)$', views.delete_employee_permission,
         name='delete_employee_permission'),
+    url(r'^sms/send/list/$', views.show_sms_sender, name='sms_sender'),
 
 ]
